@@ -1,6 +1,7 @@
 package com.r3944realms.whimsy;
 
-import com.mojang.logging.LogUtils;
+
+import com.r3944realms.whimsy.utils.logger.logger;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -8,27 +9,26 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import org.slf4j.Logger;
 
 @Mod(WhimsyMod.MOD_ID)
 public class WhimsyMod {
     public static final String MOD_ID = "whimsicality";
-    private static final Logger LOGGER = LogUtils.getLogger();
-    public WhimsyMod () { /*加载对象->*/
 
+    public WhimsyMod () { /*loading*/
+        logger.info();
     }
     /**
-     * 命令注册事务
+     *CommandRegister
      */
     @SubscribeEvent
-    public void onRegisterCommander(RegisterCommandsEvent event) {//命令注册
+    public void onRegisterCommander(RegisterCommandsEvent event) {
 
     }
     private void commonSetup(final FMLCommonSetupEvent event) {
 
     }
     /**
-     * 服务端启动事务
+     * SeverStartingEvent
      */
     public void onServerStarting(ServerStartingEvent event) {
 
