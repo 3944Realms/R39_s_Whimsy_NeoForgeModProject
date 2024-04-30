@@ -12,7 +12,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import java.util.concurrent.CompletableFuture;
 
 @Mod.EventBusSubscriber(modid = WhimsyMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class dataGenerations {
+public class ModDataGeneratorHandler {
     @SubscribeEvent
     public static void genData(GatherDataEvent event) {
         DataGenerator dataGenerator = event.getGenerator();
