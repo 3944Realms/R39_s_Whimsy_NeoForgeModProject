@@ -16,18 +16,26 @@ public class ModDataGeneratorHandler {
     @SubscribeEvent
     public static void genData(GatherDataEvent event) {
         CompletableFuture<HolderLookup.Provider> HolderFolder = event.getLookupProvider();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
+        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         /*Language Provider ENGLISH CHINESE(SIM/TRA)*/
         addLanguage(event, LanguageEnum.English, "en_us");
         addLanguage(event, LanguageEnum.SimpleChinese, "zh_cn");
         addLanguage(event, LanguageEnum.TraditionalChinese, "zh_tw");
+        /*Item Model*/
+        ItemModelGenerator(event, existingFileHelper);
         //Forge Part
     }
     private static void addLanguage(GatherDataEvent event, LanguageEnum language, String lan_regex){
         event.getGenerator().addProvider(
                 event.includeClient(),
                 (DataProvider.Factory<ModLanguageProvider>) pOutput -> new ModLanguageProvider(pOutput, WhimsyMod.MOD_ID, lan_regex, language)
+        );
+    }
+    private static void ItemModelGenerator(GatherDataEvent event, ExistingFileHelper helper) {
+        event.getGenerator().addProvider(
+                event.includeClient(),
+                (DataProvider.Factory<ModItemModelProvider>) pOutput -> new ModItemModelProvider(pOutput, WhimsyMod.MOD_ID, helper)
         );
     }
 }

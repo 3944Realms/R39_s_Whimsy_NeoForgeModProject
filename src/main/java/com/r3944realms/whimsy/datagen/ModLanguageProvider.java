@@ -1,6 +1,6 @@
 package com.r3944realms.whimsy.datagen;
 
-import com.r3944realms.whimsy.datagen.LanguageData.KeyLanguage;
+import com.r3944realms.whimsy.datagen.LanguageData.ModKeyValue;
 import com.r3944realms.whimsy.utils.Enum.LanguageEnum;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.r3944realms.whimsy.datagen.LanguageData.KeyLanguage.*;
+import static com.r3944realms.whimsy.datagen.LanguageData.ModKeyValue.*;
 
 public class ModLanguageProvider extends LanguageProvider {
     private final LanguageEnum Language;
@@ -25,7 +25,7 @@ public class ModLanguageProvider extends LanguageProvider {
         init();
     }
     private void init(){
-       for (KeyLanguage key : KeyLanguage.values()) {
+       for (ModKeyValue key : ModKeyValue.values()) {
            addLanguage(key.getKey(), getEnglish(key), getSimpleChinese(key), getTraditionalChinese(key));
        }
     }
