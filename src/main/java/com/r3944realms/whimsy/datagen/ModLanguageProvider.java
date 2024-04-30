@@ -13,20 +13,20 @@ import java.util.Map;
 
 import static com.r3944realms.whimsy.datagen.LanguageData.KeyLanguage.*;
 
-public final class ModLanguageProvider extends LanguageProvider {
-    private static LanguageEnum Language;
+public class ModLanguageProvider extends LanguageProvider {
+    private final LanguageEnum Language;
     private static Map<String, Map<LanguageEnum, String>> LanguageMAP;
     private static List<String> objects;
     public ModLanguageProvider(PackOutput output, String modId, String locale, LanguageEnum Lan) {
         super(output, modId, locale);
-        Language = Lan;
+        this.Language = Lan;
         LanguageMAP = new HashMap<>();
         objects = new ArrayList<>();
         init();
     }
     private void init(){
        for (KeyLanguage key : KeyLanguage.values()) {
-           addLanguage(key.Key, getEnglish(key), getSimpleChinese(key), getTraditionalChinese(key));
+           addLanguage(key.getKey(), getEnglish(key), getSimpleChinese(key), getTraditionalChinese(key));
        }
     }
 
