@@ -4,6 +4,7 @@ import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.utils.Enum.LanguageEnum;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataProvider;
+import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -24,6 +25,8 @@ public class ModDataGeneratorHandler {
         addLanguage(event, LanguageEnum.TraditionalChinese, "zh_tw");
         /*Item Model*/
         ItemModelGenerator(event, existingFileHelper);
+        /*Recipe*/
+        RecipeGenerator(event);
         //Forge Part
     }
     private static void addLanguage(GatherDataEvent event, LanguageEnum language, String lan_regex){
@@ -36,6 +39,12 @@ public class ModDataGeneratorHandler {
         event.getGenerator().addProvider(
                 event.includeClient(),
                 (DataProvider.Factory<ModItemModelProvider>) pOutput -> new ModItemModelProvider(pOutput, WhimsyMod.MOD_ID, helper)
+        );
+    }
+    private static void RecipeGenerator(GatherDataEvent event) {
+        event.getGenerator().addProvider(
+                event.includeServer(),
+                (DataProvider.Factory<ModRecipeProvider>) ModRecipeProvider::new
         );
     }
 }
