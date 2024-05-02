@@ -1,11 +1,13 @@
 package com.r3944realms.whimsy;
 
 
+import com.r3944realms.whimsy.blocks.ModBlocksRegister;
 import com.r3944realms.whimsy.items.ModItemsRegister;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -28,7 +30,7 @@ public class WhimsyMod {
         modEventBus.addListener(this::commonSetup);
         logger.info();//Be careful about its loading order
         ModItemsRegister.register(modEventBus);//ItemsRegister
-
+        ModBlocksRegister.register(modEventBus);//BlockRegister
 
     }
     /**
@@ -48,7 +50,7 @@ public class WhimsyMod {
     public void onServerStarting(ServerStartingEvent event) {
 
     }
-    @Mod.EventBusSubscriber(modid = WhimsyMod.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = WhimsyMod.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
     public static class ClientModEvent {
         @SubscribeEvent
         public static void ClientSetup(FMLClientSetupEvent event) {

@@ -1,6 +1,7 @@
 package com.r3944realms.whimsy.datagen;
 
 import com.r3944realms.whimsy.items.ModItemsRegister;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -9,9 +10,11 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.CompletableFuture;
+
 public class ModRecipeProvider extends RecipeProvider {
-    public ModRecipeProvider(PackOutput pOutput) {
-        super(pOutput);
+    public ModRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> future) {
+        super(pOutput, future);
     }
 
     @Override

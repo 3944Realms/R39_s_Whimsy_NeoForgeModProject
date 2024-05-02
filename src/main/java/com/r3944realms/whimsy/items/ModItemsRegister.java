@@ -3,7 +3,6 @@ package com.r3944realms.whimsy.items;
 import com.r3944realms.whimsy.WhimsyMod;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -24,6 +23,7 @@ public class ModItemsRegister {
         ITEM_SUPPLIER.add(supplierItem);
         return supplierItem;
     }
+    @Deprecated(since = "1.0.0.3", forRemoval = true)
     public static String getName(Item items){
         return items.getDescriptionId();
     }

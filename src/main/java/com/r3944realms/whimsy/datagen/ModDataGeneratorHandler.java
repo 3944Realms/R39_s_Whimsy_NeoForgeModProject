@@ -4,15 +4,15 @@ import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.utils.Enum.LanguageEnum;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataProvider;
-import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@Mod.EventBusSubscriber(modid = WhimsyMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = WhimsyMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModDataGeneratorHandler {
     @SubscribeEvent
     public static void genData(GatherDataEvent event) {
@@ -25,8 +25,10 @@ public class ModDataGeneratorHandler {
         addLanguage(event, LanguageEnum.TraditionalChinese, "zh_tw");
         /*Item Model*/
         ItemModelGenerator(event, existingFileHelper);
+        /*Block States Register*/
+        BlockStateGenerator(event, existingFileHelper);
         /*Recipe*/
-        RecipeGenerator(event);
+        RecipeGenerator(event, HolderFolder);
         //Forge Part
     }
     private static void addLanguage(GatherDataEvent event, LanguageEnum language, String lan_regex){
@@ -41,10 +43,16 @@ public class ModDataGeneratorHandler {
                 (DataProvider.Factory<ModItemModelProvider>) pOutput -> new ModItemModelProvider(pOutput, WhimsyMod.MOD_ID, helper)
         );
     }
-    private static void RecipeGenerator(GatherDataEvent event) {
+    private static void RecipeGenerator(GatherDataEvent event, CompletableFuture<HolderLookup.Provider> future) {
         event.getGenerator().addProvider(
                 event.includeServer(),
-                (DataProvider.Factory<ModRecipeProvider>) ModRecipeProvider::new
+                (DataProvider.Factory<ModRecipeProvider>) pOutput -> new ModRecipeProvider(pOutput, future)
+        );
+    }
+    private static void BlockStateGenerator(GatherDataEvent event, ExistingFileHelper helper) {
+        event.getGenerator().addProvider(
+                event.includeClient(),
+                (DataProvider.Factory<ModBlockStatesProvider>) pOutput -> new ModBlockStatesProvider(pOutput, WhimsyMod.MOD_ID, helper)
         );
     }
 }
