@@ -15,6 +15,7 @@
     "###"
   ],
   "result": {
-    "item": "whimsicality:test_item"
+    "count": 1,
+    "id": "whimsicality:test_item"
   }
 }

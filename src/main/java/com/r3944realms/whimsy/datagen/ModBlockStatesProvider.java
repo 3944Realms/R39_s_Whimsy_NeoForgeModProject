@@ -12,6 +12,6 @@ public class ModBlockStatesProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        this.simpleBlockItem(ModBlocksRegister.TEST_BLOCK.get(), cubeAll(ModBlocksRegister.TEST_BLOCK.get()));
+//        this.simpleBlockItem(ModBlocksRegister.TEST_BLOCK.get(), cubeAll(ModBlocksRegister.TEST_BLOCK.get()));
     }
 }
