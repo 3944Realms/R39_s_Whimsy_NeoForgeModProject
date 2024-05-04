@@ -1,17 +1,20 @@
 package com.r3944realms.whimsy.datagen.LanguageData;
 
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
+import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.items.ModItemsRegister;
 import com.r3944realms.whimsy.utils.Enum.ModPartEnum;
 import com.r3944realms.whimsy.utils.ModAnnotation.NeedCompletedInFuture;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
 public enum ModKeyValue {
     TEST_ITEM(ModItemsRegister.TEST_ITEM, ModPartEnum.ITEMS,"Test Item", "测试物品", "測試物品", true),
-    TEST_BLOCK(ModBlocksRegister.TEST_BLOCK, ModPartEnum.BLOCKS, "Test Block", "测试方块", "測試方塊", false)
+    TEST_BLOCK(ModBlocksRegister.TEST_BLOCK, ModPartEnum.BLOCKS, "Test Block", "测试方块", "測試方塊", false),
+    TEST_CREATIVE_TAB(ModCreativeTab.getCreativeMod(ModCreativeTab.TEST), ModPartEnum.CREATIVETAB, "Test Creative Tab", "测试创造物品栏", "測試創造物品欄",false ),
     ;
 
     private final Supplier<?> supplier;
@@ -22,8 +25,17 @@ public enum ModKeyValue {
     private final Boolean Default;
     private final ModPartEnum MPE;
 
-    ModKeyValue(Supplier<?> Supplier,ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, Boolean isDefault) {
+    ModKeyValue(Supplier<?> Supplier, ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, Boolean isDefault) {
         this.supplier = Supplier;
+        this.MPE = MPE;
+        this.US_EN = US_EN;
+        this.SIM_CN = SIM_CN;
+        this.TRA_CN = TRA_CN;
+        this.Default = isDefault;
+    }
+    ModKeyValue(@NotNull String ResourceKey, ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, Boolean isDefault) {
+        this.supplier = null;
+        this.key = ResourceKey;
         this.MPE = MPE;
         this.US_EN = US_EN;
         this.SIM_CN = SIM_CN;
@@ -42,8 +54,11 @@ public enum ModKeyValue {
     @NeedCompletedInFuture
     public String getKey() {
         if(key == null){
-            if(MPE == ModPartEnum.ITEMS )key = ((Item)supplier.get()).getDescriptionId();
-            if(MPE == ModPartEnum.BLOCKS )key =((Block)supplier.get()).getDescriptionId();
+            switch (MPE) {//Don't need to use "break;";
+                case CREATIVETAB -> throw new UnsupportedOperationException("The Key value is NULL! Please use the correct constructor and write the parameters correctly");
+                case ITEMS -> key = ((Item)supplier.get()).getDescriptionId();
+                case BLOCKS -> key =((Block)supplier.get()).getDescriptionId();
+            }
             //需要完善
         }
         return key;

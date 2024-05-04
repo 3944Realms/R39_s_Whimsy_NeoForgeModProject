@@ -2,6 +2,7 @@ package com.r3944realms.whimsy;
 
 
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
+import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.items.ModItemsRegister;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.neoforged.api.distmarker.Dist;
@@ -31,6 +32,7 @@ public class WhimsyMod {
         logger.info();//Be careful about its loading order
         ModItemsRegister.register(modEventBus);//ItemsRegister
         ModBlocksRegister.register(modEventBus);//BlockRegister
+        ModCreativeTab.register(modEventBus);//CreativeTabRegister
 
     }
     /**

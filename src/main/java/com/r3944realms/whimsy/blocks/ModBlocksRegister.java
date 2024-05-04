@@ -1,6 +1,7 @@
 package com.r3944realms.whimsy.blocks;
 
 import com.r3944realms.whimsy.WhimsyMod;
+import com.r3944realms.whimsy.blocks.custom.TestBlock;
 import com.r3944realms.whimsy.items.ModItemsRegister;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
@@ -16,7 +17,7 @@ import java.util.function.Supplier;
 public class ModBlocksRegister {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, WhimsyMod.MOD_ID);
 
-    public static final Supplier<Block> TEST_BLOCK = registerBlock("test_block", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)));
+    public static final Supplier<Block> TEST_BLOCK = registerBlock("test_block", () -> new TestBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)));
     public static Supplier<Block> registerBlock(String name, Supplier<Block> block) {
         Supplier<Block> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

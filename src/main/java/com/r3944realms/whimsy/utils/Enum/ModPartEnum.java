@@ -4,6 +4,8 @@ public enum ModPartEnum {
     DEFAULT,
     ITEMS,
     BLOCKS,
+    CREATIVETAB,
+    CONFIG,
     ENTITY,
     GUI,
     NAME,
