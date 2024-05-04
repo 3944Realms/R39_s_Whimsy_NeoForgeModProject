@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "whimsicality:block/test_block"
+    }
+  }
+}
