@@ -56,17 +56,18 @@ public enum ModKeyValue {
         if(key == null){
             switch (MPE) {//Don't need to use "break;";
                 case CREATIVETAB -> throw new UnsupportedOperationException("The Key value is NULL! Please use the correct constructor and write the parameters correctly");
-                case ITEMS -> key = ((Item)supplier.get()).getDescriptionId();
-                case BLOCKS -> key =((Block)supplier.get()).getDescriptionId();
+                case ITEMS -> key = (getItem()).getDescriptionId();
+                case BLOCKS -> key =(getBlock()).getDescriptionId();
             }
             //需要完善
         }
         return key;
     }
-
+    @SuppressWarnings("null")
     public Item getItem() {
         return (Item)supplier.get();
     }
+    @SuppressWarnings("null")
     public Block getBlock() {
         return (Block)supplier.get();
     }
