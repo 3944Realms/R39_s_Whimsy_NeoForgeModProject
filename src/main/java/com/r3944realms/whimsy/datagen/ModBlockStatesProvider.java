@@ -20,7 +20,7 @@ public class ModBlockStatesProvider extends BlockStateProvider {
 //        this.simpleBlockItem(ModBlocksRegister.TEST_BLOCK.get(), cubeAll(ModBlocksRegister.TEST_BLOCK.get()));
     }
     public void addWithHaveModel(Block block, String name) {
-        var model_path = models().getExistingFile(new ResourceLocation(WhimsyMod.MOD_ID, name));
+        var model_path = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(WhimsyMod.MOD_ID, name));
         var model = new ConfiguredModel(model_path);
         getVariantBuilder(block).partialState().setModels(model);
         simpleBlockItem(block, model_path);

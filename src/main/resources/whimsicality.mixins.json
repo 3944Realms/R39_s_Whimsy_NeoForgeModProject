@@ -1,0 +1,11 @@
+{
+  "package": "com.r3944realms.whimsy.mixin",
+  "mixins": [],
+  "client":[
+    "MixinPlayerRenderer"
+  ],
+  "refmap": "whimsicality.refmap.json",
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8"
+}
