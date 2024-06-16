@@ -14,6 +14,9 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import software.bernie.geckolib.GeckoLib;
+import software.bernie.geckolib.platform.GeckoLibNeoForge;
+
 //2024-05-18 ACC
 @Mod(WhimsyMod.MOD_ID)
 public class WhimsyMod {
