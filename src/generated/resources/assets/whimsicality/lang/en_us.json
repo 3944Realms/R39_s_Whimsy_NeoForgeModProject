@@ -1,5 +1,6 @@
 {
   "block.whimsicality.test_block": "Test Block",
   "creativetab.whimsicality.test_tab": "Test Creative Tab",
-  "item.whimsicality.test_item": "Test Item"
+  "item.whimsicality.test_item": "Test Item",
+  "whimsy.network.payload.ack.failed": "ACK FAILED"
 }

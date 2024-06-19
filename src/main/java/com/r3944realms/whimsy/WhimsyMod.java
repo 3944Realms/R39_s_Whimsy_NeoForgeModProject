@@ -2,20 +2,25 @@ package com.r3944realms.whimsy;
 
 
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
+import com.r3944realms.whimsy.config.TestConfig;
 import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.items.ModItemsRegister;
+import com.r3944realms.whimsy.network.NetworkHandler;
+import com.r3944realms.whimsy.network.configuration.TestConfigurationTask;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import software.bernie.geckolib.GeckoLib;
-import software.bernie.geckolib.platform.GeckoLibNeoForge;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 //2024-05-18 ACC
 @Mod(WhimsyMod.MOD_ID)
@@ -36,17 +41,21 @@ public class WhimsyMod {
         ModItemsRegister.register(modEventBus);//ItemsRegister
         ModBlocksRegister.register(modEventBus);//BlockRegister
         ModCreativeTab.register(modEventBus);//CreativeTabRegister
-
+        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, TestConfig.SPEC, "whimsicality_config.toml");
     }
     /**
      *CommandRegister
      */
     @SubscribeEvent
+    public static  void registerPackets(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar(WhimsyMod.MOD_ID);
+
+    }
+    @SubscribeEvent
     public void onRegisterCommander(RegisterCommandsEvent event) {
 
     }
     private void commonSetup(final FMLCommonSetupEvent event) {
-
     }
     /**
      * SeverStartingEvent

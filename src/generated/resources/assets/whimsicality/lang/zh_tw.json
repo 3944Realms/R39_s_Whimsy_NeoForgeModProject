@@ -1,5 +1,6 @@
 {
   "block.whimsicality.test_block": "測試方塊",
   "creativetab.whimsicality.test_tab": "測試創造物品欄",
-  "item.whimsicality.test_item": "測試物品"
+  "item.whimsicality.test_item": "測試物品",
+  "whimsy.network.payload.ack.failed": "確認失敗"
 }

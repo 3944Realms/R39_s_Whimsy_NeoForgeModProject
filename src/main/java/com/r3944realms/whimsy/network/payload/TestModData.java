@@ -9,7 +9,9 @@ import org.jetbrains.annotations.NotNull;
 
 public record TestModData(String message, int age) implements CustomPacketPayload {
     public static final StreamCodec<FriendlyByteBuf, TestModData> STREAM_CODEC = CustomPacketPayload.codec(TestModData::write, TestModData::new);
+
     public static final Type<TestModData> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(WhimsyMod.MOD_ID,"test_mod_data"));
+
     public TestModData(final FriendlyByteBuf buf) {
         this(buf.readUtf(), buf.readInt());
     }
@@ -22,4 +24,5 @@ public record TestModData(String message, int age) implements CustomPacketPayloa
     public @NotNull Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
+
 }

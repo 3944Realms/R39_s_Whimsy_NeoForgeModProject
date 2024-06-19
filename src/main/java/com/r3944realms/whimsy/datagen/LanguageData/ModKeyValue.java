@@ -3,6 +3,7 @@ package com.r3944realms.whimsy.datagen.LanguageData;
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
 import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.items.ModItemsRegister;
+import com.r3944realms.whimsy.network.payload.ackpayload.AckPayload;
 import com.r3944realms.whimsy.utils.Enum.ModPartEnum;
 import com.r3944realms.whimsy.utils.ModAnnotation.NeedCompletedInFuture;
 import net.minecraft.world.item.Item;
@@ -15,6 +16,7 @@ public enum ModKeyValue {
     TEST_ITEM(ModItemsRegister.TEST_ITEM, ModPartEnum.ITEMS,"Test Item", "测试物品", "測試物品", true),
     TEST_BLOCK(ModBlocksRegister.TEST_BLOCK, ModPartEnum.BLOCKS, "Test Block", "测试方块", "測試方塊", false),
     TEST_CREATIVE_TAB(ModCreativeTab.getCreativeMod(ModCreativeTab.TEST), ModPartEnum.CREATIVETAB, "Test Creative Tab", "测试创造物品栏", "測試創造物品欄",false ),
+    MESSAGE_NET_ACK_FAILED(AckPayload.NET_PAYLOAD_ACK_FAILED_KEY, ModPartEnum.MESSAGE, "ACK FAILED", "确认失败", "確認失敗",false);
     ;
 
     private final Supplier<?> supplier;

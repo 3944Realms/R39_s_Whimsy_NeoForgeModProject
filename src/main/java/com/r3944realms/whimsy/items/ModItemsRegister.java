@@ -1,6 +1,7 @@
 package com.r3944realms.whimsy.items;
 
 import com.r3944realms.whimsy.WhimsyMod;
+import com.r3944realms.whimsy.items.custom.MessageItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
@@ -16,7 +17,7 @@ public class ModItemsRegister {
     public static final List<Supplier<Item>> ITEM_SUPPLIER = new ArrayList<>();
 
     /*Register Item*/
-    public static final Supplier<Item> TEST_ITEM = ModItemsRegister.register("test_item", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final Supplier<Item> TEST_ITEM = ModItemsRegister.register("test_item", () -> new MessageItem(new Item.Properties().stacksTo(1)));
 
     public static Supplier<Item> register(String name, Supplier<Item> supplier) {
         Supplier<Item> supplierItem = ITEMS.register(name, supplier);

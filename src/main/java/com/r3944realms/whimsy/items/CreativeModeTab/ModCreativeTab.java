@@ -1,11 +1,9 @@
 package com.r3944realms.whimsy.items.CreativeModeTab;
 
 import com.r3944realms.whimsy.WhimsyMod;
-import com.r3944realms.whimsy.blocks.ModBlocksRegister;
 import com.r3944realms.whimsy.items.ModItemsRegister;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.IEventBus;
