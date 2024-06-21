@@ -10,7 +10,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class ClientPayloadHandler {
     public static void handleData(final TestModData data, final IPayloadContext context) {
-        context.enqueueWork(()->{
+        context.enqueueWork(() -> {
             logger.info(data.message());
             })
             .exceptionally(e-> {

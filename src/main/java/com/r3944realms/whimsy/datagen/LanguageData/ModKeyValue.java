@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 public enum ModKeyValue {
     TEST_ITEM(ModItemsRegister.TEST_ITEM, ModPartEnum.ITEMS,"Test Item", "测试物品", "測試物品", true),
     TEST_BLOCK(ModBlocksRegister.TEST_BLOCK, ModPartEnum.BLOCKS, "Test Block", "测试方块", "測試方塊", false),
-    TEST_CREATIVE_TAB(ModCreativeTab.getCreativeMod(ModCreativeTab.TEST), ModPartEnum.CREATIVETAB, "Test Creative Tab", "测试创造物品栏", "測試創造物品欄",false ),
+    TEST_CREATIVE_TAB(ModCreativeTab.getCreativeMod(ModCreativeTab.TEST), ModPartEnum.CREATIVE_TAB, "Test Creative Tab", "测试创造物品栏", "測試創造物品欄",false ),
     MESSAGE_NET_ACK_FAILED(AckPayload.NET_PAYLOAD_ACK_FAILED_KEY, ModPartEnum.MESSAGE, "ACK FAILED", "确认失败", "確認失敗",false);
     ;
 
@@ -57,7 +57,7 @@ public enum ModKeyValue {
     public String getKey() {
         if(key == null){
             switch (MPE) {//Don't need to use "break;";
-                case CREATIVETAB -> throw new UnsupportedOperationException("The Key value is NULL! Please use the correct constructor and write the parameters correctly");
+                case CREATIVE_TAB -> throw new UnsupportedOperationException("The Key value is NULL! Please use the correct constructor and write the parameters correctly");
                 case ITEMS -> key = (getItem()).getDescriptionId();
                 case BLOCKS -> key =(getBlock()).getDescriptionId();
             }
