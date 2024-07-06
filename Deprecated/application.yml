@@ -1,0 +1,7 @@
+
+server:
+  port: 9999
+
+logging: # 日志输出配置
+  level:
+    com.r3944realms.whimsy.api.SpringBoot.DG_LAB: DEBUG

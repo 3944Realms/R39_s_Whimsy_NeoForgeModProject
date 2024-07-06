@@ -2,9 +2,6 @@ package com.r3944realms.whimsy.network.configuration;
 
 import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.network.payload.TestModData;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.configuration.ServerConfigurationPacketListener;
 import net.minecraft.resources.ResourceLocation;

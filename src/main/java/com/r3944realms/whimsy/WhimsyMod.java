@@ -1,12 +1,12 @@
 package com.r3944realms.whimsy;
 
 
+
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
 import com.r3944realms.whimsy.config.TestConfig;
+import com.r3944realms.whimsy.init.Dependencies;
 import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.items.ModItemsRegister;
-import com.r3944realms.whimsy.network.NetworkHandler;
-import com.r3944realms.whimsy.network.configuration.TestConfigurationTask;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -21,6 +21,9 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import org.apache.logging.log4j.core.LogEvent;
+
+import java.nio.charset.StandardCharsets;
 
 //2024-05-18 ACC
 @Mod(WhimsyMod.MOD_ID)
