@@ -1,6 +1,7 @@
 package com.r3944realms.whimsy.datagen.LanguageData;
 
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
+import com.r3944realms.whimsy.command.WebSocketServerCommand;
 import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.items.ModItemsRegister;
 import com.r3944realms.whimsy.network.payload.ackpayload.AckPayload;
@@ -16,7 +17,12 @@ public enum ModKeyValue {
     TEST_ITEM(ModItemsRegister.TEST_ITEM, ModPartEnum.ITEMS,"Test Item", "测试物品", "測試物品", true),
     TEST_BLOCK(ModBlocksRegister.TEST_BLOCK, ModPartEnum.BLOCKS, "Test Block", "测试方块", "測試方塊", false),
     TEST_CREATIVE_TAB(ModCreativeTab.getCreativeMod(ModCreativeTab.TEST), ModPartEnum.CREATIVE_TAB, "Test Creative Tab", "测试创造物品栏", "測試創造物品欄",false ),
-    MESSAGE_NET_ACK_FAILED(AckPayload.NET_PAYLOAD_ACK_FAILED_KEY, ModPartEnum.MESSAGE, "ACK FAILED", "确认失败", "確認失敗",false);
+    MESSAGE_NET_ACK_FAILED(AckPayload.NET_PAYLOAD_ACK_FAILED_KEY, ModPartEnum.MESSAGE, "ACK FAILED", "确认失败", "確認失敗",false),
+    MESSAGE_WEBSOCKET_SERVER__START_SUCCESSFUL(WebSocketServerCommand.START_SUCCESSFUL, ModPartEnum.MESSAGE, "Start WebSocket Server.", "Websocket服务器线程启动成功","Websocket伺服器綫程啓動成功", false),
+    MESSAGE_WEBSOCKET_SERVER__START_FAILED_REPEAT(WebSocketServerCommand.START_FAILED_REPEAT_START, ModPartEnum.MESSAGE, "WebSocket Server is already running.", "Websocket服务器线程已运行，切勿重复启动","Websocket伺服器綫程在運行中，切勿重複啓動", false),
+    MESSAGE_WEBSOCKET_SERVER__START_FAILED_CLOSING(WebSocketServerCommand.START_FAILED_CLOSING, ModPartEnum.MESSAGE, "WebSocket Server is closing.", "Websocket服务器线程在关闭中，请等完全关闭后再启动","Websocket伺服器綫程在關閉中，請等待關閉之後再開啓", false),
+    MESSAGE_WEBSOCKET_SERVER__STOP_SUCCESS(WebSocketServerCommand.STOP_SUCCESSFUL, ModPartEnum.MESSAGE, "Stop WebSocket Server.","Websocket服务器线程关闭中","關閉Websocket伺服器綫程關閉中",false),
+    MESSAGE_WEBSOCKET_SERVER__STOP_FAILED(WebSocketServerCommand.STOP_FAILED_HAD_CLOSE, ModPartEnum.MESSAGE, "WebSocket Server had closed","Websocket服务线程已关闭","Websocket伺服器綫程已關閉",false),
     ;
 
     private final Supplier<?> supplier;

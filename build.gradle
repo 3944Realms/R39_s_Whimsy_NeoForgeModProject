@@ -120,11 +120,11 @@ dependencies {
 
     // Example mod dependency using a file as dependency
     // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
-    implementation group: 'io.netty', name: 'netty-codec-http', version: '4.1.109.Final'
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.109.Final'
     // Example project dependency using a sister or child project:
     // implementation project(":myproject")
 
-    jarJar(group: 'io.netty',name: 'netty-codec-http',version: netty_version) {
+    jarJar(group: 'io.netty',name: 'netty-all',version: netty_version) {
         version {
             strictly netty_version
         }
