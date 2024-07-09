@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WebSocketServer {
-    private static Thread WebsocketThread;
+    private static Thread WebsocketServerThread;
     static final Logger log = LoggerFactory.getLogger(WebSocketServer.class);
     private static ServerBootstrap serverBootstrap = null;
     private static EventLoopGroup bossGroup = null;
@@ -28,7 +28,7 @@ public class WebSocketServer {
             return;
         }
         initThread();
-        WebsocketThread.start();
+        WebsocketServerThread.start();
 
     }
 
@@ -36,7 +36,8 @@ public class WebSocketServer {
 
         bossGroup = new NioEventLoopGroup();
         workerGroup = new NioEventLoopGroup();
-        WebsocketThread = new Thread(() -> { try {
+        WebsocketServerThread = new Thread(() -> {
+        try {
             isRunning.set(true);
             serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workerGroup);
@@ -45,12 +46,13 @@ public class WebSocketServer {
                 @Override
                 protected void initChannel(NioSocketChannel ch) throws Exception {
                     ChannelPipeline pipeline = ch.pipeline();
-
+                    pipeline.addLast();
                 }
             });
             log.debug("WebSocketServer try binding port ... ");
             ChannelFuture channelFuture = serverBootstrap.bind(WebSocketConfig.WebSocketServerPort.get());
             channelFuture.sync();
+            serverChannel = channelFuture.channel();
             log.info("WebSocketServer start on the port of {}", WebSocketConfig.WebSocketServerPort.get());
             log.debug("WebSocketServer listening on port {}", WebSocketConfig.WebSocketServerPort.get());
             channelFuture.channel().closeFuture().sync();
@@ -60,6 +62,7 @@ public class WebSocketServer {
             Stop();
             log.info("WebSocketServer Stopped");
         }});
+        WebsocketServerThread.setDaemon(true);
     }
 
     //
@@ -68,11 +71,11 @@ public class WebSocketServer {
             log.info("Server is already stopped");
             return;
         }
-        log.debug("WebSocketServer stopping...");
+        log.debug("WebSocketServer is stopping...");
         isStopping.set(true);
         Future<Integer> future = new NioEventLoopGroup().next().submit(() -> {
             try {
-                if (serverChannel != null) {
+                if (serverChannel != null && serverChannel.isOpen()) {
                     serverChannel.close();
                 }
                 if (bossGroup != null) {
@@ -92,7 +95,7 @@ public class WebSocketServer {
         });
         try {
             if(future.get() == 0){
-                log.info("WebSocketServer stopped successfully");
+                log.info("WebSocketServer has stopped Successfully");
 
             }
         } catch (InterruptedException | ExecutionException e) {

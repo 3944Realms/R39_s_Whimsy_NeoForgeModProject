@@ -1,8 +1,10 @@
 {
   "package": "com.r3944realms.whimsy.mixin",
-  "mixins": [],
-  "client":[
-    "MixinPlayerRenderer"
+  "mixins": [
+    "network.MixinConnection"
+  ],
+  "client": [
+    "renderer.MixinPlayerRenderer"
   ],
   "refmap": "whimsicality.refmap.json",
   "required": true,

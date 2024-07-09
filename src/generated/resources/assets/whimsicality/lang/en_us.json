@@ -3,9 +3,17 @@
   "creativetab.whimsicality.test_tab": "Test Creative Tab",
   "item.whimsicality.test_item": "Test Item",
   "whimsy.network.payload.ack.failed": "ACK FAILED",
+  "whimsy.network.payload.websocket.client.sync.failed": "Sync the address of Websocket Server Failed",
+  "whimsy.websocket.client.message.not_client": "This command is Only can be running in client environment",
+  "whimsy.websocket.client.message.start.failed.closing": "WebSocket Client is closing.",
+  "whimsy.websocket.client.message.start.failed.not_sync": "Not sync WebSocket Server address,please use \"sync\" command first",
+  "whimsy.websocket.client.message.start.failed.repeat_start": "WebSocket Client is already running.",
+  "whimsy.websocket.client.message.start.successful": "Start WebSocket Client.",
+  "whimsy.websocket.client.message.stop.failed.had_closed": "WebSocket Client had closed",
+  "whimsy.websocket.client.message.stop.successful": "Stop WebSocket Client.",
   "whimsy.websocket.server.message..stop.successful": "Stop WebSocket Server.",
   "whimsy.websocket.server.message.start.failed.closing": "WebSocket Server is closing.",
   "whimsy.websocket.server.message.start.failed.repeat_start": "WebSocket Server is already running.",
   "whimsy.websocket.server.message.start.successful": "Start WebSocket Server.",
-  "whimsy.websocket.server.message.stop.failed.had_close": "WebSocket Server had closed"
+  "whimsy.websocket.server.message.stop.failed.had_closed": "WebSocket Server had closed"
 }

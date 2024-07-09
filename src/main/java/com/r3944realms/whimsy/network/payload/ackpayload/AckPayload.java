@@ -1,6 +1,7 @@
 package com.r3944realms.whimsy.network.payload.ackpayload;
 
 import com.r3944realms.whimsy.WhimsyMod;
+import com.r3944realms.whimsy.network.NetworkHandler;
 import com.r3944realms.whimsy.network.configuration.TestConfigurationTask;
 import com.r3944realms.whimsy.network.payload.TestModData;
 import io.netty.buffer.ByteBuf;
@@ -22,7 +23,7 @@ public record AckPayload() implements CustomPacketPayload {
     */
     public static final StreamCodec<ByteBuf, AckPayload> STREAM_CODEC = StreamCodec.unit(new AckPayload());
 
-    public static final String NET_PAYLOAD_ACK_FAILED_KEY = "whimsy.network.payload.ack.failed";
+//    public static final String NET_PAYLOAD_ACK_FAILED_KEY = "whimsy.network.payload.ack.failed";
     public void onAck(AckPayload payload, IPayloadContext context) {
         context.finishCurrentTask(TestConfigurationTask.TYPE);
     }
@@ -31,7 +32,7 @@ public record AckPayload() implements CustomPacketPayload {
         context.enqueueWork( () -> {
 
         }).exceptionally(e -> {
-            context.disconnect(Component.translatable(NET_PAYLOAD_ACK_FAILED_KEY + ": %s", e.getMessage()));
+            context.disconnect(Component.translatable(NetworkHandler.ACK_FAILED + ": %s", e.getMessage()));
             return null;
         })
         .thenAccept(v -> {

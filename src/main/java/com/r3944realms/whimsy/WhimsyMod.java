@@ -2,7 +2,7 @@ package com.r3944realms.whimsy;
 
 
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
-import com.r3944realms.whimsy.command.WebSocketServerCommand;
+import com.r3944realms.whimsy.command.WebSocketCommand;
 import com.r3944realms.whimsy.config.TestConfig;
 import com.r3944realms.whimsy.config.WebSocketConfig;
 import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
@@ -58,7 +58,7 @@ public class WhimsyMod {
      */
 
     public void onRegisterCommander(RegisterCommandsEvent event) {
-        WebSocketServerCommand.register(event.getDispatcher());
+        WebSocketCommand.register(event.getDispatcher());
     }
     private void commonSetup(final FMLCommonSetupEvent event) {
 

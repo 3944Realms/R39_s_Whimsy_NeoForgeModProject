@@ -1,4 +1,4 @@
-package com.r3944realms.whimsy.mixin;
+package com.r3944realms.whimsy.mixin.renderer;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
