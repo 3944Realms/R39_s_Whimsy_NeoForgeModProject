@@ -1,0 +1,33 @@
+package com.r3944realms.whimsy.utils.UnSafe;
+
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
+import java.lang.reflect.Field;
+
+public class AtomicClass<T> {
+    private static final VarHandle VALUE;
+    private volatile T value;
+
+    static {
+        try {
+            Field valueField = AtomicClass.class.getDeclaredField("value");
+            VALUE = MethodHandles.lookup().unreflectVarHandle(valueField);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public T get() {
+        return value;
+    }
+
+    public void set(T newValue) {
+        while (true) {
+            //noinspection unchecked
+            T prev = (T) VALUE.getVolatile(this);
+            if (VALUE.compareAndSet(this, prev, newValue)) {
+                break;
+            }
+        }
+    }
+}

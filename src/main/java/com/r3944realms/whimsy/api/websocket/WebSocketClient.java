@@ -8,11 +8,9 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.concurrent.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 //通过服务器发包来告诉有效链接
 public class WebSocketClient {
@@ -42,8 +40,11 @@ public class WebSocketClient {
             logger.info("waiting for sync.");
             return;
         } else if (isStopping.get()) {
-            logger.info("WebSocketClient is stopping");
-            return;
+            if(eventLoopGroup != null && channel != null) {
+                logger.info("WebSocketClient is stopping");
+                return;
+            }
+            isStopping.set(false);
         }
         initThread();
 
@@ -80,35 +81,37 @@ public class WebSocketClient {
             logger.info("WebSocketClient is not running");
             return;
         }
+        if(isStopping.get()) {
+            logger.info("WebSocketClient is stopping,don't stop duplicated");
+            return;
+        }
         logger.debug("WebSocketClient is stopping");
+
         isStopping.set(true);
-        Future<Integer> future = new NioEventLoopGroup().next().submit(() -> {
-            try {
-                if(channel != null && channel.isOpen()) {
-                    channel.close().sync();
-                }
-                if(eventLoopGroup != null) {
-                    eventLoopGroup.shutdownGracefully().sync();
-                }
-            } finally {
-                eventLoopGroup = null;
-                channel = null;
-                bootstrap = null;
-                isRunning.set(false);
-                address = "";
-                port = -1;
-                hasSync.set(false);
+        try{
+            if(channel != null) {
+                  channel.close().addListener(future -> {
+                      if(future.isSuccess()) {
+                          logger.info("Client channel closed successfully");
+                      } else {
+                          logger.error("Client channel close failed", future.cause());
+                      }
+                      channel = null;
+                  });
             }
-            return 0;
-        });
-        try {
-            if(future.get() == 0) {
-                logger.info("WebSocket Client has stopped Successfully");
+            if(eventLoopGroup != null) {
+                eventLoopGroup.shutdownGracefully().addListener(future -> {
+                    if(future.isSuccess()) {
+                        logger.info("Client event loop group closed successfully");
+                    } else {
+                        logger.error("Client event loop group close failed", future.cause());
+                    }
+                    eventLoopGroup = null;
+                });
             }
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error("WebSocket Client stooped error:{}",e.getMessage());
         } finally {
-            isStopping.set(false);
+            isRunning.set(false);
+            hasSync.set(false);
         }
     }
     public static boolean isRunning() {
@@ -119,5 +122,13 @@ public class WebSocketClient {
     }
     public static boolean hasSync() {
         return hasSync.get();
+    }
+    public static void refresh() {
+        if(isStopping.get()) {
+            if(eventLoopGroup == null && channel == null ) {
+                isStopping.set(false);
+                bootstrap = null;
+            }
+        }
     }
 }

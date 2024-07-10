@@ -31,8 +31,9 @@ public class ServerPayloadHandler {
             String address = WebSocketConfig.WebSocketServerAddress.get();
             try {
                 ServerPlayer player = Objects.requireNonNull(Objects.requireNonNull(Minecraft.getInstance().level).getServer()).getPlayerList().getPlayer(ackPayload.player_uuid());
-                if (player==null) throw new NullPointerException();
+                if (player == null) throw new NullPointerException();
                 if(!AddressValidator.isValidAddress(address)) throw new InvalidValueException(address);
+
                 PacketDistributor.sendToPlayer(player,new WebSocketServerAddressData(address,WebSocketConfig.WebSocketServerPort.get()));
             } catch (NullPointerException e) {
                 logger.error("player(uuid:{}) is not existed in game.", ackPayload.player_uuid());

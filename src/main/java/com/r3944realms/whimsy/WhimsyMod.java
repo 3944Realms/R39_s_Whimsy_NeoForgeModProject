@@ -2,7 +2,8 @@ package com.r3944realms.whimsy;
 
 
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
-import com.r3944realms.whimsy.command.WebSocketCommand;
+import com.r3944realms.whimsy.command.WebSocketClientCommand;
+import com.r3944realms.whimsy.command.WebSocketServerCommand;
 import com.r3944realms.whimsy.config.TestConfig;
 import com.r3944realms.whimsy.config.WebSocketConfig;
 import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
@@ -17,11 +18,10 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 //2024-05-18 ACC
 @Mod(WhimsyMod.MOD_ID)
@@ -40,6 +40,7 @@ public class WhimsyMod {
     public WhimsyMod (IEventBus modEventBus) { /*loading*/
         modEventBus.addListener(this::commonSetup);
         NeoForge.EVENT_BUS.addListener(this::onRegisterCommander);//指令注册器
+        NeoForge.EVENT_BUS.addListener(this::onClientCommandsRegister);//客户端指令注册器
         logger.info();//Be careful about its loading order
         ModItemsRegister.register(modEventBus);//ItemsRegister
         ModBlocksRegister.register(modEventBus);//BlockRegister
@@ -48,17 +49,20 @@ public class WhimsyMod {
         ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, WebSocketConfig.SPEC, "whimsicality_config_websocket.toml");
     }
 
-    @SubscribeEvent
-    public static  void registerPackets(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar(WhimsyMod.MOD_ID);
-
-    }
+//    @SubscribeEvent
+//    public static  void registerPackets(RegisterPayloadHandlersEvent event) {
+//        PayloadRegistrar registrar = event.registrar(WhimsyMod.MOD_ID);
+//
+//    }
     /**
      *CommandRegister
      */
 
-    public void onRegisterCommander(RegisterCommandsEvent event) {
-        WebSocketCommand.register(event.getDispatcher());
+    private void onRegisterCommander(RegisterCommandsEvent event) {
+        WebSocketServerCommand.register(event.getDispatcher());
+    }
+    private void onClientCommandsRegister(RegisterClientCommandsEvent event) {
+        WebSocketClientCommand.register(event.getDispatcher());
     }
     private void commonSetup(final FMLCommonSetupEvent event) {
 
