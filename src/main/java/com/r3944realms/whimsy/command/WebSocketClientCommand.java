@@ -5,7 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.api.websocket.WebSocketClient;
-import com.r3944realms.whimsy.config.WebSocketConfig;
+import com.r3944realms.whimsy.config.WebSocketServerConfig;
 import com.r3944realms.whimsy.network.payload.ackpayload.SyncWebsocketRequestPayload;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.minecraft.ChatFormatting;
@@ -20,6 +20,7 @@ public class WebSocketClientCommand {
     public static final String WHIMSICALITY_COMMAND = WhimsyMod.MOD_ID;
     public static final String WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_= "whimsy.websocket.client.message.",
             NOT_CLIENT = WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "not_client",
+            CLIENT_SYNC_ACK_SEND = WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "client_sync_send",
             CLIENT_START_SUCCESSFUL = WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "start.successful",
             CLIENT_START_FAILED_CLOSING =WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "start.failed.closing",
             CLIENT_START_FAILED_REPEAT_START = WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "start.failed.repeat_start",
@@ -36,11 +37,12 @@ public class WebSocketClientCommand {
             }
             try {
                 if(Minecraft.getInstance().isSingleplayer()) {
-                    WebSocketClient.syncServerData(WebSocketConfig.WebSocketServerAddress.get(), WebSocketConfig.WebSocketServerPort.get());
+                    WebSocketClient.syncServerData(WebSocketServerConfig.WebSocketServerAddress.get(), WebSocketServerConfig.WebSocketServerPort.get());
                     return 0;
                 }
                 if (Minecraft.getInstance().player != null) {
                     PacketDistributor.sendToServer(new SyncWebsocketRequestPayload(Minecraft.getInstance().player.getUUID()));
+                    source.sendSuccess(() -> Component.translatable(CLIENT_SYNC_ACK_SEND).withStyle(ChatFormatting.GREEN),true);
                 }
                 else throw new NullPointerException();
             } catch (NullPointerException e) {
@@ -65,7 +67,7 @@ public class WebSocketClientCommand {
                                             Component.translatable(CLIENT_START_SUCCESSFUL).withStyle(ChatFormatting.GREEN) :
                                             Component.translatable(CLIENT_START_FAILED_CLOSING).withStyle(ChatFormatting.RED)) :
                                     Component.translatable(CLIENT_START_FAILED_REPEAT_START).withStyle(ChatFormatting.RED)),
-                    false);
+                    true);
             if (!WebSocketClient.isStopping()) WebSocketClient.Start();
             return 0;
         };
@@ -78,7 +80,7 @@ public class WebSocketClientCommand {
             source.sendSuccess(() -> WebSocketClient.isRunning() ?
                             Component.translatable(CLIENT_STOP_SUCCESSFUL).withStyle(ChatFormatting.GREEN) :
                             Component.translatable(CLIENT_STOP_FAILED_HAD_CLOSED).withStyle(ChatFormatting.RED),
-                    false);
+                    true);
             WebSocketClient.Stop();
             return 0;
         };

@@ -1,6 +1,6 @@
 package com.r3944realms.whimsy.api.websocket;
 
-import com.r3944realms.whimsy.config.WebSocketConfig;
+import com.r3944realms.whimsy.config.WebSocketServerConfig;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -8,6 +8,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -20,6 +22,11 @@ public class WebSocketServer {
     private static Channel serverChannel = null;
     private static final AtomicBoolean isRunning = new AtomicBoolean(false),
                                         isStopping = new AtomicBoolean(false);
+    private static final AtomicBoolean isDemo = new AtomicBoolean(false);
+    public static final AtomicBoolean iSDaemonThread = new AtomicBoolean(false);
+    public static void enableDemo() {
+        isDemo.set(true);
+    }
     public static void Start() {
         if(isRunning.get()) {
             logger.info("Server is already running");
@@ -29,12 +36,12 @@ public class WebSocketServer {
             logger.info("Server is stopping");
             return;
         }
-        initThread();
+        initThread(iSDaemonThread.get());
         WebsocketServerThread.start();
 
     }
 
-    private static void initThread() {
+    private static void initThread(boolean DaemonThreadEnable) {
         bossGroup = new NioEventLoopGroup();
         workerGroup = new NioEventLoopGroup();
         WebsocketServerThread = new Thread(() -> {
@@ -50,19 +57,20 @@ public class WebSocketServer {
                     pipeline.addLast();
                 }
             });
+            int port = isDemo.get() ? 9000 : WebSocketServerConfig.WebSocketServerPort.get();
             logger.debug("WebSocketServer try binding port ... ");
-            ChannelFuture channelFuture = serverBootstrap.bind(WebSocketConfig.WebSocketServerPort.get());
+            ChannelFuture channelFuture = serverBootstrap.bind(port);
             channelFuture.sync();
             serverChannel = channelFuture.channel();
-            logger.info("WebSocketServer start on the port of {}", WebSocketConfig.WebSocketServerPort.get());
-            logger.debug("WebSocketServer listening on port {}", WebSocketConfig.WebSocketServerPort.get());
+            logger.info("WebSocketServer start on the port of {}", port);
+            logger.debug("WebSocketServer listening on port {}", port);
             channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
             logger.error("WebSocketServer get a error:{}",e.getMessage());
         } finally {
             Stop();
         }});
-        WebsocketServerThread.setDaemon(true);
+        WebsocketServerThread.setDaemon(DaemonThreadEnable);
     }
 
     //

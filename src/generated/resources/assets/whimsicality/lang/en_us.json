@@ -4,6 +4,7 @@
   "item.whimsicality.test_item": "Test Item",
   "whimsy.network.payload.ack.failed": "ACK FAILED",
   "whimsy.network.payload.websocket.client.sync.failed": "Sync the address of Websocket Server Failed",
+  "whimsy.websocket.client.message.client_sync_send": "SYNC Request is send successful",
   "whimsy.websocket.client.message.not_client": "This command is Only can be running in client environment",
   "whimsy.websocket.client.message.start.failed.closing": "WebSocket Client is closing.",
   "whimsy.websocket.client.message.start.failed.not_sync": "Not sync WebSocket Server address,please use \"sync\" command first",

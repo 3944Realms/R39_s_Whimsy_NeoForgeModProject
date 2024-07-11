@@ -16,9 +16,9 @@ import java.util.function.Supplier;
 
 public enum ModKeyValue {
     //ITEM
-    TEST_ITEM(ModItemsRegister.TEST_ITEM, ModPartEnum.ITEMS,"Test Item", "测试物品", "測試物品", true),
+    TEST_ITEM(ModItemsRegister.TEST_ITEM, ModPartEnum.ITEM,"Test Item", "测试物品", "測試物品", true),
     //BLOCK
-    TEST_BLOCK(ModBlocksRegister.TEST_BLOCK, ModPartEnum.BLOCKS, "Test Block", "测试方块", "測試方塊", false),
+    TEST_BLOCK(ModBlocksRegister.TEST_BLOCK, ModPartEnum.BLOCK, "Test Block", "测试方块", "測試方塊", false),
     //CREATIVE_TAB
     TEST_CREATIVE_TAB(ModCreativeTab.getCreativeMod(ModCreativeTab.TEST), ModPartEnum.CREATIVE_TAB, "Test Creative Tab", "测试创造物品栏", "測試創造物品欄",false ),
     //NETWORK_MESSAGE
@@ -32,6 +32,7 @@ public enum ModKeyValue {
     MESSAGE_WEBSOCKET_SERVER__STOP_FAILED(WebSocketServerCommand.SERVER_STOP_FAILED_HAD_CLOSED, ModPartEnum.MESSAGE, "WebSocket Server had closed","Websocket服务线程已关闭","Websocket伺服器綫程已關閉",false),
 
     MESSAGE_WEBSOCKET_NOT_CLIENT(WebSocketClientCommand.NOT_CLIENT, ModPartEnum.MESSAGE, "This command is Only can be running in client environment","该命令只可以在客户端上运行","該命令僅可在客戶端上運行",false),
+    MESSAGE_WEBSOCKET_SYNC_ACK_SEND(WebSocketClientCommand.CLIENT_SYNC_ACK_SEND, ModPartEnum.MESSAGE, "SYNC Request is send successful","同步请求已发送","同步請求已發送",false),
     MESSAGE_WEBSOCKET_CLIENT__START_SUCCESSFUL(WebSocketClientCommand.CLIENT_START_SUCCESSFUL, ModPartEnum.MESSAGE, "Start WebSocket Client.", "Websocket客户端线程启动成功","Websocket客戶端綫程啓動成功", false),
     MESSAGE_WEBSOCKET_CLIENT__START_FAILED_REPEAT(WebSocketClientCommand.CLIENT_START_FAILED_REPEAT_START, ModPartEnum.MESSAGE, "WebSocket Client is already running.", "Websocket客户端线程已运行，切勿重复启动","Websocket客戶端綫程在運行中，切勿重複啓動", false),
     MESSAGE_WEBSOCKET_CLIENT__START_FAILED_CLOSING(WebSocketClientCommand.CLIENT_START_FAILED_CLOSING, ModPartEnum.MESSAGE, "WebSocket Client is closing.", "Websocket客户端线程在关闭中，请等完全关闭后再启动","Websocket客戶端綫程在關閉中，請等待關閉之後再開啓", false),
@@ -80,8 +81,8 @@ public enum ModKeyValue {
         if(key == null){
             switch (MPE) {//Don't need to use "break;";
                 case CREATIVE_TAB -> throw new UnsupportedOperationException("The Key value is NULL! Please use the correct constructor and write the parameters correctly");
-                case ITEMS -> key = (getItem()).getDescriptionId();
-                case BLOCKS -> key =(getBlock()).getDescriptionId();
+                case ITEM -> key = (getItem()).getDescriptionId();
+                case BLOCK -> key =(getBlock()).getDescriptionId();
             }
             //需要完善
         }
@@ -96,9 +97,9 @@ public enum ModKeyValue {
         return (Block)supplier.get();
     }
     public boolean isDefaultItem(){
-        return MPE == ModPartEnum.ITEMS && Default;
+        return MPE == ModPartEnum.ITEM && Default;
     }
     public boolean isDefaultBlock() {
-        return MPE == ModPartEnum.BLOCKS && Default;
+        return MPE == ModPartEnum.BLOCK && Default;
     }
 }

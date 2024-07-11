@@ -1,5 +1,6 @@
 package com.r3944realms.whimsy.network;
 
+import com.r3944realms.whimsy.api.manager.WebsocketClientManager;
 import com.r3944realms.whimsy.api.websocket.WebSocketClient;
 import com.r3944realms.whimsy.network.payload.TestModData;
 import com.r3944realms.whimsy.network.payload.WebSocketServerAddressData;
@@ -27,6 +28,10 @@ public class ClientPayloadHandler {
         context.enqueueWork(() -> {
             WebSocketClient.syncServerData(data.address(), data.port());
             logger.info("sync WebsocketServer Address Data successful");
+            if(WebsocketClientManager.INSTANCE.getShouldStart()) {
+                WebSocketClient.Start();
+                WebsocketClientManager.INSTANCE.setShouldStart(false);
+            }
         }).exceptionally(throwable -> {
             context.disconnect(Component.translatable(WS_CLIENT_SYNC_FAILED));
             return null;

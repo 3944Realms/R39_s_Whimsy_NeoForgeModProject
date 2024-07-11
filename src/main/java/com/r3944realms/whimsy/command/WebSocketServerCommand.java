@@ -23,6 +23,7 @@ public class WebSocketServerCommand {
 
         Command<CommandSourceStack> WebsocketServerStart = (ctx) -> {
             CommandSourceStack source = ctx.getSource();
+            WebSocketServer.refresh();
             source.sendSuccess(() ->
                             (!WebSocketServer.isRunning() ?
                                     (!WebSocketServer.isStopping() ?

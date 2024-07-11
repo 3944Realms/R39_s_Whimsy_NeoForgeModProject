@@ -8,6 +8,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,13 @@ public class WebSocketClient {
     private static final AtomicBoolean isRunning = new AtomicBoolean(false),
                                         isStopping = new AtomicBoolean(false),
                                         hasSync = new AtomicBoolean(false);
+    private static final AtomicBoolean isDemo = new AtomicBoolean(false);
+    public static final AtomicBoolean iSDaemonThread = new AtomicBoolean(false);
+    public static void enableDemo() {
+        isDemo.set(true);
+        address = "127.0.0.1";
+        port = 9000;
+    }
 
     public static void syncServerData(String address, int port) {
         if(AddressValidator.isValidAddress(address) && port != -1) {
@@ -33,10 +41,11 @@ public class WebSocketClient {
         }
     }
     public static void Start() {
+
         if(isRunning.get()) {
             logger.info("WebSocketClient is already running");
             return;
-        }else if(!hasSync.get()) {
+        }else if(!hasSync.get() && !isDemo.get()) {
             logger.info("waiting for sync.");
             return;
         } else if (isStopping.get()) {
@@ -46,12 +55,11 @@ public class WebSocketClient {
             }
             isStopping.set(false);
         }
-        initThread();
+        initThread(iSDaemonThread.get());
 
         WebSocketClientThread.start();
-
     }
-    public static void initThread() {
+    public static void initThread(boolean DaemonThreadEnable) {
         eventLoopGroup = new NioEventLoopGroup();
         WebSocketClientThread = new Thread(() -> {
             try {
@@ -67,14 +75,18 @@ public class WebSocketClient {
                     }
                 });
                 channel = bootstrap.connect(address, port).sync().channel();
+                // 等待 channel 关闭
+                logger.info("WebSocketClient successfully connected to {}:{}", address, port);
+                channel.closeFuture().sync();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                logger.error("WebsocketClient get a error: {}",e.getMessage());
             } finally {
                 Stop();
                 logger.info("WebSocketClient has stopped");
             }
         });
-        WebSocketClientThread.setDaemon(true);
+        WebSocketClientThread.setDaemon(DaemonThreadEnable);
+
     }
     public static void Stop() {
         if(!isRunning.get()) {
@@ -131,4 +143,5 @@ public class WebSocketClient {
             }
         }
     }
+
 }

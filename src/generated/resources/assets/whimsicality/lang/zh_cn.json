@@ -4,6 +4,7 @@
   "item.whimsicality.test_item": "测试物品",
   "whimsy.network.payload.ack.failed": "确认失败",
   "whimsy.network.payload.websocket.client.sync.failed": "同步服务器Websocket地址失败",
+  "whimsy.websocket.client.message.client_sync_send": "同步请求已发送",
   "whimsy.websocket.client.message.not_client": "该命令只可以在客户端上运行",
   "whimsy.websocket.client.message.start.failed.closing": "Websocket客户端线程在关闭中，请等完全关闭后再启动",
   "whimsy.websocket.client.message.start.failed.not_sync": "未同步,请使用sync指令同步后再启动",
