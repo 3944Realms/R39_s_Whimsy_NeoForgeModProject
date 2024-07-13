@@ -1,11 +1,13 @@
 package com.r3944realms.whimsy;
 
 
+import com.mojang.brigadier.CommandDispatcher;
 import com.r3944realms.whimsy.api.manager.WebsocketClientManager;
 import com.r3944realms.whimsy.api.manager.WebsocketServerManager;
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
-import com.r3944realms.whimsy.command.WebSocketClientCommand;
-import com.r3944realms.whimsy.command.WebSocketServerCommand;
+import com.r3944realms.whimsy.command.PlayerProperty.ChatCommand;
+import com.r3944realms.whimsy.command.Websocket.WebSocketClientCommand;
+import com.r3944realms.whimsy.command.Websocket.WebSocketServerCommand;
 import com.r3944realms.whimsy.config.TestConfig;
 import com.r3944realms.whimsy.config.WebSocketClientConfig;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
@@ -13,6 +15,7 @@ import com.r3944realms.whimsy.init.FilePathInit;
 import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.items.ModItemsRegister;
 import com.r3944realms.whimsy.utils.logger.logger;
+import net.minecraft.commands.CommandSourceStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -27,10 +30,7 @@ import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
-import net.neoforged.neoforge.event.server.ServerStoppingEvent;
-import org.jetbrains.annotations.NotNull;
 
 //2024-05-18 ACC
 @Mod(WhimsyMod.MOD_ID)
@@ -69,7 +69,9 @@ public class WhimsyMod {
      *CommandRegister In BOTH SIDE
      */
     private void onRegisterCommander(RegisterCommandsEvent event) {
-        WebSocketServerCommand.register(event.getDispatcher());
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+        WebSocketServerCommand.register(dispatcher);
+        ChatCommand.register(dispatcher);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -101,7 +103,8 @@ public class WhimsyMod {
          *CommandRegister In CLIENT SIDE
          */
         private static void onClientCommandsRegister(RegisterClientCommandsEvent event) {
-            WebSocketClientCommand.register(event.getDispatcher());
+            CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+            WebSocketClientCommand.register(dispatcher);
         }
         public static void onLoggingOn(ClientPlayerNetworkEvent.LoggingIn event) {
             WebsocketClientManager.INSTANCE.StartClient();

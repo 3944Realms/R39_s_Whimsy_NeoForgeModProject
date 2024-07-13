@@ -8,7 +8,13 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1' // Ìí¼Óshadow²å¼þ
 //    id 'org.gretty' version '4.1.4'
 }
-
+// In build.gradle:
+// This block is where your mappings version is also specified
+//minecraft {
+//    accessTransformers {
+//        file('src/main/resources/META-INF/accesstransformer.cfg')
+//    }
+//}
 version = mod_version
 group = mod_group_id
 
@@ -23,6 +29,7 @@ repositories {
     }
     mavenCentral()
 }
+
 
 base {
     archivesName = mod_id
@@ -117,7 +124,6 @@ dependencies {
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
     // The group id is ignored when searching -- in this case, it is "blank"
     // implementation "blank:coolmod-${mc_version}:${coolmod_version}"
-
     // Example mod dependency using a file as dependency
     // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
     implementation group: 'io.netty', name: 'netty-all', version: '4.1.109.Final'

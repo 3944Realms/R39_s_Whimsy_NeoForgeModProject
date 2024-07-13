@@ -1,4 +1,4 @@
-package com.r3944realms.whimsy.command;
+package com.r3944realms.whimsy.command.Websocket;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 
 public class WebSocketServerCommand {
     public static final String WHIMSICALITY_COMMAND = WhimsyMod.MOD_ID;
-    private static final String WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ = "whimsy.websocket.server.message.";
+    private static final String WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ = "whimsy.command.websocket.server.message.";
     public static final String SERVER_START_SUCCESSFUL = WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ + "start.successful",
                                 SERVER_START_FAILED_CLOSING = WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ + "start.failed.closing",
                                 SERVER_START_FAILED_REPEAT_START = WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ + "start.failed.repeat_start",

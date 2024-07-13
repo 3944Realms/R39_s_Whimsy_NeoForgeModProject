@@ -1,8 +1,9 @@
-package com.r3944realms.whimsy.mixin.renderer;
+package com.r3944realms.whimsy.mixin.client.renderer;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,7 +16,8 @@ public class MixinPlayerRenderer {
 //        ((PlayerRenderer)(Object)this).addLayer();
     }
 
-    PlayerRenderer self() {
+    @Unique
+    PlayerRenderer Whimsy$Self() {
         return ((PlayerRenderer)(Object)this);
     }
 

@@ -7,7 +7,6 @@ import com.r3944realms.whimsy.network.payload.WebSocketServerAddressData;
 import com.r3944realms.whimsy.network.payload.ackpayload.SyncWebsocketRequestPayload;
 import com.r3944realms.whimsy.utils.NetworkUtils.AddressValidator;
 import com.r3944realms.whimsy.utils.logger.logger;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;

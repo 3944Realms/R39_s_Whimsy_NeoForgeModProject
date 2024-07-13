@@ -1,4 +1,4 @@
-package com.r3944realms.whimsy.command;
+package com.r3944realms.whimsy.command.Websocket;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;

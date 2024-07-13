@@ -28,9 +28,10 @@ public class ClientPayloadHandler {
         context.enqueueWork(() -> {
             WebSocketClient.syncServerData(data.address(), data.port());
             logger.info("sync WebsocketServer Address Data successful");
-            if(WebsocketClientManager.INSTANCE.getShouldStart()) {
+            if(WebsocketClientManager.INSTANCE.getShouldStart() && WebsocketClientManager.INSTANCE.getWaitingForSynchronization()) {
                 WebSocketClient.Start();
                 WebsocketClientManager.INSTANCE.setShouldStart(false);
+                WebsocketClientManager.INSTANCE.setWaitingForSynchronization(false);
             }
         }).exceptionally(throwable -> {
             context.disconnect(Component.translatable(WS_CLIENT_SYNC_FAILED));
