@@ -22,6 +22,7 @@ public class ModDataGeneratorHandler {
         addLanguage(event, LanguageEnum.English, "en_us");
         addLanguage(event, LanguageEnum.SimpleChinese, "zh_cn");
         addLanguage(event, LanguageEnum.TraditionalChinese, "zh_tw");
+        addLanguage(event, LanguageEnum.LiteraryChinese, "lzh");
         /*Item Model*/
         ItemModelGenerator(event, existingFileHelper);
         /*Block States Register*/
@@ -33,7 +34,7 @@ public class ModDataGeneratorHandler {
     private static void addLanguage(GatherDataEvent event, LanguageEnum language, String lan_regex){
         event.getGenerator().addProvider(
                 event.includeClient(),
-                (DataProvider.Factory<ModLanguageProvider>) pOutput -> new ModLanguageProvider(pOutput, WhimsyMod.MOD_ID, lan_regex, language)
+                (DataProvider.Factory<ModLanguageProvider>) pOutput -> new ModLanguageProvider(pOutput, WhimsyMod.MOD_ID, language)
         );
     }
     private static void ItemModelGenerator(GatherDataEvent event, ExistingFileHelper helper) {

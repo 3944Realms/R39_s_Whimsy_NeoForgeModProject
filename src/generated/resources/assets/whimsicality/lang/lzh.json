@@ -1,0 +1,23 @@
+{
+  "whimsy.chat.none_heard_you": "无人受子问",
+  "whimsy.command.chat.message.talkarea.current_config": "§6今聊城可知半径置§e %d§6格§f(§a默§7：§e%d格§f)§r",
+  "whimsy.command.chat.message.talkarea.preference.set": "§6默置§e %d§6格§r",
+  "whimsy.command.chat.message.talkarea.preference_not_set": "未置默视之",
+  "whimsy.command.chat.message.talkarea.set": "§6今聊城可知半径置§e%d §6格§r",
+  "whimsy.command.chat.message.talkarea.unlimited": "§a语矢无限§r",
+  "whimsy.command.websocket.server.message.start.failed.closing": "Websocket客端线程，其闭也，正当中途",
+  "whimsy.command.websocket.server.message.start.failed.repeat_start": "Websocket客端线程，已行矣，勿复再启",
+  "whimsy.command.websocket.server.message.start.successful": "Websocket服务器线程，启之，功成",
+  "whimsy.command.websocket.server.message.stop.failed.had_closed": "Websocket服务线程，已阖矣",
+  "whimsy.command.websocket.server.message.stop.successful": "Websocket服务器线程，其闭也，正当中途",
+  "whimsy.network.payload.ack.failed": "确认，不成",
+  "whimsy.network.payload.websocket.client.sync.failed": "同步服务器Websocket地址，不果",
+  "whimsy.websocket.client.message.client_sync_send": "同步之请，已发矣",
+  "whimsy.websocket.client.message.not_client": "此令，唯可在客端行也",
+  "whimsy.websocket.client.message.start.failed.closing": "Websocket客端线程，方闭之际，宜俟其全而后再启",
+  "whimsy.websocket.client.message.start.failed.not_sync": "未同步，宜用sync之令，同步而后启",
+  "whimsy.websocket.client.message.start.failed.repeat_start": "Websocket客端线程，已行矣，勿复再启",
+  "whimsy.websocket.client.message.start.successful": "Websocket客端线程，启之，功成",
+  "whimsy.websocket.client.message.stop.failed.had_closed": "Websocket客端线程，已阖矣",
+  "whimsy.websocket.client.message.stop.successful": "Websocket客端线程，其闭也，正当中途"
+}

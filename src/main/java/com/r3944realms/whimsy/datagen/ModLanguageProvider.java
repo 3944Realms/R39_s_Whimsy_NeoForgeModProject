@@ -3,7 +3,6 @@ package com.r3944realms.whimsy.datagen;
 import com.r3944realms.whimsy.datagen.LanguageData.ModKeyValue;
 import com.r3944realms.whimsy.utils.Enum.LanguageEnum;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
 import java.util.ArrayList;
@@ -15,38 +14,26 @@ import static com.r3944realms.whimsy.datagen.LanguageData.ModKeyValue.*;
 
 public class ModLanguageProvider extends LanguageProvider {
     private final LanguageEnum Language;
-    private static Map<String, Map<LanguageEnum, String>> LanguageMAP;
-    private static List<String> objects;
-    public ModLanguageProvider(PackOutput output, String modId, String locale, LanguageEnum Lan) {
-        super(output, modId, locale);
+    private final Map<String, String> LanKeyMap;
+    private static final List<String> objects = new ArrayList<>();
+    public ModLanguageProvider(PackOutput output, String modId, LanguageEnum Lan) {
+        super(output, modId, Lan.local);
         this.Language = Lan;
-        LanguageMAP = new HashMap<>();
-        objects = new ArrayList<>();
+        LanKeyMap = new HashMap<>();
         init();
     }
-    private void init(){
-       for (ModKeyValue key : ModKeyValue.values()) {
-           addLanguage(key.getKey(), getEnglish(key), getSimpleChinese(key), getTraditionalChinese(key));
-       }
+    private void init() {
+        for (ModKeyValue key : ModKeyValue.values()) {
+            addLang(key.getKey(), getLan(Language, key));
+        }
     }
-
-    private void addItemLanguage(Item item, String English, String SimpleChinese, String TraditionChinese) {
-        addLanguage(item.getDescriptionId(), English, SimpleChinese, TraditionChinese);
-    }
-    private void addLanguage(String Key, String English, String SimpleChinese, String TraditionalChinese) {
-        objects.add(Key);
-        Map<LanguageEnum, String> LanMap = new HashMap<>();
-        LanMap.put(LanguageEnum.English, English);
-        LanMap.put(LanguageEnum.SimpleChinese, SimpleChinese);
-        LanMap.put(LanguageEnum.TraditionalChinese, TraditionalChinese);
-        LanguageMAP.put(Key, LanMap);
+    private void addLang(String Key, String value) {
+        if(!objects.contains(Key)) objects.add(Key);
+        LanKeyMap.put(Key, value);
     }
 
     @Override
     protected void addTranslations() {
-        objects.forEach(key -> {
-            if(!LanguageMAP.containsKey(key)) return;
-            add(key, LanguageMAP.get(key).get(Language));
-        });
+        objects.forEach(key -> add(key,LanKeyMap.get(key)));
     }
 }

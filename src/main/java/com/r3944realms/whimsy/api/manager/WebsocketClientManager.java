@@ -70,7 +70,7 @@ public enum WebsocketClientManager {
     public void StopClient() {
         ManagerResultEnum result = StopClient0();
         switch (result) {
-            case SUCCESSFUL -> logger.info("Client successfully started");
+            case SUCCESSFUL -> logger.info("Client successfully stopped");
             case MISMATCHED_ENVIRONMENT_FAILURE -> logger.info("Mismatched environment failure");
         }
     }

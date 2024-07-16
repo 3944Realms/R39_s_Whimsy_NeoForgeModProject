@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html lang="en-ES">
+<head>
+    <title>Javascript 二维码生成库：QRCode</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="qrcode.min.js"></script>
+    <style>
+        /* outline去除input外轮廓,box-sizing:border-box计算元素宽高时不带内边距与边框宽高. */
+        * {
+            margin: 0;
+            padding: 0;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        /* min-height:最小高度为100vh,也就是屏幕高度 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(-135deg, #0099c8, #2133d0);
+        }
+
+        .wrapper {
+            width: 600px;
+            border: 1px solid gray;
+            display: flex;
+            padding: 30px;
+            background-color: white;
+        }
+
+        .wrapper .wrapper_son {
+            padding:50px 0;
+            position: relative;
+            width: 80%;
+        }
+        .wrapper .wrapper_QR {
+            position: relative;
+            width: 20%;
+        }
+        .wrapper label {
+            position: absolute;
+            transform: translateY(-20px);
+            font-size: 15px;
+            color: #4158D0;
+        }
+
+        .wrapper input {
+            width: 80%;
+            height: 100%;
+            padding:10px 0;
+            border: none;
+            border-bottom: 2px solid #4158D0;;
+            font-size: 17px;
+
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="wrapper_son">
+        <label>URL:</label>
+        <label for="text"></label><input id="text" type="text" value=" " /><br />
+    </div>
+    <div class="wrapper_QR">
+        <div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    const qrcode = new QRCode(document.getElementById("qrcode"), {
+        width: 100,
+        height: 100
+    });
+    function generateQRCode() {
+        // 获取输入框的值
+        const url = document.getElementById('text').value;
+
+        // // 创建一个新的URL对象，并设置为指向当前HTML文件
+        // const newUrl = new URL(url, window.location.href);
+        //
+        // // 拼接查询参数
+        // const params = new URLSearchParams();
+        // const qrCodeUrl = params.get('qrCodeUrl');
+        // // 将新的URL设置为输入框的值
+        // document.getElementById('text').value = url.href;
+
+        // 调用makeCode函数来生成二维码
+        makeCode();
+    }
+    function makeCode() {
+        const elText = document.getElementById("text");
+
+        if (!elText.value) {
+            alert("Please input URL");
+            elText.focus();
+            return;
+        }
+        qrcode.clear();
+        qrcode.makeCode(elText.value);
+    }
+
+    generateQRCode()
+    let text = document.getElementById('text')
+    text.addEventListener('keydown', function(e) {
+        if (e.keyCode === 13) {
+            makeCode();
+        }
+    })
+</script>
+</body>
+</html>

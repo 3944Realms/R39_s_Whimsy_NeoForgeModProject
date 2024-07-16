@@ -6,12 +6,14 @@ import com.r3944realms.whimsy.api.manager.WebsocketClientManager;
 import com.r3944realms.whimsy.api.manager.WebsocketServerManager;
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
 import com.r3944realms.whimsy.command.PlayerProperty.ChatCommand;
+import com.r3944realms.whimsy.command.TestClientCommand;
 import com.r3944realms.whimsy.command.Websocket.WebSocketClientCommand;
 import com.r3944realms.whimsy.command.Websocket.WebSocketServerCommand;
+import com.r3944realms.whimsy.command.miscCommand.MotionCommand;
 import com.r3944realms.whimsy.config.TestConfig;
 import com.r3944realms.whimsy.config.WebSocketClientConfig;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
-import com.r3944realms.whimsy.init.FilePathInit;
+import com.r3944realms.whimsy.init.FilePathHelper;
 import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.items.ModItemsRegister;
 import com.r3944realms.whimsy.utils.logger.logger;
@@ -31,6 +33,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+
 
 //2024-05-18 ACC
 @Mod(WhimsyMod.MOD_ID)
@@ -59,10 +62,11 @@ public class WhimsyMod {
         }
     private void initialize() {
         String Websocket = "Websocket";
-        FilePathInit.configWhimsyFile(new String[]{Websocket});//初始化配置文件目录
+        FilePathHelper.configWhimsyFile(new String[]{Websocket});//初始化配置文件目录
         ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, TestConfig.SPEC, MOD_ID + "/whimsicality_config.toml");
         ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, WebSocketServerConfig.SPEC, MOD_ID + "/"+ Websocket +"/whimsicality_config_websocketServer.toml");
         ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIENT, WebSocketClientConfig.SPEC, MOD_ID + "/"+ Websocket +"/whimsicality_config_websocketClient.toml");
+
     }
 
     /**
@@ -72,6 +76,7 @@ public class WhimsyMod {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
         WebSocketServerCommand.register(dispatcher);
         ChatCommand.register(dispatcher);
+        MotionCommand.register(dispatcher);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -98,6 +103,7 @@ public class WhimsyMod {
             NeoForge.EVENT_BUS.addListener(ClientModEvent::onClientCommandsRegister);//客户端指令注册器
             NeoForge.EVENT_BUS.addListener(ClientModEvent::onLoggingOn);
             NeoForge.EVENT_BUS.addListener(ClientModEvent::onLoggingOut);
+            FilePathHelper.HCJFileCreator();
         }
         /**
          *CommandRegister In CLIENT SIDE
@@ -105,6 +111,7 @@ public class WhimsyMod {
         private static void onClientCommandsRegister(RegisterClientCommandsEvent event) {
             CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
             WebSocketClientCommand.register(dispatcher);
+            TestClientCommand.register(dispatcher);
         }
         public static void onLoggingOn(ClientPlayerNetworkEvent.LoggingIn event) {
             WebsocketClientManager.INSTANCE.StartClient();

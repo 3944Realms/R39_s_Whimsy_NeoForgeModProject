@@ -16,8 +16,9 @@ import net.minecraft.network.chat.Component;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import static com.r3944realms.whimsy.command.WhimsyCommand.WHIMSICALITY_COMMAND;
+
 public class WebSocketClientCommand {
-    public static final String WHIMSICALITY_COMMAND = WhimsyMod.MOD_ID;
     public static final String WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_= "whimsy.websocket.client.message.",
             NOT_CLIENT = WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "not_client",
             CLIENT_SYNC_ACK_SEND = WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "client_sync_send",

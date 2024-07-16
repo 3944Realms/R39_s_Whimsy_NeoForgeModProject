@@ -4,14 +4,15 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.player.ServerPlayerCapacity;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 
+import static com.r3944realms.whimsy.command.WhimsyCommand.WHIMSICALITY_COMMAND;
+
+
 public class ChatCommand {
-    public static final String WHIMSICALITY_COMMAND = WhimsyMod.MOD_ID;
     private static final String WHIMSICALITY_CHAT_MESSAGE_ = "whimsy.command.chat.message.";
     public static final String TALK_AREA_SET = WHIMSICALITY_CHAT_MESSAGE_ + "talkarea.set",
                             TALK_AREA_PREFERENCE_SET = WHIMSICALITY_CHAT_MESSAGE_ + "talkarea.preference.set",
@@ -52,7 +53,6 @@ public class ChatCommand {
             CommandSourceStack source = context.getSource();
             ServerPlayerCapacity serverPlayer = (ServerPlayerCapacity) source.getPlayerOrException();
             serverPlayer.Whimsy$SetTalkArea(-1);
-            serverPlayer.Whimsy$SetTalkAreaPreference(-1);
             source.sendSuccess(() -> Component.translatable(TALK_AREA_UNLIMITED),true);
             return 0;
         });

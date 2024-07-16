@@ -4,9 +4,14 @@ import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.neoforged.fml.loading.FMLPaths;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
 
-public class FilePathInit {
+@SuppressWarnings("StringTemplateMigration")
+public class FilePathHelper {
     public static void configWhimsyFile(String[] children) {
         File configFile = new File(FMLPaths.CONFIGDIR.get().toFile(), WhimsyMod.MOD_ID);
         if (!configFile.exists()) {
@@ -25,8 +30,26 @@ public class FilePathInit {
                         }
                     }
                 }
-
             }
+        }
+    }
+    public static void HCJFileCreator() {
+        PrivateHCJFileInitHelper.createHCJFDirAndFiles();
+    }
+    public static Path get_HCJ_HTML_Path() {
+        return PrivateHCJFileInitHelper.GameDir.resolve("WhimsyHTML").resolve("index.html");
+    }
+    public static void ReCreateHCJFile(String InputValueText) {
+        PrivateHCJFileInitHelper.ReCreateHTMLFile(InputValueText);
+    }
+    public static void writeFile(Path filePath, String content) {
+        File file = filePath.toFile();
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(content);
+            logger.debug("File written: {}", filePath);
+        } catch (IOException e) {
+            logger.error(e.getMessage());
         }
     }
 }

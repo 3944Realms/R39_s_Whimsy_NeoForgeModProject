@@ -10,13 +10,14 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 
+import static com.r3944realms.whimsy.command.WhimsyCommand.WHIMSICALITY_COMMAND;
+
 public class WebSocketServerCommand {
-    public static final String WHIMSICALITY_COMMAND = WhimsyMod.MOD_ID;
     private static final String WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ = "whimsy.command.websocket.server.message.";
     public static final String SERVER_START_SUCCESSFUL = WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ + "start.successful",
                                 SERVER_START_FAILED_CLOSING = WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ + "start.failed.closing",
                                 SERVER_START_FAILED_REPEAT_START = WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ + "start.failed.repeat_start",
-                                SERVER_STOP_SUCCESSFUL = WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ + ".stop.successful",
+                                SERVER_STOP_SUCCESSFUL = WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ + "stop.successful",
                                 SERVER_STOP_FAILED_HAD_CLOSED = WHIMSICALITY_WEBSOCKET_SERVER_MESSAGE_ + "stop.failed.had_closed";
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> literalArgumentBuilder = Commands.literal(WHIMSICALITY_COMMAND);

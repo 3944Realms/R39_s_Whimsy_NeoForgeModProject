@@ -1,10 +1,9 @@
-
 plugins {
     id 'java-library'
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.142'
+    id 'net.neoforged.gradle.userdev' version '7.0.145'
     id 'com.github.johnrengelman.shadow' version '8.1.1' // 添加shadow插件
 //    id 'org.gretty' version '4.1.4'
 }
@@ -127,6 +126,9 @@ dependencies {
     // Example mod dependency using a file as dependency
     // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
     implementation group: 'io.netty', name: 'netty-all', version: '4.1.109.Final'
+    // https://mvnrepository.com/artifact/org.mozilla/rhino
+    implementation group: 'org.mozilla', name: 'rhino', version: '1.7.15'
+
     // Example project dependency using a sister or child project:
     // implementation project(":myproject")
 
@@ -140,6 +142,12 @@ dependencies {
             strictly geckolib_version
         }
     }
+    jarJar(group: 'org.mozilla', name: 'rhino', version: '1.7.15') {
+        version {
+            strictly '1.7.15'
+        }
+    }
+
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
@@ -225,7 +233,9 @@ tasks.register('copyDependencies', Copy) {
 }
 // 在构建任务之前执行复制依赖任务
 build.dependsOn(copyDependencies)
-
+minecraft {
+    accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")
+}
 shadowJar {
     zip64 true
     archiveClassifier.set('')
