@@ -1,7 +1,6 @@
 package com.r3944realms.whimsy.mixin.server;
 
 import com.mojang.authlib.GameProfile;
-import com.r3944realms.whimsy.player.PlayerCapacity;
 import com.r3944realms.whimsy.player.ServerPlayerCapacity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

@@ -1,7 +1,6 @@
 package com.r3944realms.whimsy.utils.Network;
 
 import com.google.gson.Gson;
-import org.apache.http.impl.client.StandardHttpRequestRetryHandler;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

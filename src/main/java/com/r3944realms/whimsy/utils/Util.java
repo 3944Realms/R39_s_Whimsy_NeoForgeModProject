@@ -7,4 +7,5 @@ public class Util {
     public static String getGameruleName(Class<?> clazz) {
         return Gamerules.GAMERULE_PREFIX + clazz.getSimpleName();
     }
+
 }

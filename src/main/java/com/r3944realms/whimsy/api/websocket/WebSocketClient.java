@@ -1,6 +1,8 @@
 package com.r3944realms.whimsy.api.websocket;
 
+import com.r3944realms.whimsy.api.websocket.protocol.ClientMessageWebsocketHandler;
 import com.r3944realms.whimsy.utils.NetworkUtils.AddressValidator;
+import com.r3944realms.whimsy.utils.Transform.StringHandlerUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -8,11 +10,22 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.http.DefaultHttpHeaders;
+import io.netty.handler.codec.http.HttpClientCodec;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
+import io.netty.handler.codec.http.websocketx.WebSocketClientProtocolHandler;
+import io.netty.handler.codec.http.websocketx.WebSocketFrameAggregator;
+import io.netty.handler.codec.http.websocketx.WebSocketVersion;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URI;
 import java.util.concurrent.atomic.AtomicBoolean;
 //通过服务器发包来告诉有效链接
+
 public class WebSocketClient {
     private static Thread WebSocketClientThread;
     static final Logger logger = LoggerFactory.getLogger(WebSocketClient.class);
@@ -29,7 +42,11 @@ public class WebSocketClient {
     public static void enableDemo() {
         isDemo.set(true);
         address = "127.0.0.1";
+
         port = 9000;
+    }
+    public static String getUrl() {
+        return StringHandlerUtil.buildWebSocketURL(address, port, false);
     }
 
     public static void syncServerData(String address, int port) {
@@ -70,7 +87,22 @@ public class WebSocketClient {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
-                        pipeline.addLast();
+                        pipeline.addLast(
+                                new LoggingHandler(LogLevel.DEBUG),
+                                new HttpClientCodec(),
+                                new HttpObjectAggregator(65536),
+                                new WebSocketClientProtocolHandler(
+                                        WebSocketClientHandshakerFactory.newHandshaker(
+                                                URI.create(StringHandlerUtil.buildWebSocketURL(address, port, false)),
+                                                WebSocketVersion.V13,
+                                                null,
+                                                false,
+                                                new DefaultHttpHeaders()
+                                        )
+                                ),
+                                new WebSocketFrameAggregator(65536),
+                                new ClientMessageWebsocketHandler()
+                        );
                     }
                 });
                 channel = bootstrap.connect(address, port).sync().channel();
@@ -84,6 +116,7 @@ public class WebSocketClient {
                 logger.info("WebSocketClient has stopped");
             }
         });
+        WebSocketClientThread.setName("WebSocketClientThread");
         WebSocketClientThread.setDaemon(DaemonThreadEnable);
 
     }
@@ -128,6 +161,7 @@ public class WebSocketClient {
     public static boolean isRunning() {
         return isRunning.get();
     }
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isStopping() {
         return isStopping.get();
     }

@@ -1,3 +1,11 @@
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//    }
+//    dependencies {
+//        classpath 'com.guardsquare:proguard-gradle:7.5.0'
+//    }
+//}
 plugins {
     id 'java-library'
     id 'eclipse'
@@ -118,6 +126,9 @@ dependencies {
     // compileOnly "mezz.jei:jei-${mc_version}-neoforge-api:${jei_version}"
     // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
     // localRuntime "mezz.jei:jei-${mc_version}-neoforge:${jei_version}"
+    localRunRuntime "io.netty:netty-codec-http:4.1.109.Final"
+    localRunRuntime 'io.netty:netty-common:4.1.109.Final'
+
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
@@ -126,6 +137,9 @@ dependencies {
     // Example mod dependency using a file as dependency
     // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
     implementation group: 'io.netty', name: 'netty-all', version: '4.1.109.Final'
+    implementation 'io.netty:netty-codec-http:4.1.109.Final'
+    implementation 'io.netty:netty-transport:4.1.109.Final'
+    implementation 'io.netty:netty-common:4.1.109.Final'
     // https://mvnrepository.com/artifact/org.mozilla/rhino
     implementation group: 'org.mozilla', name: 'rhino', version: '1.7.15'
 
@@ -133,6 +147,11 @@ dependencies {
     // implementation project(":myproject")
 
     jarJar(group: 'io.netty',name: 'netty-all',version: netty_version) {
+        version {
+            strictly netty_version
+        }
+    }
+    jarJar(group: 'io.netty',name: 'netty-codec-http',version: netty_version) {
         version {
             strictly netty_version
         }
@@ -152,6 +171,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
+
+
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
@@ -280,6 +301,26 @@ tasks.jarJar {
     archiveClassifier.set('neoforge')
 }
 
+//
+//tasks.register('proguard', ProGuardTask) {
+//    configuration file('proguard.pro')
+//
+//    injars(tasks.named('jar', Jar).flatMap { it.archiveFile })
+//
+//    // Automatically handle the Java version of this build.
+//    if (System.getProperty('java.version').startsWith('1.')) {
+//        // Before Java 9, the runtime classes were packaged in a single jar file.
+//        libraryjars "${System.getProperty('java.home')}/lib/rt.jar"
+//    } else {
+//        // As of Java 9, the runtime classes are packaged in modular jmod files.
+//        libraryjars "${System.getProperty('java.home')}/jmods/java.base.jmod", jarfilter: '!**.jar', filter: '!module-info.class'
+//        //libraryjars "${System.getProperty('java.home')}/jmods/....."
+//    }
+//
+//    verbose
+//
+//    outjars(layout.buildDirectory.file("libs/${baseCoordinates}-minified.jar"))
+//}
 //jar {
 //    zip64 true
 //    duplicatesStrategy = 'exclude'
@@ -290,4 +331,6 @@ tasks.jarJar {
 //        attributes 'Main-Class': 'com.r3944realms.whimsy.WhimsyMod' // 替换成你的主类名
 //    }
 //}
+
+
 test.enabled = false

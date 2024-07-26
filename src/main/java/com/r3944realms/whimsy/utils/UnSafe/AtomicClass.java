@@ -4,10 +4,13 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
 import java.lang.reflect.Field;
 
+@SuppressWarnings("FieldMayBeFinal")
 public class AtomicClass<T> {
     private static final VarHandle VALUE;
     private volatile T value;
-
+    public AtomicClass(T value) {
+        this.value = value;
+    }
     static {
         try {
             Field valueField = AtomicClass.class.getDeclaredField("value");

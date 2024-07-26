@@ -1,0 +1,16 @@
+[267月2024 12:17:20.036] [Thread-0/INFO] [com.r3944realms.whimsy.api.websocket.WebSocketServer/]: WebSocketServer start on the port of 9000
+[267月2024 12:17:22.174] [nioEventLoopGroup-3-1/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 新的 webSocket 连接已建立, 标识符为dbc21f1c-9584-4ecd-8264-ef3607ce47d8
+[267月2024 12:17:25.175] [nioEventLoopGroup-3-1/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: Message sent successfully to clientId=dbc21f1c-9584-4ecd-8264-ef3607ce47d8
+[267月2024 12:17:35.539] [nioEventLoopGroup-3-1/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 断开的client Id:dbc21f1c-9584-4ecd-8264-ef3607ce47d8
+[267月2024 12:17:38.695] [nioEventLoopGroup-3-2/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 新的 webSocket 连接已建立, 标识符为2000ac9e-a784-4e3c-9c43-4d26f5be41b1
+[267月2024 12:19:30.730] [nioEventLoopGroup-3-2/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: Message sent successfully to clientId=2000ac9e-a784-4e3c-9c43-4d26f5be41b1
+[267月2024 12:19:30.764] [nioEventLoopGroup-3-2/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 断开的client Id:2000ac9e-a784-4e3c-9c43-4d26f5be41b1
+[267月2024 12:19:57.054] [nioEventLoopGroup-3-3/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 新的 webSocket 连接已建立, 标识符为c2e8f038-c04a-4c6a-96aa-958ba30ad035
+[267月2024 12:19:57.560] [nioEventLoopGroup-3-3/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: Message sent successfully to clientId=c2e8f038-c04a-4c6a-96aa-958ba30ad035
+[267月2024 12:20:00.580] [nioEventLoopGroup-3-3/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 断开的client Id:c2e8f038-c04a-4c6a-96aa-958ba30ad035
+[267月2024 12:20:03.267] [nioEventLoopGroup-3-4/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 新的 webSocket 连接已建立, 标识符为43deccc5-1779-4507-acdc-494827526fbd
+[267月2024 12:20:03.775] [nioEventLoopGroup-3-4/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: Message sent successfully to clientId=43deccc5-1779-4507-acdc-494827526fbd
+[267月2024 12:20:05.464] [nioEventLoopGroup-3-4/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 断开的client Id:43deccc5-1779-4507-acdc-494827526fbd
+[267月2024 12:20:10.055] [nioEventLoopGroup-3-5/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 新的 webSocket 连接已建立, 标识符为c6e91e51-8630-45d4-b56b-227041882746
+[267月2024 12:20:10.567] [nioEventLoopGroup-3-5/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: Message sent successfully to clientId=c6e91e51-8630-45d4-b56b-227041882746
+[267月2024 12:20:12.365] [nioEventLoopGroup-3-5/INFO] [com.r3944realms.whimsy.api.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 断开的client Id:c6e91e51-8630-45d4-b56b-227041882746

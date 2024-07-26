@@ -3,7 +3,6 @@ package com.r3944realms.whimsy.command.Websocket;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.api.websocket.WebSocketClient;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
 import com.r3944realms.whimsy.network.payload.ackpayload.SyncWebsocketRequestPayload;
@@ -39,6 +38,7 @@ public class WebSocketClientCommand {
             try {
                 if(Minecraft.getInstance().isSingleplayer()) {
                     WebSocketClient.syncServerData(WebSocketServerConfig.WebSocketServerAddress.get(), WebSocketServerConfig.WebSocketServerPort.get());
+                    source.sendSuccess(() -> Component.translatable(CLIENT_SYNC_ACK_SEND).withStyle(ChatFormatting.GREEN),true);
                     return 0;
                 }
                 if (Minecraft.getInstance().player != null) {

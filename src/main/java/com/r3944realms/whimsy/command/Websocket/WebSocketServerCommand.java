@@ -3,7 +3,6 @@ package com.r3944realms.whimsy.command.Websocket;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.api.websocket.WebSocketServer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -24,7 +23,7 @@ public class WebSocketServerCommand {
 
         Command<CommandSourceStack> WebsocketServerStart = (ctx) -> {
             CommandSourceStack source = ctx.getSource();
-            WebSocketServer.refresh();
+            WebSocketServer.Start();
             source.sendSuccess(() ->
                             (!WebSocketServer.isRunning() ?
                                     (!WebSocketServer.isStopping() ?
@@ -32,18 +31,18 @@ public class WebSocketServerCommand {
                                             Component.translatable(SERVER_START_FAILED_CLOSING).withStyle(ChatFormatting.RED)) :
                                     Component.translatable(SERVER_START_FAILED_REPEAT_START).withStyle(ChatFormatting.RED)),
                     false);
-            if (!WebSocketServer.isStopping()) WebSocketServer.Start();
+
             return 0;
         };
 
         Command<CommandSourceStack> WebsocketServerStop = (ctx) -> {
             CommandSourceStack source = ctx.getSource();
-            WebSocketServer.refresh();
+            WebSocketServer.Stop();
             source.sendSuccess(() -> WebSocketServer.isRunning() ?
                             Component.translatable(SERVER_STOP_SUCCESSFUL).withStyle(ChatFormatting.GREEN) :
                             Component.translatable(SERVER_STOP_FAILED_HAD_CLOSED).withStyle(ChatFormatting.RED),
                     false);
-            WebSocketServer.Stop();
+
             return 0;
         };
 

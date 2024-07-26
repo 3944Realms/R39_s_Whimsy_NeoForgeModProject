@@ -9,7 +9,6 @@ public enum WebsocketServerManager {
         ManagerResultEnum result = StartServer0();
     }
     public ManagerResultEnum StartServer0() {
-        WebSocketServer.refresh();
         WebSocketServer.Start();
         return ManagerResultEnum.SUCCESSFUL;
     }
@@ -17,7 +16,6 @@ public enum WebsocketServerManager {
         ManagerResultEnum result = StopServer0();
     }
     public ManagerResultEnum StopServer0() {
-        WebSocketServer.refresh();
         WebSocketServer.Stop();
         return ManagerResultEnum.SUCCESSFUL;
     }

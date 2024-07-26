@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.r3944realms.whimsy.datagen.LanguageData.ModKeyValue.*;
+import static com.r3944realms.whimsy.datagen.LanguageData.ModKeyValue.getLan;
 
 public class ModLanguageProvider extends LanguageProvider {
     private final LanguageEnum Language;

@@ -1,11 +1,7 @@
 package com.r3944realms.whimsy.gamerule;
 
-import com.r3944realms.whimsy.WhimsyMod;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.HashMap;
 import java.util.Map;

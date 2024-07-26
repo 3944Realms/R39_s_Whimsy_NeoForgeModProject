@@ -4,6 +4,7 @@ package com.r3944realms.whimsy;
 import com.mojang.brigadier.CommandDispatcher;
 import com.r3944realms.whimsy.api.manager.WebsocketClientManager;
 import com.r3944realms.whimsy.api.manager.WebsocketServerManager;
+import com.r3944realms.whimsy.api.websocket.WebSocketServer;
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
 import com.r3944realms.whimsy.command.PlayerProperty.ChatCommand;
 import com.r3944realms.whimsy.command.TestClientCommand;
@@ -86,6 +87,7 @@ public class WhimsyMod {
      * SeverStartingEvent
      */
     public void onServerStarted(ServerStartedEvent event) {
+        WebSocketServer.isTextMessageMode.set(WebSocketServerConfig.isEnableWebSocketTextMessageMode.get());
         if(WebSocketServerConfig.WebSocketServerAutoManager.get()) {
             WebsocketServerManager.INSTANCE.StartServer();
         }
@@ -104,6 +106,13 @@ public class WhimsyMod {
             NeoForge.EVENT_BUS.addListener(ClientModEvent::onLoggingOn);
             NeoForge.EVENT_BUS.addListener(ClientModEvent::onLoggingOut);
             FilePathHelper.HCJFileCreator();
+            try {
+                Class.forName("io.netty.handler.codec.http.HttpHeaders");
+                logger.info("HttpHeaders class is available");
+            } catch (ClassNotFoundException e) {
+                logger.info("HttpHeaders class is not available");
+                logger.info(e.getMessage());
+            }
         }
         /**
          *CommandRegister In CLIENT SIDE
@@ -114,10 +123,14 @@ public class WhimsyMod {
             TestClientCommand.register(dispatcher);
         }
         public static void onLoggingOn(ClientPlayerNetworkEvent.LoggingIn event) {
-            WebsocketClientManager.INSTANCE.StartClient();
+            if(WebSocketClientConfig.WebSocketClientAutoManager.get()){
+                WebsocketClientManager.INSTANCE.StartClient();
+            }
         }
         public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event){
-            WebsocketClientManager.INSTANCE.StopClient();
+            if(WebSocketClientConfig.WebSocketClientAutoManager.get()){
+                WebsocketClientManager.INSTANCE.StopClient();
+            }
         }
     }
 }

@@ -3,7 +3,8 @@ package com.r3944realms.whimsy.init;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.neoforged.fml.loading.FMLPaths;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Matcher;
@@ -67,6 +68,9 @@ class PrivateHCJFileInitHelper {
             writeHCJFile(GameDir.resolve("WhimsyHTML").resolve("index.html"), getHTML());
         } catch (IOException e) {
             logger.debug("Can't write QrIndex.html & qrcode.min.js");
+        }
+        catch (NullPointerException e){
+            logger.info("Value:{}",textValue);
         }
     }
 
