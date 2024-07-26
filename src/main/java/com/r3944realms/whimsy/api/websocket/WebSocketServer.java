@@ -48,6 +48,8 @@ public class WebSocketServer {
     public static final Integer punishmentDuration = 5;
     // 默认一秒发送1次
     public static final Integer punishmentTime = 1;
+    // 心跳定时器
+    public static Timer heartTimer = null;
     //
     private static Thread WebsocketServerThread;
     static final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
@@ -171,6 +173,11 @@ public class WebSocketServer {
                     }
                     workerGroup = null;
                 });
+            }
+            // Cancel the heartbeat timer
+            if(heartTimer != null) {
+                heartTimer.cancel();
+                heartTimer = null;
             }
         } finally {
             // Set the server to stopped

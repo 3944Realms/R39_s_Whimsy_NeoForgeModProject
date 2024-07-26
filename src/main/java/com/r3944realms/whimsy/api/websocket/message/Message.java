@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.r3944realms.whimsy.api.websocket.message.data.IData;
 import com.r3944realms.whimsy.api.websocket.message.data.adapter.IDataTypeAdapterFactory;
 import com.r3944realms.whimsy.api.websocket.message.role.Role;
-import com.r3944realms.whimsy.api.websocket.message.role.RoleDeserializer;
+import com.r3944realms.whimsy.api.websocket.message.role.deserializer.RoleDeserializer;
 
 import java.io.Serial;
 import java.io.Serializable;

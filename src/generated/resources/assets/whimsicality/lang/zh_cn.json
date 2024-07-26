@@ -2,6 +2,8 @@
   "block.whimsicality.test_block": "测试方块",
   "creativetab.whimsicality.test_tab": "测试创造物品栏",
   "item.whimsicality.test_item": "测试物品",
+  "whimsy.api.websocket.power_box.bind.successful": "绑定成功",
+  "whimsy.api.websocket.power_box.link.show": "这里是主机绑定二维码链接 -> %s",
   "whimsy.chat.none_heard_you": "沒有人接收到你的消息",
   "whimsy.command.chat.message.talkarea.current_config": "§6目前聊天区域可见半径设置§7:§e %d §6格 §f(§a默认值§7:§e %d §a格§f)§r",
   "whimsy.command.chat.message.talkarea.preference.set": "§a默认聊天区域可见消息半径设置为 §e%d §a格!§r",

@@ -2,6 +2,8 @@
   "block.whimsicality.test_block": "測試方塊",
   "creativetab.whimsicality.test_tab": "測試創造物品欄",
   "item.whimsicality.test_item": "測試物品",
+  "whimsy.api.websocket.power_box.bind.successful": "綁定成功",
+  "whimsy.api.websocket.power_box.link.show": "這裏是主機綁定二維碼鏈接 -> %s",
   "whimsy.chat.none_heard_you": "無人接收到你的訊息",
   "whimsy.command.chat.message.talkarea.current_config": "§6目前可見訊息聊天半徑設置§7:§e%d §6格 §f(§a默認值§7:§e%d §a格§f)§r",
   "whimsy.command.chat.message.talkarea.preference.set": "§a默認聊天區域可見訊息半徑設置為 §e%d §a格!§r",

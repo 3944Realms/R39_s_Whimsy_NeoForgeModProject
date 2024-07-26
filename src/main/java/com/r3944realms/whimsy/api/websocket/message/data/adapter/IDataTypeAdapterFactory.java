@@ -11,6 +11,7 @@ import com.r3944realms.whimsy.api.websocket.message.data.PowerBoxDataWithSingleA
 
 import java.io.IOException;
 
+@SuppressWarnings("deprecation")
 public class IDataTypeAdapterFactory implements TypeAdapterFactory {
 
     @Override

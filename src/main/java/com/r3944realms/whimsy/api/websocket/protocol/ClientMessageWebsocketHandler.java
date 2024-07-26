@@ -1,16 +1,26 @@
 package com.r3944realms.whimsy.api.websocket.protocol;
 
+import com.r3944realms.whimsy.api.APILanguageKey;
 import com.r3944realms.whimsy.api.websocket.WebSocketClient;
 import com.r3944realms.whimsy.api.websocket.message.PowerBoxMessage;
 import com.r3944realms.whimsy.api.websocket.message.data.PowerBoxData;
+import com.r3944realms.whimsy.api.websocket.message.role.WebSocketClientRole;
+import com.r3944realms.whimsy.api.websocket.message.role.WebSocketServerRole;
 import com.r3944realms.whimsy.api.websocket.message.role.type.RoleType;
 import com.r3944realms.whimsy.init.FilePathHelper;
+import com.r3944realms.whimsy.utils.Notice.NoticePlayer;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.net.SocketException;
 import java.util.Objects;
 import java.util.Timer;
@@ -56,6 +66,15 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
                     logger.info("收到clientId: {}",connectionId);
                     String qrCodeContext = "https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#" + WebSocketClient.getUrl()  + connectionId;
                     FilePathHelper.ReCreateHCJFile(qrCodeContext);
+                    try {
+                        File file = FilePathHelper.get_HCJ_HTML_Path().toFile().getAbsoluteFile();
+                        MutableComponent fileComponent = Component.literal(file.getName()).withStyle(ChatFormatting.UNDERLINE);
+                        fileComponent.withStyle((style) -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath())));
+                        Component link_display = Component.translatable(APILanguageKey.PB_LINK_OF_QRCODE,fileComponent);
+                        NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, link_display);
+                    } catch (Exception e) {
+                        logger.debug("Notice File Link Failed");
+                    }
                     logger.debug("重新生成QrCodeContext: {}",qrCodeContext);
                 } else {
                     if(!Objects.equals(data.getClientId(), connectionId)) {
@@ -64,6 +83,12 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
                     }
                     targetWSId = data.getTargetId();
                     logger.info("已建立绑定连接，TargetId:{}, msg:{}",targetWSId,data.getMessage());
+                    try {
+                        Component bind_suc = Component.translatable(APILanguageKey.PB_BIND_SUCCESSFUL);
+                        NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, bind_suc);
+                    } catch (Exception e) {
+                        logger.debug("Notice Failed");
+                    }
                 }
             }
             case _NC_BREAK_ -> {
@@ -104,6 +129,8 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        PowerBoxMessage breakMsg = PowerBoxMessage.createPowerBoxMessage("break", connectionId, targetWSId, "200", new WebSocketClientRole("Cl" + connectionId), new WebSocketServerRole("WebSocketServer"));
+        if(ctx != null && ctx.channel().isActive() && ctx.channel().isOpen()) sendMsgOrData(ctx, breakMsg);
         logger.info("连接已断开");
 
     }

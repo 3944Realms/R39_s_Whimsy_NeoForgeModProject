@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 
-@SuppressWarnings("StringTemplateMigration")
 public class FilePathHelper {
     public static void configWhimsyFile(String[] children) {
         File configFile = new File(FMLPaths.CONFIGDIR.get().toFile(), WhimsyMod.MOD_ID);

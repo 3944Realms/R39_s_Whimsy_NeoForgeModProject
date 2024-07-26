@@ -1,6 +1,7 @@
-package com.r3944realms.whimsy.api.websocket.message.role;
+package com.r3944realms.whimsy.api.websocket.message.role.deserializer;
 
 import com.google.gson.*;
+import com.r3944realms.whimsy.api.websocket.message.role.*;
 import com.r3944realms.whimsy.api.websocket.message.role.type.RoleType;
 
 import java.lang.reflect.Type;

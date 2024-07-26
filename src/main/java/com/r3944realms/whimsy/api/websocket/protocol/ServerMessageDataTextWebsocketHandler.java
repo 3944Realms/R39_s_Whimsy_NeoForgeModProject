@@ -24,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -34,13 +33,12 @@ import java.util.concurrent.TimeUnit;
 import static com.r3944realms.whimsy.api.websocket.WebSocketServer.*;
 
 @SuppressWarnings("DuplicatedCode")
-@NeedCompletedInFuture
+@NeedCompletedInFuture(futureTarget = "减少二者冗余部分，用基类来同一行为，提取更多方法来实现功能化")
 public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
     //消息发送错误信息专用logger
     private static final Logger errorReport = LoggerFactory.getLogger(ServerMessageDataTextWebsocketHandler.class);
-    // 心跳定时器
-    private static Timer heartTimer = null;
+
     static Logger logger = LoggerFactory.getLogger(ServerMessageDataTextWebsocketHandler.class);
 
     @Override
@@ -64,14 +62,18 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
         );
         // 延迟发送消息
         session.executor().schedule(() -> {
-            session.channel().writeAndFlush(new TextWebSocketFrame(bindMsg.getDataJson())).addListener(sendFuture -> {
-                if (sendFuture.isSuccess()) {
-                    logger.info("Message sent successfully to clientId={}", clientId);
-                } else {
-                    logger.error("Failed to send message to clientId={}", clientId, sendFuture.cause());
-                }
-            });
-        },500, TimeUnit.MILLISECONDS); // 延迟500毫秒发送消息
+            if(session.channel().isActive() && session.channel().isOpen()){
+                session.channel().writeAndFlush(new TextWebSocketFrame(bindMsg.getDataJson())).addListener(sendFuture -> {
+                    if (sendFuture.isSuccess()) {
+                        logger.debug("Message sent successfully to clientId={}", clientId);
+                    } else {
+                        logger.debug("Failed to send message to clientId={}", clientId, sendFuture.cause());
+                    }
+                });
+            } else {
+                logger.warn("Channel is not active, skipping bindMsg for clientId={}", clientId);
+            }
+        },200, TimeUnit.MILLISECONDS); // 延迟200毫秒发送消息
         synchronized (ServerMessageDataTextWebsocketHandler.class) {
             // 启动心跳定时器（如果尚未启动）
             if (heartTimer == null) {
@@ -84,16 +86,20 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
                         }
                         for (String clientId : connections.keySet()) {
                             ChannelHandlerContext client = connections.get(clientId);
-                            String targetId = relations.get(clientId);
-                            if (ObjectUtils.isEmpty(targetId)) {
-                                targetId = "";
-                            }PowerBoxMessage message =
-                                    PowerBoxMessage.createPowerBoxMessage("heartbeat", clientId, targetId, "200",
-                                            SOCKET_SERVER_ROLE, new PlaceholderRole("Pl" + clientId));
-                            sendMessageData(client, message);
+                            if(clientId != null && client.channel().isActive() && client.channel().isOpen()){
+                                String targetId = relations.get(clientId);
+                                if (ObjectUtils.isEmpty(targetId)) {
+                                    targetId = "";
+                                }PowerBoxMessage message =
+                                        PowerBoxMessage.createPowerBoxMessage("heartbeat", clientId, targetId, "200",
+                                                SOCKET_SERVER_ROLE, new PlaceholderRole("Pl" + clientId));
+                                sendMessageData(client, message);
+                            } else {
+                                logger.warn("Channel is not active, skipping heartbeat for clientId={}", clientId);
+                            }
                         }
                     }
-                }, 0, 60000/*ms = 1min*/);
+                }, 500, 60000/*ms = 1min*/);
             }
         }
     }
@@ -102,35 +108,36 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
     public void handlerRemoved(ChannelHandlerContext session) throws Exception {
         logger.debug("Websocket 连接已关闭");
         String channelId = session.channel().id().asLongText();
-        String clientId = channelIdMap.remove(channelId);
+        String disconnectId = channelIdMap.remove(channelId);
         logger.debug("channel removed: channelId={}", channelId);
-        connections.remove(clientId);
-        logger.info("断开的client Id:{}", clientId);
+        logger.info("断开的client Id:{}", disconnectId);
         channels.remove(session.channel());
-        for(String key : relations.keySet()) {
-            String value = relations.get(key);
-            if(key.equals(clientId)) { //此时 appid = value
+        for(String _clientId_ : relations.keySet()) {
+            String _targetId_ = relations.get(_clientId_);
+            if(_clientId_.equals(disconnectId)) {
                 //Client断开 ，通知app
-                ChannelHandlerContext appClient = connections.get(key);
+                ChannelHandlerContext appClient = connections.get(_targetId_);
                 PowerBoxMessage message =
-                        PowerBoxMessage.createPowerBoxMessage("break", clientId, value, "209", SOCKET_SERVER_ROLE, new WebSocketClientRole("Cl" + value));
+                        PowerBoxMessage.createPowerBoxMessage("break", disconnectId, _targetId_, "209", SOCKET_SERVER_ROLE, new WebSocketClientRole("Cl" + _targetId_));
                 sendMessageData(appClient,message);
                 appClient.close(); //关闭当前的 websocket 连接
-                relations.remove(key); // 清除关系
-                powerBoxDataMap.remove(value);
-                logger.debug("Close Application Connecting{}", value);
-            } else if(value.equals(clientId)) { //此时 clientId = value
+                relations.remove(_clientId_); // 清除关系
+                powerBoxDataMap.remove(_targetId_);
+                logger.debug("Close Application Connecting{}", _targetId_);
+                connections.remove(_targetId_);//并移除targetId
+            } else if(_targetId_.equals(disconnectId)) {
                 //app断开,通知Client
-                ChannelHandlerContext client = connections.get(key);
+                ChannelHandlerContext client = connections.get(_clientId_);
                 PowerBoxMessage message =
-                        PowerBoxMessage.createPowerBoxMessage("break", clientId, value, "209", SOCKET_SERVER_ROLE, new WebSocketApplicationRole("Ap" + value));
+                        PowerBoxMessage.createPowerBoxMessage("break", _clientId_, _targetId_, "209", SOCKET_SERVER_ROLE, new WebSocketApplicationRole("Ap" + _targetId_));
                 sendMessageData(client, message);
                 client.close();//关闭当前的 websocket 连接
-                relations.remove(key);// 清除关系
-                powerBoxDataMap.remove(value);
-                logger.debug("Close Client Connecting{}", value);
+                relations.remove(_clientId_);// 清除关系
+                powerBoxDataMap.remove(_targetId_);
+                logger.debug("Close Client Connecting{}", _targetId_);
+                connections.remove(_clientId_);//并移除clientId
             }
-            connections.remove(clientId);//清除ws客户端
+            connections.remove(disconnectId);//移除断开连接的对方
             channels.remove(session.channel());
             logger.debug("channel removed: channelId={}[Current Size:{}]", channelId, connections.size());
         }
@@ -142,26 +149,26 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
         if(cause instanceof IOException) {
             return;
         }
-        logger.error("WebSocket 异常{}", cause.getMessage());
+        logger.error("WebSocket 异常{}:{}", cause.getClass(),cause.getMessage());
         //在此通知用户异常，提过Websocket 发送消息给对方
-        String clientId = channelIdMap.get(ctx.channel().id().asLongText());
-        if(ObjectUtils.isEmpty(clientId)) {
+        String _errorSideId_ = channelIdMap.get(ctx.channel().id().asLongText());
+        if(ObjectUtils.isEmpty(_errorSideId_)) {
             logger.debug("Can't found the client");
             return;
         }
         //构造错误信息
         String  errorMessage = "Websocket异常 " + cause.getMessage();
-        for(String key : relations.keySet()) {
-            String value = relations.get(key);
-            if(key.equals(clientId)) {//clientId = value
+        for(String _clientId_ : relations.keySet()) {
+            String _targetId_ = relations.get(_clientId_);
+            if(_clientId_.equals(_errorSideId_)) {//clientId = value
                 //通知app
-                ChannelHandlerContext appClient = connections.get(value);
-                PowerBoxMessage error = PowerBoxMessage.createPowerBoxMessage("error", clientId, value, "500", SOCKET_SERVER_ROLE, new WebSocketApplicationRole("Ap" + value));
+                ChannelHandlerContext appClient = connections.get(_targetId_);
+                PowerBoxMessage error = PowerBoxMessage.createPowerBoxMessage("error", _clientId_, _targetId_, "500", SOCKET_SERVER_ROLE, new WebSocketApplicationRole("Ap" + _targetId_));
                 sendMessageData(appClient, error);
-            } else if(value.equals(clientId)) {
+            } else if(_targetId_.equals(_errorSideId_)) {
                 //通知client
-                ChannelHandlerContext client = connections.get(key);
-                PowerBoxMessage error = PowerBoxMessage.createPowerBoxMessage("error", key, clientId, errorMessage, SOCKET_SERVER_ROLE, new WebSocketClientRole("Cl" + value) );
+                ChannelHandlerContext client = connections.get(_clientId_);
+                PowerBoxMessage error = PowerBoxMessage.createPowerBoxMessage("error", _clientId_ , _targetId_, errorMessage, SOCKET_SERVER_ROLE, new WebSocketClientRole("Cl" + _targetId_) );
                 sendMessageData(client, error);
             }
         }
@@ -206,7 +213,6 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
                             ChannelHandlerContext client = connections.get(clientId);
                             PowerBoxMessage bindMessage = PowerBoxMessage.createPowerBoxMessage("bind", clientId, targetId, "200", SOCKET_SERVER_ROLE, new PlaceholderRole("Both: " + clientId + " ^ " + targetId));
                             sendMessageData(session, bindMessage);
-                            powerBoxDataMap.put(targetId, null);
                             sendMessageData(client, bindMessage);
                         } else {
                             PowerBoxMessage failure = PowerBoxMessage.createPowerBoxMessage("bind", clientId, targetId, "400", SOCKET_SERVER_ROLE, new WebSocketApplicationRole("Ap" + targetId));
@@ -246,7 +252,7 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
                                     int BStrength = ((Integer[])argsArray)[1];
                                     int ALimit = ((Integer[])argsArray)[2];
                                     int BLimit = ((Integer[])argsArray)[3];
-                                    powerBoxDataMap.replace(targetId, data);
+                                    putDataInMap(targetId, data);
                                     String currentStrengthMsg = "strength-" + AStrength + "+" + BStrength + "+" + ALimit + "+" + BLimit;
                                     PowerBoxMessage clientMsg = PowerBoxMessage.createPowerBoxMessage("clientMsg", clientId, targetId, currentStrengthMsg, SOCKET_SERVER_ROLE, new WebSocketClientRole("Cl" + clientId));
                                     sendMessageData(client, clientMsg);
@@ -347,6 +353,12 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
         }
 
     }
+
+    private static void putDataInMap(String targetId, PowerBoxData data) {
+        if(powerBoxDataMap.containsKey(targetId))powerBoxDataMap.replace(targetId, data);
+        else powerBoxDataMap.put(targetId, data);
+    }
+
     /**
      *
      * @param uuid 能处理Message对象的目标UUID（UUID必须存在）
@@ -413,6 +425,7 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
      *
      * @param clientId 客户端uuid
      * @return PowerData 客户端Data消息（存储的一般是对应的pulse数据）
+     * @throws NullPointerException 如果对于clientId未存入对应数据
      */
     public static PowerBoxData getData(String clientId) {
         return powerBoxDataMap.get(clientId);

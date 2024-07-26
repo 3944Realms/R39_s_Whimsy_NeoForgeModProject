@@ -234,7 +234,6 @@ public class PowerBoxData implements IData {
         }
     }
 
-
     String[] getWaveformDataList(String msg) {
         String dataList = msg.substring(msg.indexOf('[') + 1, msg.indexOf(']'));
         String[] rawStringList = dataList.split(",");

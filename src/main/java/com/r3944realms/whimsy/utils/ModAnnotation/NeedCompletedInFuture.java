@@ -8,4 +8,5 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.SOURCE)
 @Target(value = {ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
 public @interface NeedCompletedInFuture {
+    String futureTarget() default "";
 }

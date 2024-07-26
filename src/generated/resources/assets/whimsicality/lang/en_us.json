@@ -2,6 +2,8 @@
   "block.whimsicality.test_block": "Test Block",
   "creativetab.whimsicality.test_tab": "Test Creative Tab",
   "item.whimsicality.test_item": "Test Item",
+  "whimsy.api.websocket.power_box.bind.successful": "bind successful",
+  "whimsy.api.websocket.power_box.link.show": "Here is Bind Qrcode Link for DG_LAB PowerBox -> %s",
   "whimsy.chat.none_heard_you": "Nobody heard your message",
   "whimsy.command.chat.message.talkarea.current_config": "§6TalkArea Current§7:§e %d §6blocks §f(§aPrefence§7:§e %d §ablocks§f)§r",
   "whimsy.command.chat.message.talkarea.preference.set": "§aTalk area preference set to §e%d§a blocks!§r",

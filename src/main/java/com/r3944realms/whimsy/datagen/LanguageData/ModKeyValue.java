@@ -1,5 +1,6 @@
 package com.r3944realms.whimsy.datagen.LanguageData;
 
+import com.r3944realms.whimsy.api.APILanguageKey;
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
 import com.r3944realms.whimsy.command.PlayerProperty.ChatCommand;
 import com.r3944realms.whimsy.command.TestClientCommand;
@@ -57,7 +58,10 @@ public enum ModKeyValue {
     //INFO_MESSAGE
     CHAT_NONE_HEARD_YOU(DefaultTalkArea.CHAT_NONE_HEARD_YOU, ModPartEnum.MESSAGE, "Nobody heard your message", "沒有人接收到你的消息", "無人接收到你的訊息", "无人受子问",false),
     //TEST MESSAGE
-    TEST_OPEN_FILE_LINK(TestClientCommand.TEST_KEY_OPEN_FILE_LINK, ModPartEnum.COMMAND, ">> %s",">> %s",">> %s",false)
+    TEST_OPEN_FILE_LINK(TestClientCommand.TEST_KEY_OPEN_FILE_LINK, ModPartEnum.COMMAND, ">> %s",">> %s",">> %s",false),
+    //API WEBSOCKET APPLICATION
+    PB_LINK_SHOW(APILanguageKey.PB_LINK_OF_QRCODE, ModPartEnum.MESSAGE, "Here is Bind Qrcode Link for DG_LAB PowerBox -> %s","这里是主机绑定二维码链接 -> %s","這裏是主機綁定二維碼鏈接 -> %s",false),
+    PB_BIND_SUC(APILanguageKey.PB_BIND_SUCCESSFUL, ModPartEnum.MESSAGE, "bind successful", "绑定成功" , "綁定成功", false)
     ;
 
     private final Supplier<?> supplier;
