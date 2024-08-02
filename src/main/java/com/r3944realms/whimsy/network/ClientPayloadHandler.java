@@ -2,23 +2,22 @@ package com.r3944realms.whimsy.network;
 
 import com.r3944realms.whimsy.api.manager.WebsocketClientManager;
 import com.r3944realms.whimsy.api.websocket.WebSocketClient;
-import com.r3944realms.whimsy.network.payload.TestModData;
-import com.r3944realms.whimsy.network.payload.WebSocketServerAddressData;
+import com.r3944realms.whimsy.gamerule.GameruleRegistry;
+import com.r3944realms.whimsy.gamerule.Gamerules;
+import com.r3944realms.whimsy.network.payload.*;
 import com.r3944realms.whimsy.utils.logger.logger;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.minecraft.world.level.GameRules;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 import static com.r3944realms.whimsy.network.NetworkHandler.WS_CLIENT_SYNC_FAILED;
 
 public class ClientPayloadHandler {
 
     public static void handleData(final TestModData data, final IPayloadContext context) {
-        context.enqueueWork(() -> {
-            logger.info(data.message());
-            })
+        context.enqueueWork(() -> logger.info(data.message()))
             .exceptionally(e-> {
                 context.disconnect(Component.translatable(NetworkHandler.ACK_FAILED + ": %s", e.getMessage()));
                 return null;
@@ -28,19 +27,58 @@ public class ClientPayloadHandler {
         context.enqueueWork(() -> {
             WebSocketClient.syncServerData(data.address(), data.port());
             logger.info("sync WebsocketServer Address Data successful");
-            if(WebsocketClientManager.INSTANCE.getShouldStart() && WebsocketClientManager.INSTANCE.getWaitingForSynchronization()) {
-                WebSocketClient.Start();
-                WebsocketClientManager.INSTANCE.setShouldStart(false);
-                WebsocketClientManager.INSTANCE.setWaitingForSynchronization(false);
-            }
+            WebsocketClientManager.INSTANCE.SyncedAndStart();
         }).exceptionally(throwable -> {
             context.disconnect(Component.translatable(WS_CLIENT_SYNC_FAILED));
             return null;
         });
     }
-    @SubscribeEvent
-    public static void register(final RegisterPayloadHandlersEvent event) {
-        // Sets the current network version
-        final PayloadRegistrar registrar = event.registrar("1");
+    @SuppressWarnings("unchecked")
+    public static void handleSyncBooleanGameRuleData(final BooleanGameRuleValueChangeData data, final IPayloadContext context) {
+        context.enqueueWork(() -> {
+            ClientLevel level = Minecraft.getInstance().level;
+            assert level != null;
+            GameRules gameRules = level.getGameRules();
+            gameRules.getRule(
+                    (GameRules.Key<GameRules.BooleanValue>)
+                            GameruleRegistry.gamerules.get(data.GameRuleName())
+            ).set(data.value(), null);
+        }).exceptionally(throwable -> {
+            context.disconnect(Component.translatable(WS_CLIENT_SYNC_FAILED));
+            return null;
+        });
     }
+    @SuppressWarnings("unchecked")
+    public static void handleSyncIntegerGameRuleData(final IntegerGameRuleValueChangeData data, final IPayloadContext context) {
+        context.enqueueWork(() -> {
+            ClientLevel level = Minecraft.getInstance().level;
+            assert level != null;
+            GameRules gameRules = level.getGameRules();
+            gameRules.getRule(
+                    (GameRules.Key<GameRules.IntegerValue>)
+                            GameruleRegistry.gamerules.get(data.GameRuleName())
+            ).set(data.value(), null);
+        }).exceptionally(throwable -> {
+            context.disconnect(Component.translatable(WS_CLIENT_SYNC_FAILED));
+            return null;
+        });
+    }
+    @SuppressWarnings("unchecked")
+    public static void handleSyncFloatGameRuleData(final FloatGameRuleValueChangeData data, final IPayloadContext context) {
+        context.enqueueWork(() -> {
+            ClientLevel level = Minecraft.getInstance().level;
+            assert level != null;
+            GameRules gameRules = level.getGameRules();
+            gameRules.getRule(
+                    (GameRules.Key<Gamerules.FloatValue>)
+                            GameruleRegistry.gamerules.get(data.GameRuleName())
+            ).set(data.value(), null);
+        }).exceptionally(throwable -> {
+            context.disconnect(Component.translatable(WS_CLIENT_SYNC_FAILED));
+            return null;
+        });
+    }
+
+
+
 }

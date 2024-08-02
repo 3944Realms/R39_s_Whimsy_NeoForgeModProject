@@ -1,6 +1,6 @@
-package com.r3944realms.whimsy.datagen;
+package com.r3944realms.whimsy.datagen.provider;
 
-import com.r3944realms.whimsy.datagen.LanguageData.ModKeyValue;
+import com.r3944realms.whimsy.datagen.LanguageData.ModLangKeyValue;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -17,7 +17,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         init();
     }
     private void init() {
-        for(ModKeyValue obj : ModKeyValue.values()) {
+        for(ModLangKeyValue obj : ModLangKeyValue.values()) {
             if(!obj.isDefaultItem()) continue;
             objectList.add(obj.getItem());
         }

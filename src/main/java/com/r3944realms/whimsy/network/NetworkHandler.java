@@ -1,8 +1,7 @@
 package com.r3944realms.whimsy.network;
 
 import com.r3944realms.whimsy.WhimsyMod;
-import com.r3944realms.whimsy.network.payload.TestModData;
-import com.r3944realms.whimsy.network.payload.WebSocketServerAddressData;
+import com.r3944realms.whimsy.network.payload.*;
 import com.r3944realms.whimsy.network.payload.ackpayload.SyncWebsocketRequestPayload;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -41,6 +40,22 @@ public class NetworkHandler {
                 WebSocketServerAddressData.TYPE,
                 WebSocketServerAddressData.STREAM_CODEC,
                 ClientPayloadHandler::handleSyncWebsocketServerAddressData
+        );
+        //同步
+        registrar.playToClient(
+                BooleanGameRuleValueChangeData.TYPE,
+                BooleanGameRuleValueChangeData.STREAM_CODEC ,
+                ClientPayloadHandler::handleSyncBooleanGameRuleData
+        );
+        registrar.playToClient(
+                IntegerGameRuleValueChangeData.TYPE,
+                IntegerGameRuleValueChangeData.STREAM_CODEC ,
+                ClientPayloadHandler::handleSyncIntegerGameRuleData
+        );
+        registrar.playToClient(
+                FloatGameRuleValueChangeData.TYPE,
+                FloatGameRuleValueChangeData.STREAM_CODEC ,
+                ClientPayloadHandler::handleSyncFloatGameRuleData
         );
     }
 }

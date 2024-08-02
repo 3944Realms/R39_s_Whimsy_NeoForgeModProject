@@ -296,12 +296,11 @@ public class ServerMessageTextWebsocketHandler extends SimpleChannelInboundHandl
                             }
                         }
                         case FEEDBACK -> {
-                            if(connections.containsKey(targetId)) {
-                                ChannelHandlerContext app = connections.get(targetId);
+                            if(connections.containsKey(targetId)) { //发送给客户端
                                 int index = ((Integer[])argsArray)[0];
                                 String feedBack = "feedback-" + index;
                                 PowerBoxMessage feedBackMsg = PowerBoxMessage.createPowerBoxMessage("msg", clientId, targetId, feedBack, SOCKET_SERVER_ROLE, new WebSocketApplicationRole("Ap" + targetId));
-                                sendMessageData(app, feedBackMsg);
+                                sendMessageData(clientId, feedBackMsg);
                             }
                         }
                     }

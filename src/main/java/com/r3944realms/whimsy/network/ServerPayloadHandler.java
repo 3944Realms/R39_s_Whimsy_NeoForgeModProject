@@ -1,6 +1,5 @@
 package com.r3944realms.whimsy.network;
 
-import com.electronwill.nightconfig.core.conversion.InvalidValueException;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
 import com.r3944realms.whimsy.network.payload.TestModData;
 import com.r3944realms.whimsy.network.payload.WebSocketServerAddressData;
@@ -17,9 +16,7 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
 public class ServerPayloadHandler {
 
     public static void handleData(final TestModData data, final IPayloadContext context) {
-        context.enqueueWork(() -> {
-            logger.info(data.message());
-        })
+        context.enqueueWork(() -> logger.info(data.message()))
         .exceptionally(e -> {
            context.disconnect(Component.translatable("whimsy.network.payload.ack.failed" + ": %s",e.getMessage()));
             return null;
@@ -35,11 +32,11 @@ public class ServerPayloadHandler {
                     player = server.getPlayerList().getPlayer(ackPayload.player_uuid());
                 }
                 if (player == null) throw new NullPointerException();
-                if(!AddressValidator.isValidAddress(address)) throw new InvalidValueException(address);
+                if(!AddressValidator.isValidAddress(address)) throw new IllegalArgumentException(address);
                 PacketDistributor.sendToPlayer(player,new WebSocketServerAddressData(address, WebSocketServerConfig.WebSocketServerPort.get()));
             } catch (NullPointerException e) {
                 logger.error("player(uuid:{}) is not existed in game.", ackPayload.player_uuid());
-            } catch (InvalidValueException e) {
+            } catch (IllegalArgumentException e) {
                 logger.error("Server Address is invalid:{}",address);
             }
         }).exceptionally(throwable -> {

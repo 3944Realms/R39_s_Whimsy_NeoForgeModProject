@@ -1,6 +1,6 @@
-package com.r3944realms.whimsy.datagen;
+package com.r3944realms.whimsy.datagen.provider;
 
-import com.r3944realms.whimsy.datagen.LanguageData.ModKeyValue;
+import com.r3944realms.whimsy.datagen.LanguageData.ModLangKeyValue;
 import com.r3944realms.whimsy.utils.Enum.LanguageEnum;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.r3944realms.whimsy.datagen.LanguageData.ModKeyValue.getLan;
+import static com.r3944realms.whimsy.datagen.LanguageData.ModLangKeyValue.getLan;
 
 public class ModLanguageProvider extends LanguageProvider {
     private final LanguageEnum Language;
@@ -23,7 +23,7 @@ public class ModLanguageProvider extends LanguageProvider {
         init();
     }
     private void init() {
-        for (ModKeyValue key : ModKeyValue.values()) {
+        for (ModLangKeyValue key : ModLangKeyValue.values()) {
             addLang(key.getKey(), getLan(Language, key));
         }
     }

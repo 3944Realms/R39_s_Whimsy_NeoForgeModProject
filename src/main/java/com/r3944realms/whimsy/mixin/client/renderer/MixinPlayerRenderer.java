@@ -10,11 +10,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerRenderer.class)
 public class MixinPlayerRenderer {
+
+
+
+
     @Inject(at = @At("TAIL")
             , method = "<init>(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Z)V")
     public void extraLayers(EntityRendererProvider.Context pContext, boolean pUseSlimModel, CallbackInfo ci) {
-//        ((PlayerRenderer)(Object)this).addLayer();
+
     }
+
 
     @Unique
     PlayerRenderer Whimsy$Self() {

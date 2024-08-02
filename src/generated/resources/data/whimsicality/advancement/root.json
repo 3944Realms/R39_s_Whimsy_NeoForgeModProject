@@ -1,0 +1,40 @@
+{
+  "criteria": {
+    "join_this_game": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "dimension": "minecraft:overworld"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "whimsicality:textures/gui/advancements/backgrounds/whimsy.png",
+    "description": {
+      "translate": "advancement.whimsicality.root.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:tnt"
+    },
+    "title": {
+      "translate": "advancement.whimsicality.root"
+    }
+  },
+  "requirements": [
+    [
+      "join_this_game"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

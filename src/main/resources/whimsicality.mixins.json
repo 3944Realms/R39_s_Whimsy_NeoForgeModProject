@@ -7,6 +7,9 @@
     "server.MixinServerPlayer"
   ],
   "client": [
+    "client.renderer.MixinEntityRenderer",
+    "client.renderer.MixinEntityRenderers",
+    "client.renderer.MixinLivingEntityRenderer",
     "client.renderer.MixinPlayerRenderer"
   ],
   "refmap": "whimsicality.refmap.json",

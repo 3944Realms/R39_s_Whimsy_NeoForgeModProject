@@ -12,7 +12,7 @@ import net.neoforged.neoforge.network.event.RegisterConfigurationTasksEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
-
+@Deprecated
 public record TestConfigurationTask(ServerConfigurationPacketListener listener) implements ICustomConfigurationTask {
     private static final String TaskName = "MyTestConfigurationTask";
     public static final ConfigurationTask.Type TYPE = new ConfigurationTask.Type(ResourceLocation.fromNamespaceAndPath(WhimsyMod.MOD_ID, TaskName));

@@ -84,4 +84,11 @@ public enum WebsocketClientManager {
         WebSocketClient.Stop();
         return ManagerResultEnum.SUCCESSFUL;
     }
+    public void SyncedAndStart(){
+        if(WebsocketClientManager.INSTANCE.getShouldStart() && WebsocketClientManager.INSTANCE.getWaitingForSynchronization()) {
+            WebSocketClient.Start();
+            WebsocketClientManager.INSTANCE.setShouldStart(false);
+            WebsocketClientManager.INSTANCE.setWaitingForSynchronization(false);
+        }
+    }
 }

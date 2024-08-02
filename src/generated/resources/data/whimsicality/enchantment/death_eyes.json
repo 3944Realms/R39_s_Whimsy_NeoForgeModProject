@@ -1,0 +1,41 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "translate": "enchantment.whimsicality.death_eyes"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:levels_squared",
+          "added": -11.0
+        },
+        "attribute": "minecraft:generic.max_health",
+        "id": "whimsicality:death_eyes",
+        "operation": "add_value"
+      }
+    ],
+    "whimsicality:death_eyes": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": 1.0
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 25,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:axes",
+  "weight": 2
+}

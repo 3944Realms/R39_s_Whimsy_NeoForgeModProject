@@ -30,9 +30,12 @@ public class TestClientCommand {
             } else context.getSource().sendFailure(Component.literal("Not Found Html file"));
             return 0;
         });
+
         literalArgumentBuilder
                 .then(Commands.literal("test").requires(commandSourceStack -> commandSourceStack.hasPermission(4))
-                        .then(Commands.literal("CreateFileLink").executes(CreateFileLink)));
+                        .then(Commands.literal("CreateFileLink").executes(CreateFileLink))
+
+                );
 
         dispatcher.register(literalArgumentBuilder);
     }

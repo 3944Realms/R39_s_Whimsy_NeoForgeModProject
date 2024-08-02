@@ -24,7 +24,6 @@ public abstract class MixinServerPlayer extends Player implements ServerPlayerCa
     int Whimsy$TalkAreaPreference;
 
     public MixinServerPlayer(Level pLevel, BlockPos pPos, float pYRot, GameProfile pGameProfile) {
-
         super(pLevel, pPos, pYRot, pGameProfile);
     }
 

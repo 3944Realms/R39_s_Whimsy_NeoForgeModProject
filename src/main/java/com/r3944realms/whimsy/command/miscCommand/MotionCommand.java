@@ -20,35 +20,37 @@ public class MotionCommand {
         LiteralArgumentBuilder<CommandSourceStack> literalArgumentBuilder = Commands.literal(WhimsyCommand.WHIMSICALITY_COMMAND);
         Command<CommandSourceStack> motionVecAdder = context -> {
             CommandSourceStack source = context.getSource();
-            Entity entity = EntityArgument.getEntity(context, "target");
-            Vec3 motionVec = new Vec3(
-                    DoubleArgumentType.getDouble(context, "vecX"),
-                    DoubleArgumentType.getDouble(context, "vecY"),
-                    DoubleArgumentType.getDouble(context, "vecZ")
-            );
-            entity.addDeltaMovement(motionVec);
-            entity.hurtMarked = true;
-            double vecX = entity.getDeltaMovement().x, vecY = entity.getDeltaMovement().y, vecZ = entity.getDeltaMovement().z;
-            source.sendSuccess(() -> Component.translatable(MOTION_ADDER_SUCCESSFUL,entity.getName().copy().withStyle(),vecX, vecY, vecZ),true);
+            for(Entity entity : EntityArgument.getEntities(context, "targets")){
+                Vec3 motionVec = new Vec3(
+                        DoubleArgumentType.getDouble(context, "vecX"),
+                        DoubleArgumentType.getDouble(context, "vecY"),
+                        DoubleArgumentType.getDouble(context, "vecZ")
+                );
+                entity.addDeltaMovement(motionVec);
+                entity.hurtMarked = true;
+                double vecX = entity.getDeltaMovement().x, vecY = entity.getDeltaMovement().y, vecZ = entity.getDeltaMovement().z;
+                source.sendSuccess(() -> Component.translatable(MOTION_ADDER_SUCCESSFUL, entity.getName().copy().withStyle(), vecX, vecY, vecZ), true);
+            }
             return 0;
         };
         Command<CommandSourceStack> motionVecSetter = context -> {
             CommandSourceStack source = context.getSource();
-            Entity entity = EntityArgument.getEntity(context, "target");
-            Vec3 motionVec = new Vec3(
-                    DoubleArgumentType.getDouble(context, "vecX"),
-                    DoubleArgumentType.getDouble(context, "vecY"),
-                    DoubleArgumentType.getDouble(context, "vecZ")
-            );
-            entity.setDeltaMovement(motionVec);
-            entity.hurtMarked = true;
-            double vecX = entity.getDeltaMovement().x, vecY = entity.getDeltaMovement().y, vecZ = entity.getDeltaMovement().z;
-            source.sendSuccess(() -> Component.translatable(MOTION_SETTER_SUCCESSFUL, entity.getName().copy(), vecX, vecY, vecZ), true);
+            for(Entity entity : EntityArgument.getEntities(context, "targets")){
+                Vec3 motionVec = new Vec3(
+                        DoubleArgumentType.getDouble(context, "vecX"),
+                        DoubleArgumentType.getDouble(context, "vecY"),
+                        DoubleArgumentType.getDouble(context, "vecZ")
+                );
+                entity.setDeltaMovement(motionVec);
+                entity.hurtMarked = true;
+                double vecX = entity.getDeltaMovement().x, vecY = entity.getDeltaMovement().y, vecZ = entity.getDeltaMovement().z;
+                source.sendSuccess(() -> Component.translatable(MOTION_SETTER_SUCCESSFUL, entity.getName().copy(), vecX, vecY, vecZ), true);
+            }
             return 0;
         };
         literalArgumentBuilder
                 .then(Commands.literal("motion").requires(cs -> cs.hasPermission(2))
-                        .then(Commands.argument("target", EntityArgument.entity())
+                        .then(Commands.argument("targets", EntityArgument.entities())
                             .then(Commands.literal("add")
                                     .then(Commands.argument("vecX", DoubleArgumentType.doubleArg())
                                         .then(Commands.argument("vecY", DoubleArgumentType.doubleArg())

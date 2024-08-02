@@ -96,6 +96,7 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
                                 sendMessageData(client, message);
                             } else {
                                 logger.warn("Channel is not active, skipping heartbeat for clientId={}", clientId);
+                                connections.remove(clientId);
                             }
                         }
                     }

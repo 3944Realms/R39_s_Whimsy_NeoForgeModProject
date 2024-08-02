@@ -3,10 +3,13 @@ package com.r3944realms.whimsy.datagen.LanguageData;
 import com.r3944realms.whimsy.api.APILanguageKey;
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
 import com.r3944realms.whimsy.command.PlayerProperty.ChatCommand;
+import com.r3944realms.whimsy.command.PlayerProperty.NameTagCommand;
 import com.r3944realms.whimsy.command.TestClientCommand;
 import com.r3944realms.whimsy.command.Websocket.WebSocketClientCommand;
 import com.r3944realms.whimsy.command.Websocket.WebSocketServerCommand;
 import com.r3944realms.whimsy.command.miscCommand.MotionCommand;
+import com.r3944realms.whimsy.datagen.provider.enchantment.ModEnchantments;
+import com.r3944realms.whimsy.gamerule.ClientRender.MustOthersHiddenNameTag;
 import com.r3944realms.whimsy.gamerule.ServerChat.DefaultTalkArea;
 import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.items.ModItemsRegister;
@@ -21,13 +24,19 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
-public enum ModKeyValue {
+public enum ModLangKeyValue {
     //ITEM
     TEST_ITEM(ModItemsRegister.TEST_ITEM, ModPartEnum.ITEM,"Test Item", "测试物品", "測試物品", true),
     //BLOCK
     TEST_BLOCK(ModBlocksRegister.TEST_BLOCK, ModPartEnum.BLOCK, "Test Block", "测试方块", "測試方塊", false),
     //CREATIVE_TAB
     TEST_CREATIVE_TAB(ModCreativeTab.getCreativeMod(ModCreativeTab.TEST), ModPartEnum.CREATIVE_TAB, "Test Creative Tab", "测试创造物品栏", "測試創造物品欄",false),
+    //ENCHANTMENT
+    DEAD_EYES(ModEnchantments.getEnchantmentKey("death_eyes"), ModPartEnum.ENCHANTMENT, "Death Eyes", "死亡之眼", "死亡之眼", false),
+    CHANGE_ITEM(ModEnchantments.getEnchantmentKey("change_item"), ModPartEnum.ENCHANTMENT, "Change item", "易物", "易物", "易", false),
+    //ADVANCEMENT
+    NAME_START_ADV(ModAdvancementKey.RWN_WELCOME.getNameKey(), ModPartEnum.ADVANCEMENT, "Whimsy", "奇思妙想", "奇思妙想", false),
+    DES_START_ADV(ModAdvancementKey.RWN_WELCOME.getDescKey(), ModPartEnum.DESCRIPTION, "Welcome Join this world.Have Fun !", "欢迎加入，快乐至上", "感謝游玩，快樂至上", false),
     //NETWORK_MESSAGE
     MESSAGE_NET_ACK_FAILED(NetworkHandler.ACK_FAILED, ModPartEnum.MESSAGE, "ACK FAILED", "确认失败", "確認失敗","确认，不成",false),
     MESSAGE_NET_WB_CLIENT_SYNC_FAILED(NetworkHandler.WS_CLIENT_SYNC_FAILED, ModPartEnum.MESSAGE,"Sync the address of Websocket Server Failed", "同步服务器Websocket地址失败", "同步伺服器Websocket地址失敗","同步服务器Websocket地址，不果",false),
@@ -53,15 +62,26 @@ public enum ModKeyValue {
     MESSAGE_CHAT_TALKAREA_PREFERENCE_NOT_SET(ChatCommand.TALK_AREA_PREFERENCE_NOT_SET, ModPartEnum.COMMAND, "Your talk area preference is not set!", "未设置默认可见消息聊天区域半径", "未設置可見訊息聊天半徑", "未置默视之",false),
     MESSAGE_CHAT_TALKAREA_CURRENT_CONFIG(ChatCommand.TALK_AREA_CURRENT_CONFIG, ModPartEnum.COMMAND, "§6TalkArea Current§7:§e %d §6blocks §f(§aPrefence§7:§e %d §ablocks§f)§r", "§6目前聊天区域可见半径设置§7:§e %d §6格 §f(§a默认值§7:§e %d §a格§f)§r", "§6目前可見訊息聊天半徑設置§7:§e%d §6格 §f(§a默認值§7:§e%d §a格§f)§r", "§6今聊城可知半径置§e %d§6格§f(§a默§7：§e%d格§f)§r",false),
 
-    MESSAGE_MOTION_SETTER_SUCCESSFUL(MotionCommand.MOTION_SETTER_SUCCESSFUL,ModPartEnum.COMMAND,"§bSet Successfully.§a%s§7:§f[§eCurrent Vec§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r","§b设置成功.§a%s§7:§f[§e目前速度§7: §a(§f %f §7, §f %f §7, §f %f §a)§f]§r","§b設置成功.§a%s§7:§f[§e目前速度§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r",false),
-    MESSAGE_MOTION_ADDER_SUCCESSFUL(MotionCommand.MOTION_ADDER_SUCCESSFUL,ModPartEnum.COMMAND, "§bAdd Successfully.§a%s§7:§f[§eCurrent Vec§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r","§b添加成功.§a%s§7:§f[§e目前速度§7: §a(§f %f §7, §f %f §7, §f %f §a)§f]§r","§b添加成功.§a%s§7:§f[§e目前速度§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r", false),
+    MESSAGE_NAME_TAG_SELF_VISIBILITY_STATUS(NameTagCommand.SELF_NAME_TAG_VISIBILITY, ModPartEnum.COMMAND, "%s SelfNameTagVisible:%s","%s可见自身名牌:%s","%s可見自身名牌:%s",false),
+    MESSAGE_NAME_TAG_OTHERS_HIDDEN_STATUS(NameTagCommand.OTHERS_NAME_TAG_HIDDEN, ModPartEnum.COMMAND, "%s OthersNameTagHidden:%s","对于%s隐藏其它玩家名牌:%s","對於%s隱藏他人名牌:%s",false),
+    MESSAGE_NAME_TAG_FORBIDDEN_OPERATION(NameTagCommand.FORBIDDEN_MODIFIED_GAMERULE_LOCK, ModPartEnum.COMMAND, "Modifications to content locked by the rules are prohibited. To make changes, please disable the setting that forcefully hides labels above other players' heads.", "禁止修改规则已锁定的内容，如要修改请先关闭强制隐藏他人NameTag规则", "禁止修改規則已鎖定内容，如需修改請先關閉强制隱藏他人頭部NameTag規則",false),
+
+    MESSAGE_MOTION_SETTER_SUCCESSFUL(MotionCommand.MOTION_SETTER_SUCCESSFUL,ModPartEnum.COMMAND,"§bSet Successfully.§a%s§7:§f[§eCurrent Vec§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r","§b设置成功.§a%s§7:§f[§e目前速度§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r","§b設置成功.§a%s§7:§f[§e目前速度§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r",false),
+    MESSAGE_MOTION_ADDER_SUCCESSFUL(MotionCommand.MOTION_ADDER_SUCCESSFUL,ModPartEnum.COMMAND, "§bAdd Successfully.§a%s§7:§f[§eCurrent Vec§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r","§b添加成功.§a%s§7:§f[§e目前速度§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r","§b添加成功.§a%s§7:§f[§e目前速度§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r", false),
     //INFO_MESSAGE
     CHAT_NONE_HEARD_YOU(DefaultTalkArea.CHAT_NONE_HEARD_YOU, ModPartEnum.MESSAGE, "Nobody heard your message", "沒有人接收到你的消息", "無人接收到你的訊息", "无人受子问",false),
     //TEST MESSAGE
     TEST_OPEN_FILE_LINK(TestClientCommand.TEST_KEY_OPEN_FILE_LINK, ModPartEnum.COMMAND, ">> %s",">> %s",">> %s",false),
     //API WEBSOCKET APPLICATION
     PB_LINK_SHOW(APILanguageKey.PB_LINK_OF_QRCODE, ModPartEnum.MESSAGE, "Here is Bind Qrcode Link for DG_LAB PowerBox -> %s","这里是主机绑定二维码链接 -> %s","這裏是主機綁定二維碼鏈接 -> %s",false),
-    PB_BIND_SUC(APILanguageKey.PB_BIND_SUCCESSFUL, ModPartEnum.MESSAGE, "bind successful", "绑定成功" , "綁定成功", false)
+    PB_BIND_SUC(APILanguageKey.PB_BIND_SUCCESSFUL, ModPartEnum.MESSAGE, "bind successful", "绑定成功" , "綁定成功", false),
+    //GAME_RULE_NAME
+    DEFAULT_AREA_TALK_NAME(DefaultTalkArea.NAME_KEY, ModPartEnum.NAME, "Default Area Talk", "默认聊天区域可见半径", "默認聊天區域可見半徑",false),
+    MUST_OTHERS_HIDDEN_NAME_TAG_NAME(MustOthersHiddenNameTag.NAME_KEY, ModPartEnum.NAME, "Force Hide Others' NameTag", "强制隐藏他人名字标签", "强制隱藏他人名字標簽", false),
+    //GAME_RULE_DESCRIPTION
+    DEFAULT_AREA_TALK_DESCRIPTION(DefaultTalkArea.DESCRIPTION_KEY, ModPartEnum.DESCRIPTION, "When the global setting is non-negative, it limits the chat range for all players. If a player's configured chat range is smaller than this value, this rule applies. Otherwise, the player's custom value is used.", "全局区域设置为非负数时，则限制全体玩家的聊天区域。若玩家设置的聊天区域小于该值则采用该规则，反之则采用玩家自定义值", "儅全局區域為非負時，則限制全服玩家聊天區域。若玩家自定義值小於該規則則采用，反之則用玩家自定義值","阖局初置非负数，则限一顾之日下，若立聊城小在直则用其常，若用玩义直上跻之地", false),
+    MUST_OTHERS_HIDDEN_NAME_DESCRIPTION(MustOthersHiddenNameTag.DESCRIPTION_KEY, ModPartEnum.DESCRIPTION, "Forcefully turn off the display of others' NameTags, but it does not affect the display of NameTags through team settings. (After enabling, NameTag cannot be used to control others' head NameTag hidden control)", "强制关闭他人NameTag显示，但不影响通过队伍设置来显示NameTag的情况。（开启后无法使用NameTag来控制他人头部NameTag隐藏控制）", "強制關閉他人NameTag顯示，但不影響通過隊伍設定來顯示NameTag的情况。 （開啟後無法使用NameTag來控制他人頭部NameTag隱藏控制）", false),
+
     ;
 
     private final Supplier<?> supplier;
@@ -72,7 +92,7 @@ public enum ModKeyValue {
     private final String LZH;
     private final Boolean Default;
     private final ModPartEnum MPE;
-    ModKeyValue(Supplier<?> Supplier, ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, String LZH, Boolean isDefault) {
+    ModLangKeyValue(Supplier<?> Supplier, ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, String LZH, Boolean isDefault) {
         this.supplier = Supplier;
         this.MPE = MPE;
         this.US_EN = US_EN;
@@ -81,7 +101,7 @@ public enum ModKeyValue {
         this.LZH = LZH;
         this.Default = isDefault;
     }
-    ModKeyValue(@NotNull String ResourceKey, ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, String LZH, Boolean isDefault) {
+    ModLangKeyValue(@NotNull String ResourceKey, ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, String LZH, Boolean isDefault) {
         this.supplier = null;
         this.key = ResourceKey;
         this.MPE = MPE;
@@ -91,13 +111,13 @@ public enum ModKeyValue {
         this.LZH = LZH;
         this.Default = isDefault;
     }
-    ModKeyValue(Supplier<?> Supplier, ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, Boolean isDefault) {
+    ModLangKeyValue(Supplier<?> Supplier, ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, Boolean isDefault) {
         this(Supplier, MPE, US_EN, SIM_CN, TRA_CN, null, isDefault);
     }
-    ModKeyValue(@NotNull String ResourceKey, ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, Boolean isDefault) {
+    ModLangKeyValue(@NotNull String ResourceKey, ModPartEnum MPE, String US_EN, String SIM_CN, String TRA_CN, Boolean isDefault) {
         this(ResourceKey, MPE, US_EN, SIM_CN, TRA_CN, null, isDefault);
     }
-    public static String getLan(LanguageEnum lan, ModKeyValue key) {
+    public static String getLan(LanguageEnum lan, ModLangKeyValue key) {
         if (lan == null || lan == LanguageEnum.English) return getEnglish(key);
         else {
           switch (lan) {
@@ -116,16 +136,16 @@ public enum ModKeyValue {
           }
         }
     }
-    private static String getEnglish(ModKeyValue key) {
+    private static String getEnglish(ModLangKeyValue key) {
         return key.US_EN;
     }
-    private static String getSimpleChinese(ModKeyValue key) {
+    private static String getSimpleChinese(ModLangKeyValue key) {
         return key.SIM_CN;
     }
-    private static String getTraditionalChinese(ModKeyValue key) {
+    private static String getTraditionalChinese(ModLangKeyValue key) {
         return key.TRA_CN;
     }
-    @Nullable public static String getLiteraryChinese(ModKeyValue key) {
+    @Nullable public static String getLiteraryChinese(ModLangKeyValue key) {
         return key.LZH;
     }
     @NeedCompletedInFuture
@@ -143,10 +163,12 @@ public enum ModKeyValue {
     }
     @SuppressWarnings("null")
     public Item getItem() {
+        assert supplier != null;
         return (Item)supplier.get();
     }
     @SuppressWarnings("null")
     public Block getBlock() {
+        assert supplier != null;
         return (Block)supplier.get();
     }
     public boolean isDefaultItem(){

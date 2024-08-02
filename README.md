@@ -3,9 +3,15 @@
 
 ## 项目概述
 
-本项目基于1.20.6~1.21 Neoforge，目标是基于原版和第三方动画库(Geckolib提高玩家间的互动性
+本项目基于1.21 Neoforge，目标是基于原版和第三方动画库(Geckolib提高玩家间的互动性
 
 ## 项目大致阶段
+
+## 涉及的技术方向
+
+1. **渲染 （相机、实体（人称））**
+2. **Jar混淆技术（Obfuscate）<font color="#ff0000">【闭源】</font>**
+3. **Java Native Interface JNI C/C++ 进行<font color="#00ff00">重量级的操作</font>**
 
 ## 大致方向
 
@@ -22,9 +28,9 @@
 
 * 使用Minecraft网络基于的Netty框架来实现websocket服务
   - [x] Websocket服务器启动
-  - [ ] 服务器逻辑编写
-  - [ ] Websocket客户端逻辑编写
-  - [ ] 实现服务器与客户端通讯
+  - [x] 服务器逻辑编写
+  - [x] Websocket客户端逻辑编写
+  - [x] 实现服务器与客户端通讯
 * 实现聊天区域半径设置
   - [x] 了解原版聊天逻辑
   - [x] Mixin原版原版聊天系统

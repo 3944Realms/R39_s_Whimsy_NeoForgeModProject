@@ -1,4 +1,6 @@
 {
+  "enchantment.whimsicality.change_item": "易",
+  "gamerule.RWN.DefaultTalkArea.description": "阖局初置非负数，则限一顾之日下，若立聊城小在直则用其常，若用玩义直上跻之地",
   "whimsy.chat.none_heard_you": "无人受子问",
   "whimsy.command.chat.message.talkarea.current_config": "§6今聊城可知半径置§e %d§6格§f(§a默§7：§e%d格§f)§r",
   "whimsy.command.chat.message.talkarea.preference.set": "§6默置§e %d§6格§r",

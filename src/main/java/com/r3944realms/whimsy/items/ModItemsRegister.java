@@ -24,6 +24,7 @@ public class ModItemsRegister {
         ITEM_SUPPLIER.add(supplierItem);
         return supplierItem;
     }
+
     @Deprecated(since = "1.0.0.3", forRemoval = true)
     public static String getName(Item items){
         return items.getDescriptionId();

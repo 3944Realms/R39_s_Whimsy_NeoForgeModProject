@@ -12,7 +12,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.neoforged.gradle.userdev' version '7.0.145'
-    id 'com.github.johnrengelman.shadow' version '8.1.1' // Ìí¼Óshadow²å¼ş
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // æ·»åŠ shadowæ’ä»¶
 //    id 'org.gretty' version '4.1.4'
 }
 // In build.gradle:
@@ -51,6 +51,10 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 // Default run configurations.
 // These can be tweaked, removed, or duplicated as needed.
 runs {
+    client {
+        // è®¾ç½®è¿è¡Œåç©å®¶çš„åç§°
+        programArguments = ["--username", "3944Realms"]
+    }
     // applies to all the run configs below
     configureEach {
         // Recommended logging data for a userdev environment
@@ -248,11 +252,11 @@ tasks.register('copyDependencies', Copy) {
     def Libraries = configurations.runtimeClasspath.filter { file ->
         file.name.startsWith("geckolib")
     }
-    from Libraries // Ê¹ÓÃ runtimeClasspath »ñÈ¡¿É½âÎöµÄÒÀÀµ
-    into 'build/libs/modRunLib' // ÕâÀï¿ÉÒÔÊÇ·ÅÖÃÒÀÀµµÄÄ¿Â¼£¬±ÈÈçÄ£×éµÄ libs Ä¿Â¼
+    from Libraries // ä½¿ç”¨ runtimeClasspath è·å–å¯è§£æçš„ä¾èµ–
+    into 'build/libs/modRunLib' // è¿™é‡Œå¯ä»¥æ˜¯æ”¾ç½®ä¾èµ–çš„ç›®å½•ï¼Œæ¯”å¦‚æ¨¡ç»„çš„ libs ç›®å½•
 
 }
-// ÔÚ¹¹½¨ÈÎÎñÖ®Ç°Ö´ĞĞ¸´ÖÆÒÀÀµÈÎÎñ
+// åœ¨æ„å»ºä»»åŠ¡ä¹‹å‰æ‰§è¡Œå¤åˆ¶ä¾èµ–ä»»åŠ¡
 build.dependsOn(copyDependencies)
 minecraft {
     accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")
@@ -277,23 +281,28 @@ shadowJar {
 //    }
 }
 //jar {
-//    dependsOn 'copyDependencies' // ÔÚ´ò°ü JAR Ç°Ö´ĞĞ¸´ÖÆÒÀÀµµÄÈÎÎñ
+//    dependsOn 'copyDependencies' // åœ¨æ‰“åŒ… JAR å‰æ‰§è¡Œå¤åˆ¶ä¾èµ–çš„ä»»åŠ¡
 //
 //    from('build/libs/modRunLib') {
 //        into 'META-INF/jarJar'
-//        // ¿ÉÒÔ¸ù¾İĞèÒªÖ¸¶¨Òª°üº¬µÄÎÄ¼ş»òÎÄ¼şÀàĞÍ
-//        include '**' //Ö»°üº¬ËùÓĞµÄ. ÎÄ¼ş
-//        includeEmptyDirs = false // ²»°üº¬¿ÕÎÄ¼ş¼Ğ
+//        // å¯ä»¥æ ¹æ®éœ€è¦æŒ‡å®šè¦åŒ…å«çš„æ–‡ä»¶æˆ–æ–‡ä»¶ç±»å‹
+//        include '**' //åªåŒ…å«æ‰€æœ‰çš„. æ–‡ä»¶
+//        includeEmptyDirs = false // ä¸åŒ…å«ç©ºæ–‡ä»¶å¤¹
 //    }
 //
-//    duplicatesStrategy = 'warn' // ÉèÖÃÖØ¸´ÎÄ¼şµÄ´¦Àí²ßÂÔ
+//    duplicatesStrategy = 'warn' // è®¾ç½®é‡å¤æ–‡ä»¶çš„å¤„ç†ç­–ç•¥
 ////    manifest {
-////        attributes 'Main-Class': 'com.r3944realms.whimsy.api.SpringBoot.DG_LAB.DG_LAB_WebSocket_SpringBootApplication' // Ìæ»»³ÉÖ÷ÀàÃû
+////        attributes 'Main-Class': 'com.r3944realms.whimsy.api.SpringBoot.DG_LAB.DG_LAB_WebSocket_SpringBootApplication' // æ›¿æ¢æˆä¸»ç±»å
 ////    }
 //}
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xlint:deprecation"
+    options.compilerArgs << "-Xlint:removal"
+    options.compilerArgs << "-Xlint:unchecked"
 }
 
 jarJar.enable()
@@ -328,7 +337,7 @@ tasks.jarJar {
 //        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
 //    }
 //    manifest {
-//        attributes 'Main-Class': 'com.r3944realms.whimsy.WhimsyMod' // Ìæ»»³ÉÄãµÄÖ÷ÀàÃû
+//        attributes 'Main-Class': 'com.r3944realms.whimsy.WhimsyMod' // æ›¿æ¢æˆä½ çš„ä¸»ç±»å
 //    }
 //}
 

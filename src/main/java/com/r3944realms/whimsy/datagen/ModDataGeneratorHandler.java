@@ -1,12 +1,14 @@
 package com.r3944realms.whimsy.datagen;
 
 import com.r3944realms.whimsy.WhimsyMod;
+import com.r3944realms.whimsy.datagen.provider.*;
 import com.r3944realms.whimsy.utils.Enum.LanguageEnum;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataProvider;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.internal.NeoForgeAdvancementProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
@@ -29,6 +31,10 @@ public class ModDataGeneratorHandler {
         BlockStateGenerator(event, existingFileHelper);
         /*Recipe*/
         RecipeGenerator(event, HolderFolder);
+        /*DataPack*/
+        ModDataPackBuiltinEntriesProvider(event, HolderFolder);
+        /*Advancement*/
+        ModAdvancementProvider(event, HolderFolder, existingFileHelper);
         //Forge Part
     }
     private static void addLanguage(GatherDataEvent event, LanguageEnum language, String lan_regex){
@@ -53,6 +59,18 @@ public class ModDataGeneratorHandler {
         event.getGenerator().addProvider(
                 event.includeClient(),
                 (DataProvider.Factory<ModBlockStatesProvider>) pOutput -> new ModBlockStatesProvider(pOutput, WhimsyMod.MOD_ID, helper)
+        );
+    }
+    private static void ModDataPackBuiltinEntriesProvider(GatherDataEvent event, CompletableFuture<HolderLookup.Provider> pLookUpProvider) {
+        event.getGenerator().addProvider(
+                event.includeServer(),
+                (DataProvider.Factory<ModDataPackBuiltInEntriesProvider>) pOutput -> new ModDataPackBuiltInEntriesProvider(pOutput, pLookUpProvider)
+        );
+    }
+    private static void ModAdvancementProvider(GatherDataEvent event, CompletableFuture<HolderLookup.Provider> pLookUpProvider, ExistingFileHelper helper) {
+        event.getGenerator().addProvider(
+                event.includeServer(),
+                (DataProvider.Factory<ModAdvancementProvider>) pOutput -> new ModAdvancementProvider(pOutput, pLookUpProvider, helper)
         );
     }
 }

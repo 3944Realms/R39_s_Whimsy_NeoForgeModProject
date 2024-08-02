@@ -1,4 +1,4 @@
-package com.r3944realms.whimsy.datagen;
+package com.r3944realms.whimsy.datagen.provider;
 
 import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
