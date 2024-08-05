@@ -2,9 +2,12 @@ package com.r3944realms.whimsy.datagen;
 
 import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.datagen.provider.*;
+import com.r3944realms.whimsy.datagen.provider.enchantment.ModEnchantments;
 import com.r3944realms.whimsy.utils.Enum.LanguageEnum;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataProvider;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -27,12 +30,12 @@ public class ModDataGeneratorHandler {
         addLanguage(event, LanguageEnum.LiteraryChinese, "lzh");
         /*Item Model*/
         ItemModelGenerator(event, existingFileHelper);
+        /*DataPack*/
+        ModDataPackBuiltinEntriesProvider(event, HolderFolder);
         /*Block States Register*/
         BlockStateGenerator(event, existingFileHelper);
         /*Recipe*/
         RecipeGenerator(event, HolderFolder);
-        /*DataPack*/
-        ModDataPackBuiltinEntriesProvider(event, HolderFolder);
         /*Advancement*/
         ModAdvancementProvider(event, HolderFolder, existingFileHelper);
         //Forge Part
@@ -70,7 +73,14 @@ public class ModDataGeneratorHandler {
     private static void ModAdvancementProvider(GatherDataEvent event, CompletableFuture<HolderLookup.Provider> pLookUpProvider, ExistingFileHelper helper) {
         event.getGenerator().addProvider(
                 event.includeServer(),
-                (DataProvider.Factory<ModAdvancementProvider>) pOutput -> new ModAdvancementProvider(pOutput, pLookUpProvider, helper)
+                (DataProvider.Factory<ModAdvancementProvider>) pOutput -> {
+                    try {
+                        Thread.sleep(1000);//最Low的方法，目前沒想到其他方法來更好的控制，只能拉延遲
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return new ModAdvancementProvider(pOutput, pLookUpProvider, helper);
+                }
         );
     }
 }

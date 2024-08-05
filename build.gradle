@@ -51,6 +51,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 // Default run configurations.
 // These can be tweaked, removed, or duplicated as needed.
 runs {
+
     client {
         // 设置运行后玩家的名称
         programArguments = ["--username", "3944Realms"]
@@ -92,7 +93,7 @@ runs {
     data {
         // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
         // workingDirectory project.file('run-data')
-
+        systemProperty('gradle.task', 'runData')
         // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
         programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }

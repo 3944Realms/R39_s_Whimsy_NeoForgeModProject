@@ -3,6 +3,7 @@
   "mixins": [
     "client.player.MixinPlayer",
     "network.MixinConnection",
+    "registry.MixinEnchantments",
     "server.MixinPlayerList",
     "server.MixinServerPlayer"
   ],

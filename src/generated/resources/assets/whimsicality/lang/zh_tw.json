@@ -1,4 +1,6 @@
 {
+  "advancement.whimsicality.change_item": "以己之矛，攻子之盾",
+  "advancement.whimsicality.change_item.desc": "通過附魔來交換雙方物品",
   "advancement.whimsicality.root": "奇思妙想",
   "advancement.whimsicality.root.desc": "感謝游玩，快樂至上",
   "block.whimsicality.test_block": "測試方塊",

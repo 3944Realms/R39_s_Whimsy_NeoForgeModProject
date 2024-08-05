@@ -19,19 +19,26 @@ import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.item.enchantment.effects.AddValue;
 import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.Tags;
+
 
 public class ModEnchantments {
+
     public static final ResourceKey<Enchantment> DEATH_EYES = Key("death_eyes");
     public static final ResourceKey<Enchantment> CHANGE_ITEM = Key("change_item");
-    public static void bootstrap(BootstrapContext<Enchantment> context) {
-        HolderGetter<DamageType> damageTypeHolderGetter = context.lookup(Registries.DAMAGE_TYPE);
-        HolderGetter<Enchantment> enchantmentHolderGetter = context.lookup(Registries.ENCHANTMENT);
-        HolderGetter<Item> itemHolderGetter = context.lookup(Registries.ITEM);
-        HolderGetter<Block> blockHolderGetter = context.lookup(Registries.BLOCK);
 
-        register(
-                context,
-                DEATH_EYES,
+    public static void bootstrap(BootstrapContext<Enchantment> pContext) {
+        EnchantmentBootstrap(pContext);
+    }
+
+    public static void EnchantmentBootstrap(BootstrapContext<Enchantment> pContext) {
+        HolderGetter<DamageType> damageTypeHolderGetter = pContext.lookup(Registries.DAMAGE_TYPE);
+        HolderGetter<Enchantment> enchantmentHolderGetter = pContext.lookup(Registries.ENCHANTMENT);
+        HolderGetter<Item> itemHolderGetter = pContext.lookup(Registries.ITEM);
+        HolderGetter<Block> blockHolderGetter = pContext.lookup(Registries.BLOCK);
+        ModEnchantments.register(
+                pContext,
+                ModEnchantments.DEATH_EYES,
                 Enchantment.enchantment(
                         Enchantment.definition(
                                 itemHolderGetter.getOrThrow(ItemTags.AXES),
@@ -50,35 +57,38 @@ public class ModEnchantments {
                                 AttributeModifier.Operation.ADD_VALUE
                         )
                 ).withEffect(
-                            ModEnchantmentEffectComponents.DEATH_EYES.get(),
-                            new AddValue(LevelBasedValue.constant(1))
+                        ModEnchantmentEffectComponents.DEATH_EYES.get(),
+                        new AddValue(LevelBasedValue.constant(1))
                 )
         );
-        register(
-               context,
-               CHANGE_ITEM,
-               Enchantment.enchantment(
-                       Enchantment.definition(
-                               itemHolderGetter.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                               2,
-                               1,
-                               Enchantment.constantCost(25),
-                               Enchantment.constantCost(20),
-                               8, EquipmentSlotGroup.MAINHAND
-                       )
-               ).withEffect(
-                    ModEnchantmentEffectComponents.CHANGE_ITEM.get(),
-                       new AddValue(LevelBasedValue.constant(1))
-               )
+        ModEnchantments.register(
+                pContext,
+                ModEnchantments.CHANGE_ITEM,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(Tags.Items.ENCHANTABLES),
+                                2,
+                                1,
+                                Enchantment.constantCost(25),
+                                Enchantment.constantCost(20),
+                                8, EquipmentSlotGroup.MAINHAND
+                        )
+                ).withEffect(
+                        ModEnchantmentEffectComponents.CHANGE_ITEM.get(),
+                        new AddValue(LevelBasedValue.constant(1))
+                )
         );
     }
-    private static void register(BootstrapContext<Enchantment> context, ResourceKey<Enchantment> key, Enchantment.Builder builder) {
+
+    public static void register(BootstrapContext<Enchantment> context, ResourceKey<Enchantment> key, Enchantment.Builder builder) {
         context.register(key, builder.build(key.location()));
     }
-    private static ResourceKey<Enchantment> Key(String name) {
+    public static ResourceKey<Enchantment> Key(String name) {
         return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(WhimsyMod.MOD_ID, name));
     }
     public static String getEnchantmentKey(String enchantmentName) {
+
         return "enchantment." + WhimsyMod.MOD_ID + "." + enchantmentName;
     }
+
 }

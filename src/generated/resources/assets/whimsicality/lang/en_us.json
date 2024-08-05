@@ -1,4 +1,6 @@
 {
+  "advancement.whimsicality.change_item": "Fight your own shield with your spear",
+  "advancement.whimsicality.change_item.desc": "Change each other item by enchantment",
   "advancement.whimsicality.root": "Whimsy",
   "advancement.whimsicality.root.desc": "Welcome Join this world.Have Fun !",
   "block.whimsicality.test_block": "Test Block",

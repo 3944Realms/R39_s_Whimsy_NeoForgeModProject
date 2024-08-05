@@ -5,7 +5,8 @@ import com.r3944realms.whimsy.WhimsyMod;
 import javax.annotation.Nullable;
 
 public enum ModAdvancementKey {
-    RWN_WELCOME("root", null)
+    RWN_WELCOME("root", null),
+    RWN_CHANGE_ITEM("change_item", RWN_WELCOME),
     ;
     private final String Name;
     @Nullable

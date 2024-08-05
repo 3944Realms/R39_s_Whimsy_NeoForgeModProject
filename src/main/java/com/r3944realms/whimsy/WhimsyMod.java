@@ -2,6 +2,7 @@ package com.r3944realms.whimsy;
 
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.r3944realms.whimsy.advancements.ModCriteriaTriggers;
 import com.r3944realms.whimsy.api.manager.WebsocketServerManager;
 import com.r3944realms.whimsy.api.websocket.WebSocketServer;
 import com.r3944realms.whimsy.blocks.ModBlocksRegister;
@@ -23,7 +24,9 @@ import com.r3944realms.whimsy.network.payload.BooleanGameRuleValueChangeData;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
@@ -34,6 +37,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 
 
 //2024-05-18 ACC
@@ -62,7 +66,7 @@ public class WhimsyMod {
         ModBlocksRegister.register(modEventBus);//BlockRegister
         ModCreativeTab.register(modEventBus);//CreativeTabRegister
         ModEnchantmentEffectComponents.register(modEventBus);//ModEnchantmentEffectComponents
-
+        ModCriteriaTriggers.register(modEventBus);//CriteriaTriggers
         }
     private void initialize() {
         String Websocket = "Websocket";
@@ -117,5 +121,6 @@ public class WhimsyMod {
 //           event.register(new ClientGameRulesSyncConfigurationTask(event.getListener()));
 //       }
 //   }
+
 }
 

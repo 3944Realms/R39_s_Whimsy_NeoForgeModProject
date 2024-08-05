@@ -37,6 +37,8 @@ public enum ModLangKeyValue {
     //ADVANCEMENT
     NAME_START_ADV(ModAdvancementKey.RWN_WELCOME.getNameKey(), ModPartEnum.ADVANCEMENT, "Whimsy", "奇思妙想", "奇思妙想", false),
     DES_START_ADV(ModAdvancementKey.RWN_WELCOME.getDescKey(), ModPartEnum.DESCRIPTION, "Welcome Join this world.Have Fun !", "欢迎加入，快乐至上", "感謝游玩，快樂至上", false),
+    NAME_CHANGE_ITEM_ADV(ModAdvancementKey.RWN_CHANGE_ITEM.getNameKey(), ModPartEnum.ADVANCEMENT, "Fight your own shield with your spear", "以子之矛，攻子之盾", "以己之矛，攻子之盾",false),
+    DES_CHANGE_ITEM_ADV(ModAdvancementKey.RWN_CHANGE_ITEM.getDescKey(), ModPartEnum.DESCRIPTION, "Change each other item by enchantment", "通过附魔来交换双方的物品", "通過附魔來交換雙方物品", false),
     //NETWORK_MESSAGE
     MESSAGE_NET_ACK_FAILED(NetworkHandler.ACK_FAILED, ModPartEnum.MESSAGE, "ACK FAILED", "确认失败", "確認失敗","确认，不成",false),
     MESSAGE_NET_WB_CLIENT_SYNC_FAILED(NetworkHandler.WS_CLIENT_SYNC_FAILED, ModPartEnum.MESSAGE,"Sync the address of Websocket Server Failed", "同步服务器Websocket地址失败", "同步伺服器Websocket地址失敗","同步服务器Websocket地址，不果",false),

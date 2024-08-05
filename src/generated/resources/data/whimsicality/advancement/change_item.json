@@ -1,0 +1,39 @@
+{
+  "parent": "whimsicality:root",
+  "criteria": {
+    "change_item": {
+      "conditions": {
+        "enchantments": {
+          "enchantments": "whimsicality:change_item",
+          "levels": {
+            "min": 1
+          }
+        },
+        "item": {
+          "items": "#c:enchantables"
+        }
+      },
+      "trigger": "whimsicality:enchantment_item_used"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.whimsicality.change_item.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:flint_and_steel"
+    },
+    "title": {
+      "translate": "advancement.whimsicality.change_item"
+    }
+  },
+  "requirements": [
+    [
+      "change_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
