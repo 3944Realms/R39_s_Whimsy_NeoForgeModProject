@@ -7,6 +7,7 @@
   "creativetab.whimsicality.test_tab": "測試創造物品欄",
   "enchantment.whimsicality.change_item": "易物",
   "enchantment.whimsicality.death_eyes": "死亡之眼",
+  "enchantment.whimsicality.random_enchantment": "§k#§r隨機§k#§r",
   "gamerule.RWN.DefaultTalkArea": "默認聊天區域可見半徑",
   "gamerule.RWN.DefaultTalkArea.description": "儅全局區域為非負時，則限制全服玩家聊天區域。若玩家自定義值小於該規則則采用，反之則用玩家自定義值",
   "gamerule.RWN.MustOthersHiddenNameTag": "强制隱藏他人名字標簽",

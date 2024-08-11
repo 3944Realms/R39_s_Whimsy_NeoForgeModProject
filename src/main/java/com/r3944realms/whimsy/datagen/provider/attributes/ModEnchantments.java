@@ -1,4 +1,4 @@
-package com.r3944realms.whimsy.datagen.provider.enchantment;
+package com.r3944realms.whimsy.datagen.provider.attributes;
 
 import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.items.enchantment.ModEnchantmentEffectComponents;
@@ -21,11 +21,21 @@ import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ModEnchantments {
-
+    public static final List<ResourceKey<Enchantment>> ModEnchantmentResourceKeys = new ArrayList<>();
     public static final ResourceKey<Enchantment> DEATH_EYES = Key("death_eyes");
     public static final ResourceKey<Enchantment> CHANGE_ITEM = Key("change_item");
+    public static final ResourceKey<Enchantment> RANDOM_ENCHANTMENT = Key("random_enchantment");
+
+    static {
+        ModEnchantmentResourceKeys.add(DEATH_EYES);
+        ModEnchantmentResourceKeys.add(CHANGE_ITEM);
+        ModEnchantmentResourceKeys.add(RANDOM_ENCHANTMENT);
+    }
 
     public static void bootstrap(BootstrapContext<Enchantment> pContext) {
         EnchantmentBootstrap(pContext);
@@ -76,6 +86,23 @@ public class ModEnchantments {
                 ).withEffect(
                         ModEnchantmentEffectComponents.CHANGE_ITEM.get(),
                         new AddValue(LevelBasedValue.constant(1))
+                )
+        );
+        ModEnchantments.register(
+                pContext,
+                ModEnchantments.RANDOM_ENCHANTMENT,
+                Enchantment.enchantment(
+                        Enchantment.definition(
+                                itemHolderGetter.getOrThrow(Tags.Items.ENCHANTABLES),
+                                2,
+                                5,
+                                Enchantment.constantCost(20),
+                                Enchantment.constantCost(10),
+                                8, EquipmentSlotGroup.MAINHAND
+                        )
+                ).withEffect(
+                    ModEnchantmentEffectComponents.RANDOM_ENCHANTMENT.get(),
+                    new AddValue(LevelBasedValue.constant(1))
                 )
         );
     }

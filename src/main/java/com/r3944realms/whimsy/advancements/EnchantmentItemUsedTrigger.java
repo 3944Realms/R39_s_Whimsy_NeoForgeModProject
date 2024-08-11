@@ -2,22 +2,13 @@ package com.r3944realms.whimsy.advancements;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.r3944realms.whimsy.items.enchantment.ModEnchantmentHelper;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.core.component.DataComponentType;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.ConditionalEffect;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
-import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Optional;
 
 public class EnchantmentItemUsedTrigger extends SimpleCriterionTrigger<EnchantmentItemUsedTrigger.TriggerInstance> {
@@ -26,7 +17,7 @@ public class EnchantmentItemUsedTrigger extends SimpleCriterionTrigger<Enchantme
         return EnchantmentItemUsedTrigger.TriggerInstance.CODEC;
     }
     public void trigger(ServerPlayer pPlayer, ItemStack pItem, ItemEnchantments enchantment) {
-        this.trigger(pPlayer, p_163870_ -> p_163870_.matches(pItem, enchantment));
+       this.trigger(pPlayer, p_163870_ -> p_163870_.matches(pItem, enchantment));
     }
     public record TriggerInstance(
             Optional<ContextAwarePredicate> player, Optional<ItemPredicate> itemStack, Optional<EnchantmentPredicate> enchantment

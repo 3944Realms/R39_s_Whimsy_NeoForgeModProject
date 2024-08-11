@@ -1,0 +1,30 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "translate": "enchantment.whimsicality.random_enchantment"
+  },
+  "effects": {
+    "whimsicality:random_enchantment": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": 1.0
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 10,
+    "per_level_above_first": 0
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 20,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#c:enchantables",
+  "weight": 2
+}

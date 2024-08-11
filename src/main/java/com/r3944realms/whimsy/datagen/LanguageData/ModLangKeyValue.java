@@ -8,7 +8,7 @@ import com.r3944realms.whimsy.command.TestClientCommand;
 import com.r3944realms.whimsy.command.Websocket.WebSocketClientCommand;
 import com.r3944realms.whimsy.command.Websocket.WebSocketServerCommand;
 import com.r3944realms.whimsy.command.miscCommand.MotionCommand;
-import com.r3944realms.whimsy.datagen.provider.enchantment.ModEnchantments;
+import com.r3944realms.whimsy.datagen.provider.attributes.ModEnchantments;
 import com.r3944realms.whimsy.gamerule.ClientRender.MustOthersHiddenNameTag;
 import com.r3944realms.whimsy.gamerule.ServerChat.DefaultTalkArea;
 import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
@@ -34,6 +34,7 @@ public enum ModLangKeyValue {
     //ENCHANTMENT
     DEAD_EYES(ModEnchantments.getEnchantmentKey("death_eyes"), ModPartEnum.ENCHANTMENT, "Death Eyes", "死亡之眼", "死亡之眼", false),
     CHANGE_ITEM(ModEnchantments.getEnchantmentKey("change_item"), ModPartEnum.ENCHANTMENT, "Change item", "易物", "易物", "易", false),
+    RANDOM_ENCHANTMENT(ModEnchantments.getEnchantmentKey("random_enchantment"), ModPartEnum.ENCHANTMENT, "§k#§rRandom§k#§r", "§k#§r随机§k#§r", "§k#§r隨機§k#§r", false),
     //ADVANCEMENT
     NAME_START_ADV(ModAdvancementKey.RWN_WELCOME.getNameKey(), ModPartEnum.ADVANCEMENT, "Whimsy", "奇思妙想", "奇思妙想", false),
     DES_START_ADV(ModAdvancementKey.RWN_WELCOME.getDescKey(), ModPartEnum.DESCRIPTION, "Welcome Join this world.Have Fun !", "欢迎加入，快乐至上", "感謝游玩，快樂至上", false),

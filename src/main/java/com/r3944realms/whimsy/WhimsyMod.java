@@ -11,9 +11,10 @@ import com.r3944realms.whimsy.command.PlayerProperty.NameTagCommand;
 import com.r3944realms.whimsy.command.TestServerCommand;
 import com.r3944realms.whimsy.command.Websocket.WebSocketServerCommand;
 import com.r3944realms.whimsy.command.miscCommand.MotionCommand;
-import com.r3944realms.whimsy.config.TestConfig;
+import com.r3944realms.whimsy.config.ModMiscConfig;
 import com.r3944realms.whimsy.config.WebSocketClientConfig;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
+import com.r3944realms.whimsy.datagen.provider.attributes.ModDataComponents;
 import com.r3944realms.whimsy.gamerule.ClientRender.MustOthersHiddenNameTag;
 import com.r3944realms.whimsy.gamerule.Gamerules;
 import com.r3944realms.whimsy.init.FilePathHelper;
@@ -24,9 +25,7 @@ import com.r3944realms.whimsy.network.payload.BooleanGameRuleValueChangeData;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
@@ -37,7 +36,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 
 
 //2024-05-18 ACC
@@ -67,11 +65,12 @@ public class WhimsyMod {
         ModCreativeTab.register(modEventBus);//CreativeTabRegister
         ModEnchantmentEffectComponents.register(modEventBus);//ModEnchantmentEffectComponents
         ModCriteriaTriggers.register(modEventBus);//CriteriaTriggers
+        ModDataComponents.register(modEventBus);//DataComponents
         }
     private void initialize() {
         String Websocket = "Websocket";
         FilePathHelper.configWhimsyFile(new String[]{Websocket});//初始化配置文件目录
-        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, TestConfig.SPEC, MOD_ID + "/whimsicality_config.toml");
+        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, ModMiscConfig.SPEC, MOD_ID + "/whimsicality_config.toml");
         ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, WebSocketServerConfig.SPEC, MOD_ID + "/"+ Websocket +"/whimsicality_config_websocketServer.toml");
         ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIENT, WebSocketClientConfig.SPEC, MOD_ID + "/"+ Websocket +"/whimsicality_config_websocketClient.toml");
 

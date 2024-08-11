@@ -9,6 +9,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -23,10 +24,13 @@ public interface ModEnchantmentEffectComponents {
             "change_item",
             listBuilder -> listBuilder.persistent(ConditionalEffect.codec(EnchantmentValueEffect.CODEC, LootContextParamSets.ENCHANTED_ITEM).listOf())
     );
+    DeferredHolder<DataComponentType<?>, DataComponentType<List<ConditionalEffect<EnchantmentValueEffect>>>> RANDOM_ENCHANTMENT = register(
+            "random_enchantment",
+            listBuilder -> listBuilder.persistent(ConditionalEffect.codec(EnchantmentValueEffect.CODEC, LootContextParamSets.ENCHANTED_ITEM).listOf())
+    );
 
     private static <T> DeferredHolder<DataComponentType<?>,DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> operator) {
         return ENCHANTMENT_COMPONENTS.register(name,()-> operator.apply(DataComponentType.builder()).build());
-
     }
 
 

@@ -29,8 +29,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     private boolean isDataGeneration() {
         // 使用你的逻辑来检查是否在数据生成阶段
-        String environment = System.getProperty("minecraft.env");
-        return "data".equals(environment);
+        String environment = System.getProperty("gradle.task");
+        return "runData".equals(environment);
     }
 
     @Override

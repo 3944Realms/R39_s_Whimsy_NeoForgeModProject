@@ -70,7 +70,7 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
                         File file = FilePathHelper.get_HCJ_HTML_Path().toFile().getAbsoluteFile();
                         MutableComponent fileComponent = Component.literal(file.getName()).withStyle(ChatFormatting.UNDERLINE);
                         fileComponent.withStyle((style) -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath())));
-                        Component link_display = Component.translatable(APILanguageKey.PB_LINK_OF_QRCODE,fileComponent);
+                        Component link_display = Component.translatable(APILanguageKey.PB_LINK_OF_QRCODE, fileComponent);
                         NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, link_display);
                     } catch (Exception e) {
                         logger.debug("Notice File Link Failed");

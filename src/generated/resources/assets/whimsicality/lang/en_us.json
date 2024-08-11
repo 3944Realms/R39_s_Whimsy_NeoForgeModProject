@@ -7,6 +7,7 @@
   "creativetab.whimsicality.test_tab": "Test Creative Tab",
   "enchantment.whimsicality.change_item": "Change item",
   "enchantment.whimsicality.death_eyes": "Death Eyes",
+  "enchantment.whimsicality.random_enchantment": "§k#§rRandom§k#§r",
   "gamerule.RWN.DefaultTalkArea": "Default Area Talk",
   "gamerule.RWN.DefaultTalkArea.description": "When the global setting is non-negative, it limits the chat range for all players. If a player's configured chat range is smaller than this value, this rule applies. Otherwise, the player's custom value is used.",
   "gamerule.RWN.MustOthersHiddenNameTag": "Force Hide Others' NameTag",

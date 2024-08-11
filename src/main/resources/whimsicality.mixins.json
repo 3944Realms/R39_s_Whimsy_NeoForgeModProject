@@ -1,7 +1,27 @@
 {
   "package": "com.r3944realms.whimsy.mixin",
   "mixins": [
-    "client.player.MixinPlayer",
+    "bothSide.player.MixinPlayer",
+    "enchantmentBlock.custom.MixinBrushableBlock",
+    "enchantmentBlock.custom.MixinFallable",
+    "enchantmentBlock.custom.MixinFallingBlock",
+    "enchantmentBlock.custom.MixinPointedDripstoneBlock",
+    "enchantmentBlock.main.MixinBlock",
+    "enchantmentBlock.main.MixinBrushItem",
+    "enchantmentBlock.main.MixinPistonBlock",
+    "enchantmentBlock.main.MixinPlayerEntity",
+    "enchantmentBlock.main.MixinWorld",
+    "enchantmentBlock.main.sigleinject.MixinAbstractRedStoneGateBlock",
+    "enchantmentBlock.main.sigleinject.MixinCommandBlock",
+    "enchantmentBlock.main.sigleinject.MixinCraftBlock",
+    "enchantmentBlock.main.sigleinject.MixinDoorBlock",
+    "enchantmentBlock.main.sigleinject.MixinDoublePlantBlock",
+    "enchantmentBlock.main.sigleinject.MixinPitcherCropBlock",
+    "enchantmentBlock.main.sigleinject.MixinSmallDripleafBlock",
+    "enchantmentBlock.main.sigleinject.MixinStructBlock",
+    "enchantmentBlock.main.sigleinject.MixinTripWireHookBlock",
+    "enchantmentBlock.main.sigleinject.MixinWebBlock",
+    "enchantmentItem.MixinEnchantment",
     "network.MixinConnection",
     "registry.MixinEnchantments",
     "server.MixinPlayerList",
@@ -16,5 +36,6 @@
   "refmap": "whimsicality.refmap.json",
   "required": true,
   "minVersion": "0.8",
-  "compatibilityLevel": "JAVA_8"
+  "compatibilityLevel": "JAVA_8",
+  "plugin": "com.r3944realms.whimsy.mixin.MixinPlugin"
 }

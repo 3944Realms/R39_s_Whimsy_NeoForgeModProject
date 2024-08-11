@@ -1,12 +1,11 @@
 package com.r3944realms.whimsy.datagen.provider;
 
 import com.r3944realms.whimsy.WhimsyMod;
-import com.r3944realms.whimsy.datagen.provider.enchantment.ModEnchantments;
+import com.r3944realms.whimsy.datagen.provider.attributes.ModEnchantments;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 
 import java.util.Set;

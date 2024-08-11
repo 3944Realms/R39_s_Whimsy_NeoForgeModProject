@@ -1,4 +1,4 @@
-package com.r3944realms.whimsy.mixin.client.player;
+package com.r3944realms.whimsy.mixin.bothSide.player;
 
 import com.r3944realms.whimsy.gamerule.ClientRender.MustOthersHiddenNameTag;
 import com.r3944realms.whimsy.gamerule.GameruleRegistry;
