@@ -1,8 +1,8 @@
 package com.r3944realms.whimsy.mixin.server;
 
-import com.r3944realms.whimsy.gamerule.GameruleRegistry;
-import com.r3944realms.whimsy.gamerule.ServerChat.DefaultTalkArea;
-import com.r3944realms.whimsy.player.ServerPlayerCapacity;
+import com.r3944realms.whimsy.content.gamerules.GameruleRegistry;
+import com.r3944realms.whimsy.content.gamerules.ServerChat.DefaultTalkArea;
+import com.r3944realms.whimsy.modInterface.player.ServerPlayerCapacity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;

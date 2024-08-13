@@ -2,8 +2,8 @@ package com.r3944realms.whimsy.network;
 
 import com.r3944realms.whimsy.api.manager.WebsocketClientManager;
 import com.r3944realms.whimsy.api.websocket.WebSocketClient;
-import com.r3944realms.whimsy.gamerule.GameruleRegistry;
-import com.r3944realms.whimsy.gamerule.Gamerules;
+import com.r3944realms.whimsy.content.gamerules.GameruleRegistry;
+import com.r3944realms.whimsy.content.gamerules.Gamerules;
 import com.r3944realms.whimsy.network.payload.*;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.minecraft.client.Minecraft;

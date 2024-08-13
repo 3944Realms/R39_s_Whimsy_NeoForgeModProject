@@ -2,25 +2,26 @@ package com.r3944realms.whimsy;
 
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.r3944realms.whimsy.advancements.ModCriteriaTriggers;
 import com.r3944realms.whimsy.api.manager.WebsocketServerManager;
 import com.r3944realms.whimsy.api.websocket.WebSocketServer;
-import com.r3944realms.whimsy.blocks.ModBlocksRegister;
-import com.r3944realms.whimsy.command.PlayerProperty.ChatCommand;
-import com.r3944realms.whimsy.command.PlayerProperty.NameTagCommand;
-import com.r3944realms.whimsy.command.TestServerCommand;
-import com.r3944realms.whimsy.command.Websocket.WebSocketServerCommand;
-import com.r3944realms.whimsy.command.miscCommand.MotionCommand;
 import com.r3944realms.whimsy.config.ModMiscConfig;
 import com.r3944realms.whimsy.config.WebSocketClientConfig;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
-import com.r3944realms.whimsy.datagen.provider.attributes.ModDataComponents;
-import com.r3944realms.whimsy.gamerule.ClientRender.MustOthersHiddenNameTag;
-import com.r3944realms.whimsy.gamerule.Gamerules;
+import com.r3944realms.whimsy.content.advancements.ModCriteriaTriggers;
+import com.r3944realms.whimsy.content.blocks.ModBlocksRegister;
+import com.r3944realms.whimsy.content.commands.MiscCommand.MotionCommand;
+import com.r3944realms.whimsy.content.commands.PlayerProperty.ChatCommand;
+import com.r3944realms.whimsy.content.commands.PlayerProperty.NameTagCommand;
+import com.r3944realms.whimsy.content.commands.TestServerCommand;
+import com.r3944realms.whimsy.content.commands.Websocket.WebSocketServerCommand;
+import com.r3944realms.whimsy.content.components.ModDataComponents;
+import com.r3944realms.whimsy.content.gamerules.ClientRender.MustOthersHiddenNameTag;
+import com.r3944realms.whimsy.content.gamerules.Gamerules;
+import com.r3944realms.whimsy.content.items.CreativeModeTab.ModCreativeTab;
+import com.r3944realms.whimsy.content.items.ModItemsRegister;
+import com.r3944realms.whimsy.content.items.enchantment.ModEnchantmentEffectComponents;
+import com.r3944realms.whimsy.content.paintings.ModPaintingsRegister;
 import com.r3944realms.whimsy.init.FilePathHelper;
-import com.r3944realms.whimsy.items.CreativeModeTab.ModCreativeTab;
-import com.r3944realms.whimsy.items.ModItemsRegister;
-import com.r3944realms.whimsy.items.enchantment.ModEnchantmentEffectComponents;
 import com.r3944realms.whimsy.network.payload.BooleanGameRuleValueChangeData;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.minecraft.commands.CommandSourceStack;
@@ -62,6 +63,7 @@ public class WhimsyMod {
         logger.info();//Be careful about its loading order
         ModItemsRegister.register(modEventBus);//ItemsRegister
         ModBlocksRegister.register(modEventBus);//BlockRegister
+        ModPaintingsRegister.register(modEventBus);//Painting
         ModCreativeTab.register(modEventBus);//CreativeTabRegister
         ModEnchantmentEffectComponents.register(modEventBus);//ModEnchantmentEffectComponents
         ModCriteriaTriggers.register(modEventBus);//CriteriaTriggers

@@ -2,6 +2,7 @@ package com.r3944realms.whimsy.datagen.provider;
 
 import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.datagen.provider.attributes.ModEnchantments;
+import com.r3944realms.whimsy.datagen.provider.attributes.ModPaintingVariants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -14,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModDataPackBuiltInEntriesProvider extends DatapackBuiltinEntriesProvider {
 
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
+            .add(Registries.PAINTING_VARIANT, ModPaintingVariants::bootstrap)
             .add(Registries.ENCHANTMENT, ModEnchantments::bootstrap);
 
     public ModDataPackBuiltInEntriesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

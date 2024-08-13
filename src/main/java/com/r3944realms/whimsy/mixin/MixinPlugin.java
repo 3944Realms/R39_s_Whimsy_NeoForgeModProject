@@ -21,7 +21,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         // 检查当前是否在数据生成阶段
         // 根据需要添加逻辑来控制特定Mixin类的应用
-        if (mixinClassName.equals("com.r3944realms.whimsy.mixin.registry.MixinEnchantments")) {
+        boolean isRegister = mixinClassName.split("com\\.r3944realms\\.whimsy\\.mixin\\.")[1].split("\\.")[0].equals("registry");
+        if (isRegister) {
             return isDataGeneration();
         }
         return true; // 其他Mixin类默认应用

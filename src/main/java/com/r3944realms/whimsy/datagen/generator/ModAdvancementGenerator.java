@@ -1,8 +1,8 @@
 package com.r3944realms.whimsy.datagen.generator;
 
 import com.r3944realms.whimsy.WhimsyMod;
-import com.r3944realms.whimsy.advancements.EnchantmentItemUsedTrigger;
-import com.r3944realms.whimsy.datagen.LanguageData.ModAdvancementKey;
+import com.r3944realms.whimsy.content.advancements.EnchantmentItemUsedTrigger;
+import com.r3944realms.whimsy.datagen.LanguageAndOtherData.ModAdvancementKey;
 import com.r3944realms.whimsy.datagen.provider.attributes.ModEnchantments;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -34,7 +34,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 Component.translatable(ModAdvancementKey.RWN_WELCOME.getNameKey()),
                 Component.translatable(ModAdvancementKey.RWN_WELCOME.getDescKey()),
                 //BACKGROUND
-                ResourceLocation.fromNamespaceAndPath(WhimsyMod.MOD_ID, "textures/gui/advancements/backgrounds/whimsy.png"),
+                ResourceLocation.fromNamespaceAndPath(WhimsyMod.MOD_ID, "textures/gui/advancements/backgrounds/dynamic_texture_item.png"),
                 AdvancementType.TASK,
                 true,
                 false,

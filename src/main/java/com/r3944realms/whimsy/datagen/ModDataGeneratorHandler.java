@@ -32,6 +32,8 @@ public class ModDataGeneratorHandler {
         BlockStateGenerator(event, existingFileHelper);
         /*Recipe*/
         RecipeGenerator(event, HolderFolder);
+        /*PaintingTag*/
+        ModPaintVariantTagsProvider(event, HolderFolder, existingFileHelper);
         /*Advancement*/
         ModAdvancementProvider(event, HolderFolder, existingFileHelper);
         //Forge Part
@@ -64,6 +66,14 @@ public class ModDataGeneratorHandler {
         event.getGenerator().addProvider(
                 event.includeServer(),
                 (DataProvider.Factory<ModDataPackBuiltInEntriesProvider>) pOutput -> new ModDataPackBuiltInEntriesProvider(pOutput, pLookUpProvider)
+        );
+    }
+    private static void ModPaintVariantTagsProvider(GatherDataEvent event, CompletableFuture<HolderLookup.Provider> completableFuture, ExistingFileHelper helper) {
+        event.getGenerator().addProvider(
+                event.includeServer(),
+                (DataProvider.Factory<ModPaintingVariantTagsProvider>) pOutput -> {
+                  return new ModPaintingVariantTagsProvider(pOutput, completableFuture, WhimsyMod.MOD_ID, helper);
+                }
         );
     }
     private static void ModAdvancementProvider(GatherDataEvent event, CompletableFuture<HolderLookup.Provider> pLookUpProvider, ExistingFileHelper helper) {

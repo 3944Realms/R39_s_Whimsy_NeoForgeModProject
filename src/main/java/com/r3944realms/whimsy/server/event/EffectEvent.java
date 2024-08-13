@@ -1,19 +1,18 @@
 package com.r3944realms.whimsy.server.event;
 
 import com.r3944realms.whimsy.WhimsyMod;
-import com.r3944realms.whimsy.advancements.ModCriteriaTriggers;
-import com.r3944realms.whimsy.blocks.enchantmentBlock.BlockEnchantmentStorage;
-import com.r3944realms.whimsy.datagen.provider.attributes.ModDataComponents;
+import com.r3944realms.whimsy.content.advancements.ModCriteriaTriggers;
+import com.r3944realms.whimsy.content.blocks.enchantmentBlock.BlockEnchantmentStorage;
+import com.r3944realms.whimsy.content.components.ModDataComponents;
+import com.r3944realms.whimsy.content.items.enchantment.ModEnchantmentEffectComponents;
+import com.r3944realms.whimsy.content.items.enchantment.ModEnchantmentHelper;
 import com.r3944realms.whimsy.datagen.provider.attributes.ModEnchantments;
-import com.r3944realms.whimsy.items.enchantment.ModEnchantmentEffectComponents;
-import com.r3944realms.whimsy.items.enchantment.ModEnchantmentHelper;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.component.PatchedDataComponentMap;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
@@ -80,6 +79,7 @@ public class EffectEvent {
 
         }
     }
+    //ITEM store StartPos
     @SubscribeEvent
     public static void onPlayerAttack(PlayerInteractEvent.LeftClickBlock event){
         if(event.getLevel() instanceof ServerLevel) {

@@ -1,17 +1,14 @@
 package com.r3944realms.whimsy.server.event;
 
 import com.r3944realms.whimsy.WhimsyMod;
-import com.r3944realms.whimsy.datagen.provider.attributes.ModDataComponents;
+import com.r3944realms.whimsy.content.components.ModDataComponents;
+import com.r3944realms.whimsy.content.items.enchantment.ModEnchantmentEffectComponents;
+import com.r3944realms.whimsy.content.items.enchantment.ModEnchantmentHelper;
 import com.r3944realms.whimsy.datagen.provider.attributes.ModEnchantments;
-import com.r3944realms.whimsy.items.enchantment.ModEnchantmentEffectComponents;
-import com.r3944realms.whimsy.items.enchantment.ModEnchantmentHelper;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;

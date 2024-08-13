@@ -19,7 +19,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "background": "whimsicality:textures/gui/advancements/backgrounds/whimsy.png",
+    "background": "whimsicality:textures/gui/advancements/backgrounds/dynamic_texture_item.png",
     "description": {
       "translate": "advancement.whimsicality.root.desc"
     },

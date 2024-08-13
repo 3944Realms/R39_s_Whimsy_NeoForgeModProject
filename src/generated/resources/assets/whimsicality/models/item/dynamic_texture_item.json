@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "whimsicality:item/dynamic_texture_item"
+  }
+}

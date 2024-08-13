@@ -1,6 +1,6 @@
 package com.r3944realms.whimsy.datagen.provider;
 
-import com.r3944realms.whimsy.datagen.LanguageData.ModLangKeyValue;
+import com.r3944realms.whimsy.datagen.LanguageAndOtherData.ModLangKeyValue;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;

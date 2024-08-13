@@ -7,6 +7,7 @@ import com.r3944realms.whimsy.api.websocket.message.data.PowerBoxData;
 import com.r3944realms.whimsy.api.websocket.message.role.WebSocketClientRole;
 import com.r3944realms.whimsy.api.websocket.message.role.WebSocketServerRole;
 import com.r3944realms.whimsy.api.websocket.message.role.type.RoleType;
+import com.r3944realms.whimsy.content.items.ModItemsRegister;
 import com.r3944realms.whimsy.init.FilePathHelper;
 import com.r3944realms.whimsy.utils.Notice.NoticePlayer;
 import io.netty.channel.ChannelHandlerContext;
@@ -16,7 +17,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +72,11 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
                     try {
                         File file = FilePathHelper.get_HCJ_HTML_Path().toFile().getAbsoluteFile();
                         MutableComponent fileComponent = Component.literal(file.getName()).withStyle(ChatFormatting.UNDERLINE);
-                        fileComponent.withStyle((style) -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath())));
+                        fileComponent.withStyle((style) -> {
+                                    return style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath()))
+                                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackInfo(new ItemStack(ModItemsRegister.TEST_ITEM.get()))));
+                                }
+                        );
                         Component link_display = Component.translatable(APILanguageKey.PB_LINK_OF_QRCODE, fileComponent);
                         NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, link_display);
                     } catch (Exception e) {

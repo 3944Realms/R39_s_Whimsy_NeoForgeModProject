@@ -1,6 +1,6 @@
 package com.r3944realms.whimsy.datagen.provider;
 
-import com.r3944realms.whimsy.items.ModItemsRegister;
+import com.r3944realms.whimsy.content.items.ModItemsRegister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;

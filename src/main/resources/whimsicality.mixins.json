@@ -1,7 +1,9 @@
 {
   "package": "com.r3944realms.whimsy.mixin",
   "mixins": [
+    "bothSide.entity.MixinLivingEntity",
     "bothSide.player.MixinPlayer",
+    "client.renderer.MixinItemFrame",
     "enchantmentBlock.custom.MixinBrushableBlock",
     "enchantmentBlock.custom.MixinFallable",
     "enchantmentBlock.custom.MixinFallingBlock",
@@ -24,12 +26,16 @@
     "enchantmentItem.MixinEnchantment",
     "network.MixinConnection",
     "registry.MixinEnchantments",
+    "registry.MixinPaintingVariants",
     "server.MixinPlayerList",
     "server.MixinServerPlayer"
   ],
   "client": [
     "client.renderer.MixinEntityRenderer",
     "client.renderer.MixinEntityRenderers",
+    "client.renderer.MixinItemEntityRenderer",
+    "client.renderer.MixinItemInHandRenderer",
+    "client.renderer.MixinItemRenderer",
     "client.renderer.MixinLivingEntityRenderer",
     "client.renderer.MixinPlayerRenderer"
   ],

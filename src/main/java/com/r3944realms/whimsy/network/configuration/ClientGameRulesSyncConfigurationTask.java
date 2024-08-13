@@ -1,8 +1,8 @@
 package com.r3944realms.whimsy.network.configuration;
 
 import com.r3944realms.whimsy.WhimsyMod;
-import com.r3944realms.whimsy.gamerule.ClientRender.MustOthersHiddenNameTag;
-import com.r3944realms.whimsy.gamerule.Gamerules;
+import com.r3944realms.whimsy.content.gamerules.ClientRender.MustOthersHiddenNameTag;
+import com.r3944realms.whimsy.content.gamerules.Gamerules;
 import com.r3944realms.whimsy.network.payload.BooleanGameRuleValueChangeData;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.configuration.ServerConfigurationPacketListener;

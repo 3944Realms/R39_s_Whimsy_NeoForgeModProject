@@ -1,7 +1,7 @@
 package com.r3944realms.whimsy.datagen.provider;
 
 import com.r3944realms.whimsy.WhimsyMod;
-import com.r3944realms.whimsy.blocks.ModBlocksRegister;
+import com.r3944realms.whimsy.content.blocks.ModBlocksRegister;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;

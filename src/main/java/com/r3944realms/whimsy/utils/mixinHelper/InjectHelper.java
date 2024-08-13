@@ -1,6 +1,6 @@
 package com.r3944realms.whimsy.utils.mixinHelper;
 
-import com.r3944realms.whimsy.blocks.enchantmentBlock.BlockEnchantmentStorage;
+import com.r3944realms.whimsy.content.blocks.enchantmentBlock.BlockEnchantmentStorage;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -8,7 +8,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;

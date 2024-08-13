@@ -1,10 +1,9 @@
 package com.r3944realms.whimsy.mixin.enchantmentBlock.main;
 
-import com.r3944realms.whimsy.blocks.enchantmentBlock.BlockEnchantmentStorage;
+import com.r3944realms.whimsy.content.blocks.enchantmentBlock.BlockEnchantmentStorage;
 import com.r3944realms.whimsy.utils.mixinHelper.InjectHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;

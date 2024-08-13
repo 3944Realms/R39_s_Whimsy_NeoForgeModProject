@@ -1,4 +1,6 @@
-// 1.21	2024-08-07T13:50:14.3706122	Registries
+// 1.21	2024-08-12T22:04:20.2056512	Registries
 69aa4c4188145258dc74ab5b287d2b4a5823fcd7 data/whimsicality/enchantment/change_item.json
 015d205ce1faaa4c5749d6ea1720ea73b809d41e data/whimsicality/enchantment/death_eyes.json
 8f2ac59fc0754fc8820c1abdf61c969bf286d609 data/whimsicality/enchantment/random_enchantment.json
+5465231de50dd6149d26c3add604005c9d8f92e8 data/whimsicality/painting_variant/group_photo.json
+110dd5c81bfd26be911ecd16e1a9ebd345d314a9 data/whimsicality/painting_variant/rank.json

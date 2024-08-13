@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public interface MixinFallable {
     @Inject(method = {"onLand"}, at = {@At("TAIL")})
     private void onLand(Level pLevel, BlockPos pPos, BlockState pState, BlockState pReplaceableState, FallingBlockEntity pFallingBlock, CallbackInfo ci) {
-        //Todo:待解决下落方块落地，附魔同步问题[退chi]
+        //Todo:待解决下落方块落地，附魔同步问题[看有无实现的必要]
     }
 
 }

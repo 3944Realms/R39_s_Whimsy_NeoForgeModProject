@@ -1,7 +1,7 @@
 package com.r3944realms.whimsy.mixin.client.renderer;
 
 import com.google.common.collect.Lists;
-import com.r3944realms.whimsy.player.PlayerCapacity;
+import com.r3944realms.whimsy.modInterface.player.PlayerCapacity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.player.LocalPlayer;

@@ -10,6 +10,8 @@ public enum ModPartEnum {
     CONFIG,
     ENTITY,
     GUI,
+    AUTHOR,
+    TITLE,
     NAME,
     DESCRIPTION,
     INFO,

@@ -1,6 +1,6 @@
 package com.r3944realms.whimsy.mixin.enchantmentBlock.main.sigleinject;
 
-import com.r3944realms.whimsy.blocks.enchantmentBlock.BlockEnchantmentStorage;
+import com.r3944realms.whimsy.content.blocks.enchantmentBlock.BlockEnchantmentStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.enchantment.Enchantments;

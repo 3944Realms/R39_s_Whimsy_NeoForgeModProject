@@ -1,11 +1,10 @@
 package com.r3944realms.whimsy.mixin.enchantmentBlock.main;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.r3944realms.whimsy.blocks.enchantmentBlock.BlockEnchantmentStorage;
+import com.r3944realms.whimsy.content.blocks.enchantmentBlock.BlockEnchantmentStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.piston.PistonBaseBlock;
 import org.spongepowered.asm.mixin.Mixin;

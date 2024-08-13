@@ -1,7 +1,7 @@
 package com.r3944realms.whimsy.datagen.provider.attributes;
 
 import com.r3944realms.whimsy.WhimsyMod;
-import com.r3944realms.whimsy.items.enchantment.ModEnchantmentEffectComponents;
+import com.r3944realms.whimsy.content.items.enchantment.ModEnchantmentEffectComponents;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -113,9 +113,13 @@ public class ModEnchantments {
     public static ResourceKey<Enchantment> Key(String name) {
         return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(WhimsyMod.MOD_ID, name));
     }
-    public static String getEnchantmentKey(String enchantmentName) {
 
+    public static String getEnchantmentKey(String enchantmentName) {
         return "enchantment." + WhimsyMod.MOD_ID + "." + enchantmentName;
+    }
+
+    public static String getEnchantmentKey(ResourceKey<Enchantment> pKey) {
+        return "enchantment." + pKey.location().getNamespace() + "." + pKey.location().getPath();
     }
 
 }
