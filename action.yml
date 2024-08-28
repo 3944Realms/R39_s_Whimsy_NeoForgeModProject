@@ -1,0 +1,3 @@
+- name: Discord Reporter
+  uses: TeamGalacticraft/discord-reporter@1.0.0
+            
