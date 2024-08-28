@@ -50,6 +50,7 @@ public abstract class MixinBrushItem extends Item {
                     BlockEnchantmentStorage.removeBlockEnchantment(level.dimension() ,context.getClickedPos().immutable());//先删除信息
 //					ListTag enchantments = context.getItemInHand().getEnchantments();//获取刷子上的附魔信息列表
                     ListTag enchantments = InjectHelper.enchantmentsToNbtList(context.getItemInHand(), context.getClickedPos());
+                    assert oldEnchantments != null;
                     ListTag newEnchantments = Whimsy$MergeNbtLists(oldEnchantments, enchantments); // 合并附魔列表
                     BlockEnchantmentStorage.addBlockEnchantment(level.dimension(), context.getClickedPos().immutable(), newEnchantments);//储存信息
                 }

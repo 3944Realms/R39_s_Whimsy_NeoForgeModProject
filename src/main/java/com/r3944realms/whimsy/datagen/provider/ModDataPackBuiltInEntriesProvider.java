@@ -2,6 +2,7 @@ package com.r3944realms.whimsy.datagen.provider;
 
 import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.datagen.provider.attributes.ModEnchantments;
+import com.r3944realms.whimsy.datagen.provider.attributes.ModJukeboxSongs;
 import com.r3944realms.whimsy.datagen.provider.attributes.ModPaintingVariants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
@@ -16,7 +17,8 @@ public class ModDataPackBuiltInEntriesProvider extends DatapackBuiltinEntriesPro
 
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.PAINTING_VARIANT, ModPaintingVariants::bootstrap)
-            .add(Registries.ENCHANTMENT, ModEnchantments::bootstrap);
+            .add(Registries.ENCHANTMENT, ModEnchantments::bootstrap)
+            .add(Registries.JUKEBOX_SONG, ModJukeboxSongs::bootstrap);
 
     public ModDataPackBuiltInEntriesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(WhimsyMod.MOD_ID));

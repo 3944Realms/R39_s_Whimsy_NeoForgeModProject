@@ -1,6 +1,7 @@
 package com.r3944realms.whimsy.content.items.custom;
 
 import com.r3944realms.whimsy.content.components.ModDataComponents;
+import com.r3944realms.whimsy.content.items.custom.capcity.IDynamicTexture;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class DynamicTextureItem extends Item {
+public class DynamicTextureItem extends Item implements IDynamicTexture {
     public DynamicTextureItem(Properties pProperties) {
         super(pProperties);
     }

@@ -2,16 +2,20 @@ package com.r3944realms.whimsy.datagen.LanguageAndOtherData;
 
 import com.r3944realms.whimsy.api.APILanguageKey;
 import com.r3944realms.whimsy.content.blocks.ModBlocksRegister;
+import com.r3944realms.whimsy.content.commands.MiscCommand.LeashCommand;
 import com.r3944realms.whimsy.content.commands.MiscCommand.MotionCommand;
 import com.r3944realms.whimsy.content.commands.PlayerProperty.ChatCommand;
 import com.r3944realms.whimsy.content.commands.PlayerProperty.NameTagCommand;
 import com.r3944realms.whimsy.content.commands.TestClientCommand;
 import com.r3944realms.whimsy.content.commands.Websocket.WebSocketClientCommand;
 import com.r3944realms.whimsy.content.commands.Websocket.WebSocketServerCommand;
+import com.r3944realms.whimsy.content.effects.ModEffectRegister;
+import com.r3944realms.whimsy.content.effects.ModPotionRegister;
 import com.r3944realms.whimsy.content.gamerules.ClientRender.MustOthersHiddenNameTag;
 import com.r3944realms.whimsy.content.gamerules.ServerChat.DefaultTalkArea;
 import com.r3944realms.whimsy.content.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.content.items.ModItemsRegister;
+import com.r3944realms.whimsy.content.sounds.ModSoundRegister;
 import com.r3944realms.whimsy.datagen.provider.attributes.ModEnchantments;
 import com.r3944realms.whimsy.datagen.provider.attributes.ModPaintingVariants;
 import com.r3944realms.whimsy.network.NetworkHandler;
@@ -28,7 +32,13 @@ import java.util.function.Supplier;
 public enum ModLangKeyValue {
     //ITEM
     TEST_ITEM(ModItemsRegister.TEST_ITEM, ModPartEnum.ITEM,"Test Item", "测试物品", "測試物品", true),
-    DYNAMIC_ITEM(ModItemsRegister.DYNAMIC_TEXTURE_ITEM, ModPartEnum.ITEM, "Dynamic Texture Item", "动态材质物品", "動態材質物品", true),
+    DYNAMIC_ITEM(ModItemsRegister.DYNAMIC_TEXTURE_ITEM, ModPartEnum.ITEM, "Dynamic Texture Item", "动态材质物品", "動態材質物品", false),
+    TEST_TEXTURE_ITEM(ModItemsRegister.TEST_TEXTURE_ITEM, ModPartEnum.ITEM, "Test Texture Item", "测试材质物品", "測試材質物品", false),
+    DISC_SANDS_OF_TIME(ModItemsRegister.MUSIC_DISC_SANDS_OF_TIME, ModPartEnum.ITEM, "Mcc Game Music Disc", "Mcc小游戏音乐唱片", "Mcc小游戲音樂唱片", true),
+    DISC_HUB_MUSIC(ModItemsRegister.MUSIC_DISC_HUB_MUSIC, ModPartEnum.ITEM, "Mcc Game Music Disc", "Mcc小游戏音乐唱片", "Mcc小游戲音樂唱片", true),
+    DISC_ACE_RACE(ModItemsRegister.MUSIC_DISC_ACE_RACE, ModPartEnum.ITEM, "Mcc Game Music Disc", "Mcc小游戏音乐唱片", "Mcc小游戲音樂唱片", true),
+    DISC_GRID_RUNNERS(ModItemsRegister.MUSIC_DISC_GRID_RUNNERS, ModPartEnum.ITEM, "Mcc Game Music Disc", "Mcc小游戏音乐唱片", "Mcc小游戲音樂唱片", true),
+    DISC_MELTDOWN(ModItemsRegister.MUSIC_DISC_MELTDOWN, ModPartEnum.ITEM, "Mcc Game Music Disc", "Mcc小游戏音乐唱片", "Mcc小游戲音樂唱片", true),
     //BLOCK
     TEST_BLOCK(ModBlocksRegister.TEST_BLOCK, ModPartEnum.BLOCK, "Test Block", "测试方块", "測試方塊", false),
     //CREATIVE_TAB
@@ -38,6 +48,34 @@ public enum ModLangKeyValue {
     RANK_AUTHOR(ModPaintingVariants.getPaintingVariantAuthorKey(ModPaintingVariants.RANK), ModPartEnum.AUTHOR, "Who know?", "佚名", "佚名", false),
     GROUP_PHOTO_TITLE(ModPaintingVariants.getPaintingVariantTitleKey(ModPaintingVariants.GROUP_PHOTO),ModPartEnum.TITLE, "§dGroup Photo §7[§6memorable§7]§r", "§d集体照  §7[§6纪念§7]§r", "§d集體照 §7[§6紀念§7]§r", false),
     GROUP_PHOTO_AUTHOR(ModPaintingVariants.getPaintingVariantAuthorKey(ModPaintingVariants.GROUP_PHOTO),ModPartEnum.AUTHOR, "§9Leisure §4Time §eDock§r","§9闲趣§4时§e坞§r","§9閑趣§4時§e塢§r",false),
+    //SOUND_SUBTITLE
+    ST_SANDS_OF_TIME(ModSoundRegister.getSubTitleTranslateKey("sands_of_time"), ModPartEnum.TITLE, "Sands Of Time", "肝疼小曲", "時之沙", false),
+    ST_HUB_MUSIC(ModSoundRegister.getSubTitleTranslateKey("hub_music"), ModPartEnum.TITLE, "Main Hub Music", "主大厅音乐", "主大厅音乐", false),
+    ST_GRID_RUNNER(ModSoundRegister.getSubTitleTranslateKey("grid_runners"), ModPartEnum.TITLE, "Grid Runners", "网格跑者", "網格跑者", false),
+    ST_ACE_RACE(ModSoundRegister.getSubTitleTranslateKey("ace_race"), ModPartEnum.TITLE, "Ace Race", "王牌竞速", "王牌盡速", false),
+    ST_MELTDOWN(ModSoundRegister.getSubTitleTranslateKey("meltdown"), ModPartEnum.TITLE, "Meltdown", "熔毁", "熔毀", false),
+    //JUKEBOX_SONG
+    JB_SANDS_OF_TIME(ModSoundRegister.getJukeboxSongTranslateKey("sands_of_time"), ModPartEnum.DESCRIPTION, "Sands of time", "时之沙", "時之沙", false),
+    JB_HUB_MUSIC(ModSoundRegister.getJukeboxSongTranslateKey("hub_music"), ModPartEnum.DESCRIPTION, "Main Hub's music", "主大厅音乐", "主大廳音樂", false),
+    JB_ACE_RACE(ModSoundRegister.getJukeboxSongTranslateKey("ace_race"), ModPartEnum.DESCRIPTION, "Ace Race", "王牌竞速", "王牌盡速", false),
+    JB_GRID_RUNNER(ModSoundRegister.getJukeboxSongTranslateKey("grid_runner"), ModPartEnum.DESCRIPTION, "Grid Runners", "网格跑者", "網格跑者", false),
+    JB_MELTDOWN(ModSoundRegister.getJukeboxSongTranslateKey("meltdown"), ModPartEnum.DESCRIPTION, "Meltdown", "熔毁", "熔毀", false),
+    //MOB_EFFECT
+    DRUNK_EFFECT(ModEffectRegister.getModEffectKey(ModEffectRegister.DRUNK_EFFECT), ModPartEnum.NAME, "Drunk", "醉", "醉",false),
+    //POTION
+    DRUNK_POTION(ModPotionRegister.getPotionNameKey("drunk", (char) 0), ModPartEnum.ITEM, "Wine", "酒", "酒",false),
+    DRUNK_POTION_SPLASH(ModPotionRegister.getPotionNameKey("drunk", (char) 2), ModPartEnum.ITEM, "Splash Wine", "喷溅型酒", "噴濺型酒",false),
+    DRUNK_POTION_LINGERING(ModPotionRegister.getPotionNameKey("drunk", (char) 1), ModPartEnum.ITEM, "Lingering Wine", "滞留型酒", "滯留型酒",false),
+    L_DRUNK_POTION(ModPotionRegister.getPotionNameKey("long_drunk", (char) 0), ModPartEnum.ITEM, "Wine", "酒", "酒",false),
+    L_DRUNK_POTION_SPLASH(ModPotionRegister.getPotionNameKey("long_drunk", (char) 2), ModPartEnum.ITEM, "Splash Wine", "喷溅型酒", "噴濺型酒",false),
+    L_DRUNK_POTION_LINGERING(ModPotionRegister.getPotionNameKey("long_drunk", (char) 1), ModPartEnum.ITEM, "Lingering Wine", "滞留型酒", "滯留型酒",false),
+    S_DRUNK_POTION(ModPotionRegister.getPotionNameKey("strong_drunk", (char) 0), ModPartEnum.ITEM, "Strong Wine", "烈酒", "烈酒",false),
+    S_DRUNK_POTION_SPLASH(ModPotionRegister.getPotionNameKey(")strong_drunk", (char) 2), ModPartEnum.ITEM, "Splash Strong Wine", "喷溅型烈酒", "噴濺型烈酒",false),
+    S_DRUNK_POTION_LINGERING(ModPotionRegister.getPotionNameKey("strong_drunk", (char) 1), ModPartEnum.ITEM, "Lingering Strong Wine", "滞留型烈酒", "滯留型烈酒",false),
+    //ARROW
+    DRUNK_ARROW(ModPotionRegister.getTippedArrowNameKey("drunk"), ModPartEnum.ITEM, "Arrow of Drunk", "醉酒之箭", "醉酒之箭", false),
+    L_DRUNK_ARROW(ModPotionRegister.getTippedArrowNameKey("long_drunk"), ModPartEnum.ITEM, "Arrow of Drunk", "醉酒之箭", "醉酒之箭", false),
+    S_DRUNK_ARROW(ModPotionRegister.getTippedArrowNameKey("strong_drunk"), ModPartEnum.ITEM, "Arrow of Strong Drunk", "烈酒之箭", "烈酒之箭", false),
     //ENCHANTMENT
     DEAD_EYES(ModEnchantments.getEnchantmentKey(ModEnchantments.DEATH_EYES), ModPartEnum.ENCHANTMENT, "Death Eyes", "死亡之眼", "死亡之眼", false),
     CHANGE_ITEM(ModEnchantments.getEnchantmentKey(ModEnchantments.CHANGE_ITEM), ModPartEnum.ENCHANTMENT, "Change item", "易物", "易物", "易", false),
@@ -78,6 +116,9 @@ public enum ModLangKeyValue {
 
     MESSAGE_MOTION_SETTER_SUCCESSFUL(MotionCommand.MOTION_SETTER_SUCCESSFUL,ModPartEnum.COMMAND,"§bSet Successfully.§a%s§7:§f[§eCurrent Vec§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r","§b设置成功.§a%s§7:§f[§e目前速度§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r","§b設置成功.§a%s§7:§f[§e目前速度§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r",false),
     MESSAGE_MOTION_ADDER_SUCCESSFUL(MotionCommand.MOTION_ADDER_SUCCESSFUL,ModPartEnum.COMMAND, "§bAdd Successfully.§a%s§7:§f[§eCurrent Vec§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r","§b添加成功.§a%s§7:§f[§e目前速度§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r","§b添加成功.§a%s§7:§f[§e目前速度§7: §a(§f%f§7, §f%f§7, §f%f§a)§f]§r", false),
+    MESSAGE_LEASH_LENGTH_FAIL(LeashCommand.LEASH_LENGTH_FAIL, ModPartEnum.COMMAND, "Failed (Internal Error)", "失败（内部错误）", "失敗（内部錯誤）", false),
+    MESSAGE_LEASH_LENGTH_SHOW(LeashCommand.LEASH_LENGTH_SHOW, ModPartEnum.COMMAND, "The Leash Length of %s is %f blocks", "%s的拴绳长度为%f格", "%s的栓繩長度為%f格" , false),
+    MESSAGE_LEASH_LENGTH_SET(LeashCommand.LEASH_LENGTH_SET, ModPartEnum.COMMAND, "The Leash length of %s is set to %f blocks", "%s的拴绳长度被设置为%f格", "%s的栓繩長度被設置為%f格" , false),
     //INFO_MESSAGE
     CHAT_NONE_HEARD_YOU(DefaultTalkArea.CHAT_NONE_HEARD_YOU, ModPartEnum.MESSAGE, "Nobody heard your message", "沒有人接收到你的消息", "無人接收到你的訊息", "无人受子问",false),
     //TEST MESSAGE

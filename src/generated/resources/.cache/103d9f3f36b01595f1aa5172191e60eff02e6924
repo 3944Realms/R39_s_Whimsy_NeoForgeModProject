@@ -1,6 +1,11 @@
-// 1.21	2024-08-12T22:04:20.2056512	Registries
+// 1.21	2024-08-27T18:15:10.1817554	Registries
 69aa4c4188145258dc74ab5b287d2b4a5823fcd7 data/whimsicality/enchantment/change_item.json
 015d205ce1faaa4c5749d6ea1720ea73b809d41e data/whimsicality/enchantment/death_eyes.json
 8f2ac59fc0754fc8820c1abdf61c969bf286d609 data/whimsicality/enchantment/random_enchantment.json
+45990a18ad5b6c60e44267b4114cc2157b65c5a9 data/whimsicality/jukebox_song/ace_race.json
+7b33a911b932c685848243100ed78e70d3483a06 data/whimsicality/jukebox_song/grid_runner.json
+1e3597436db4166136dae47740e57f287f3de25b data/whimsicality/jukebox_song/hub_music.json
+a450528add82513da8ecf900be3be83dcc06ed4a data/whimsicality/jukebox_song/meltdown.json
+7087f053db5d91f15ec6af0057aceb203b5fc267 data/whimsicality/jukebox_song/sands_of_time.json
 5465231de50dd6149d26c3add604005c9d8f92e8 data/whimsicality/painting_variant/group_photo.json
 110dd5c81bfd26be911ecd16e1a9ebd345d314a9 data/whimsicality/painting_variant/rank.json

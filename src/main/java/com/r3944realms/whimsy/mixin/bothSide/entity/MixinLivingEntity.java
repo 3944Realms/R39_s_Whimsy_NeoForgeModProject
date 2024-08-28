@@ -22,22 +22,22 @@ public abstract class MixinLivingEntity extends Entity implements IEntityExtensi
     }
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
-    private static final EntityDataAccessor<Float> DATA_ENTITY_LEASH_ID = SynchedEntityData.defineId(LivingEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> DATA_ENTITY_LEASH_LENGTH = SynchedEntityData.defineId(LivingEntity.class, EntityDataSerializers.FLOAT);
 
     @SuppressWarnings("AddedMixinMembersNamePattern")
     @Override
     public float getLeashLength() {
-        return this.entityData.get(DATA_ENTITY_LEASH_ID);
+        return this.entityData.get(DATA_ENTITY_LEASH_LENGTH);
     }
     @SuppressWarnings("AddedMixinMembersNamePattern")
     @Override
     public void setLeashLength(float length) {
-        this.entityData.set(DATA_ENTITY_LEASH_ID, length);
+        this.entityData.set(DATA_ENTITY_LEASH_LENGTH, length);
     }
     @Inject(method = {"defineSynchedData"}, at = {@At("TAIL")})
     private
     void defineSyncData(SynchedEntityData.Builder pBuilder, CallbackInfo ci) {
-        pBuilder.define(DATA_ENTITY_LEASH_ID, 0.0F);
+        pBuilder.define(DATA_ENTITY_LEASH_LENGTH, 5.0F);
     }
     @Inject(method = {"readAdditionalSaveData"}, at = {@At("RETURN")})
     private void readSaveData(CompoundTag compoundTag, CallbackInfo callbackInfo) {

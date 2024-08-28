@@ -1,9 +1,10 @@
 {
   "package": "com.r3944realms.whimsy.mixin",
   "mixins": [
+    "bothSide.entity.MixinEntity",
     "bothSide.entity.MixinLivingEntity",
+    "bothSide.item.MixinLeadItem",
     "bothSide.player.MixinPlayer",
-    "client.renderer.MixinItemFrame",
     "enchantmentBlock.custom.MixinBrushableBlock",
     "enchantmentBlock.custom.MixinFallable",
     "enchantmentBlock.custom.MixinFallingBlock",
@@ -26,22 +27,26 @@
     "enchantmentItem.MixinEnchantment",
     "network.MixinConnection",
     "registry.MixinEnchantments",
+    "registry.MixinJukeboxSongs",
     "registry.MixinPaintingVariants",
     "server.MixinPlayerList",
     "server.MixinServerPlayer"
   ],
   "client": [
+    "MixinMinecraft",
     "client.renderer.MixinEntityRenderer",
     "client.renderer.MixinEntityRenderers",
     "client.renderer.MixinItemEntityRenderer",
+    "client.renderer.MixinItemFrame",
     "client.renderer.MixinItemInHandRenderer",
     "client.renderer.MixinItemRenderer",
+    "client.renderer.MixinLevelRenderer",
     "client.renderer.MixinLivingEntityRenderer",
     "client.renderer.MixinPlayerRenderer"
   ],
   "refmap": "whimsicality.refmap.json",
   "required": true,
   "minVersion": "0.8",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_17",
   "plugin": "com.r3944realms.whimsy.mixin.MixinPlugin"
 }
