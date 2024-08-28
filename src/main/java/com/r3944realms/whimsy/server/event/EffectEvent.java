@@ -20,6 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -56,10 +57,13 @@ public class EffectEvent {
         Entity damageSourceEntity = event.getSource().getEntity();
         if (damageTargetLivingEntity.level() instanceof ServerLevel serverLevel && damageSourceEntity instanceof LivingEntity damageSourceLivingEntity) {
             ItemStack weaponItem = damageSourceEntity.getWeaponItem();
-            if (ModEnchantmentHelper.hasDesignatedEnchantment(serverLevel, weaponItem, ModEnchantmentEffectComponents.CHANGE_ITEM)) {
-                ItemStack damageTargetEntityMainHandItem = damageTargetLivingEntity.getMainHandItem();
-                damageSourceLivingEntity.setItemInHand(InteractionHand.MAIN_HAND, damageTargetEntityMainHandItem);
-                damageTargetLivingEntity.setItemInHand(InteractionHand.MAIN_HAND, weaponItem);
+            if((damageSourceLivingEntity instanceof Player || damageSourceLivingEntity instanceof Monster) && (damageTargetLivingEntity instanceof Player || damageTargetLivingEntity instanceof Monster)) {
+                if(((LivingEntity) damageSourceEntity).isBaby())
+                if (ModEnchantmentHelper.hasDesignatedEnchantment(serverLevel, weaponItem, ModEnchantmentEffectComponents.CHANGE_ITEM)) {
+                    ItemStack damageTargetEntityMainHandItem = damageTargetLivingEntity.getMainHandItem();
+                    damageSourceLivingEntity.setItemInHand(InteractionHand.MAIN_HAND, damageTargetEntityMainHandItem);
+                    damageTargetLivingEntity.setItemInHand(InteractionHand.MAIN_HAND, weaponItem);
+                }
             }
         }
     }

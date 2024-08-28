@@ -34,7 +34,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 Component.translatable(ModAdvancementKey.RWN_WELCOME.getNameKey()),
                 Component.translatable(ModAdvancementKey.RWN_WELCOME.getDescKey()),
                 //BACKGROUND
-                ResourceLocation.fromNamespaceAndPath(WhimsyMod.MOD_ID, "textures/gui/advancements/backgrounds/dynamic_texture_item.png"),
+                ResourceLocation.fromNamespaceAndPath(WhimsyMod.MOD_ID, "textures/gui/advancements/backgrounds/whimsy.png"),
                 AdvancementType.TASK,
                 true,
                 false,

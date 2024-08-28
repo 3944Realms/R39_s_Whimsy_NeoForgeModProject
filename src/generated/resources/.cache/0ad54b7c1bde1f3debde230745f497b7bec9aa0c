@@ -1,3 +1,7 @@
-// 1.21	2024-08-13T10:05:32.9021211	Item Models: whimsicality
-b125e370dbf532007791e72d7847a0bdd43361fc assets/whimsicality/models/item/dynamic_texture_item.json
+// 1.21	2024-08-27T18:15:10.1842534	Item Models: whimsicality
+c0f8186cf03e2ca4b94abd0c5a850587be8be80b assets/whimsicality/models/item/music_disc_ace_race.json
+1a1267ccc4ae858a8f7a5dc7c6069d295998cbc1 assets/whimsicality/models/item/music_disc_grid_runners.json
+4d36e658af8aeab2e4dee1f24fa266143b448aa3 assets/whimsicality/models/item/music_disc_hub_music.json
+0753c4bec3a4121806e2d75cd5e14ed1898a00cd assets/whimsicality/models/item/music_disc_meltdown.json
+34c1f6b1f40fb9b462569d4b0fa80ca4acb02371 assets/whimsicality/models/item/music_disc_sands_of_time.json
 6b477c237cc4149f63f0d095fb7cd9591241c491 assets/whimsicality/models/item/test_item.json

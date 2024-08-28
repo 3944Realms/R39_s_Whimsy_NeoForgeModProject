@@ -13,10 +13,13 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public class NewKidPlayerModel<T extends LivingEntity> extends PlayerModel<T> {
     private final List<ModelPart> parts;
     public final ModelPart leftSleeve;

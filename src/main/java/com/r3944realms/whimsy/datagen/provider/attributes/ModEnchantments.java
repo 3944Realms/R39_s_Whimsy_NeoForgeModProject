@@ -27,9 +27,9 @@ import java.util.List;
 
 public class ModEnchantments {
     public static final List<ResourceKey<Enchantment>> ModEnchantmentResourceKeys = new ArrayList<>();
-    public static final ResourceKey<Enchantment> DEATH_EYES = Key("death_eyes");
-    public static final ResourceKey<Enchantment> CHANGE_ITEM = Key("change_item");
-    public static final ResourceKey<Enchantment> RANDOM_ENCHANTMENT = Key("random_enchantment");
+    public static final ResourceKey<Enchantment> DEATH_EYES = create("death_eyes");
+    public static final ResourceKey<Enchantment> CHANGE_ITEM = create("change_item");
+    public static final ResourceKey<Enchantment> RANDOM_ENCHANTMENT = create("random_enchantment");
 
     static {
         ModEnchantmentResourceKeys.add(DEATH_EYES);
@@ -110,7 +110,7 @@ public class ModEnchantments {
     public static void register(BootstrapContext<Enchantment> context, ResourceKey<Enchantment> key, Enchantment.Builder builder) {
         context.register(key, builder.build(key.location()));
     }
-    public static ResourceKey<Enchantment> Key(String name) {
+    public static ResourceKey<Enchantment> create(String name) {
         return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(WhimsyMod.MOD_ID, name));
     }
 

@@ -4,7 +4,7 @@ import com.r3944realms.whimsy.config.WebSocketServerConfig;
 import com.r3944realms.whimsy.network.payload.TestModData;
 import com.r3944realms.whimsy.network.payload.WebSocketServerAddressData;
 import com.r3944realms.whimsy.network.payload.ackpayload.SyncWebsocketRequestPayload;
-import com.r3944realms.whimsy.utils.NetworkUtils.AddressValidator;
+import com.r3944realms.whimsy.utils.NetworkUtils.UrlValidator;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -32,7 +32,7 @@ public class ServerPayloadHandler {
                     player = server.getPlayerList().getPlayer(ackPayload.player_uuid());
                 }
                 if (player == null) throw new NullPointerException();
-                if(!AddressValidator.isValidAddress(address)) throw new IllegalArgumentException(address);
+                if(!UrlValidator.isValidAddress(address)) throw new IllegalArgumentException(address);
                 PacketDistributor.sendToPlayer(player,new WebSocketServerAddressData(address, WebSocketServerConfig.WebSocketServerPort.get()));
             } catch (NullPointerException e) {
                 logger.error("player(uuid:{}) is not existed in game.", ackPayload.player_uuid());

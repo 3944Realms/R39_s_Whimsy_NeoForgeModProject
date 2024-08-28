@@ -2,6 +2,7 @@ package com.r3944realms.whimsy.datagen;
 
 import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.datagen.provider.*;
+import com.r3944realms.whimsy.datagen.provider.tag.ModEnchantTagsProvider;
 import com.r3944realms.whimsy.utils.Enum.LanguageEnum;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataProvider;
@@ -36,6 +37,10 @@ public class ModDataGeneratorHandler {
         ModPaintVariantTagsProvider(event, HolderFolder, existingFileHelper);
         /*Advancement*/
         ModAdvancementProvider(event, HolderFolder, existingFileHelper);
+        /*Tag*/
+        ModTagsProvider(event, HolderFolder, existingFileHelper);
+        /*Sound*/
+        ModSoundProvider(event, existingFileHelper);
         //Forge Part
     }
     private static void addLanguage(GatherDataEvent event, LanguageEnum language, String lan_regex){
@@ -76,7 +81,22 @@ public class ModDataGeneratorHandler {
                 }
         );
     }
-    private static void ModAdvancementProvider(GatherDataEvent event, CompletableFuture<HolderLookup.Provider> pLookUpProvider, ExistingFileHelper helper) {
+    private static void ModTagsProvider(GatherDataEvent event, CompletableFuture<HolderLookup.Provider> completableFuture, ExistingFileHelper helper) {
+        event.getGenerator().addProvider(
+                event.includeServer(),
+                (DataProvider.Factory<ModEnchantTagsProvider>) pOutput ->
+                    new ModEnchantTagsProvider(pOutput, completableFuture, WhimsyMod.MOD_ID, helper)
+        );
+    }
+    private static void ModSoundProvider(GatherDataEvent event, ExistingFileHelper helper) {
+        event.getGenerator().addProvider(
+                event.includeServer(),
+                (DataProvider.Factory<ModSoundDefinitionsProvider>) pOutput ->
+                    new ModSoundDefinitionsProvider(pOutput,WhimsyMod.MOD_ID, helper)
+        );
+    }
+
+        private static void ModAdvancementProvider(GatherDataEvent event, CompletableFuture<HolderLookup.Provider> pLookUpProvider, ExistingFileHelper helper) {
         event.getGenerator().addProvider(
                 event.includeServer(),
                 (DataProvider.Factory<ModAdvancementProvider>) pOutput -> {

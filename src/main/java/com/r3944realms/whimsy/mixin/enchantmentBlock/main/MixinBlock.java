@@ -46,7 +46,7 @@ public abstract class MixinBlock extends BlockBehaviour implements ItemLike, net
         }
     }
     @Inject(at = @At("TAIL"), method = "wasExploded")//删除方块的附魔
-    private void init4(Level level, BlockPos pos, Explosion explosion, CallbackInfo ci){
+    private void breakBFExploded(Level level, BlockPos pos, Explosion explosion, CallbackInfo ci){
         if (!level.isClientSide) {
             if (!Objects.equals(BlockEnchantmentStorage.getEnchantmentsAtPosition(level.dimension(), pos), WHIMSY$EMPTY_LIST)) {
                 BlockEnchantmentStorage.removeBlockEnchantment(level.dimension(), pos.immutable());//删除信息

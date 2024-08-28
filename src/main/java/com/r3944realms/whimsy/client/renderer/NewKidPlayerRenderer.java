@@ -31,8 +31,11 @@ import net.minecraft.world.scores.DisplaySlot;
 import net.minecraft.world.scores.Objective;
 import net.minecraft.world.scores.ReadOnlyScoreInfo;
 import net.minecraft.world.scores.Scoreboard;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
+@OnlyIn(Dist.CLIENT)
 public class NewKidPlayerRenderer extends PlayerRenderer {
     public NewKidPlayerRenderer(EntityRendererProvider.Context pContext, boolean pUSeSlimModel) {
         super(pContext,  pUSeSlimModel);

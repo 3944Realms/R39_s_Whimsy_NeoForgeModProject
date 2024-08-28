@@ -1,7 +1,7 @@
 package com.r3944realms.whimsy.api.websocket;
 
 import com.r3944realms.whimsy.api.websocket.protocol.ClientMessageWebsocketHandler;
-import com.r3944realms.whimsy.utils.NetworkUtils.AddressValidator;
+import com.r3944realms.whimsy.utils.NetworkUtils.UrlValidator;
 import com.r3944realms.whimsy.utils.Transform.StringHandlerUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -50,7 +50,7 @@ public class WebSocketClient {
     }
 
     public static void syncServerData(String address, int port) {
-        if(AddressValidator.isValidAddress(address) && port != -1) {
+        if(UrlValidator.isValidAddress(address) && port != -1) {
             WebSocketClient.address = address;
             WebSocketClient.port = port;
             hasSync.set(true);
