@@ -10,6 +10,7 @@
     "enchantmentBlock.custom.MixinFallingBlock",
     "enchantmentBlock.custom.MixinPointedDripstoneBlock",
     "enchantmentBlock.main.MixinBlock",
+    "enchantmentBlock.main.MixinBlock$Properties",
     "enchantmentBlock.main.MixinBrushItem",
     "enchantmentBlock.main.MixinPistonBlock",
     "enchantmentBlock.main.MixinPlayerEntity",

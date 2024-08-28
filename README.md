@@ -1,4 +1,4 @@
-![Whimsicality Minecraft Mod](https://github.com/3944Realms/R39_s_Whimsy_NeoForgeModProject/blob/master/src/main/resources/whimsicalityLogo.png?raw=true)
+![Whimsicality Minecraft Mod](https://github.com/3944Realms/R39_s_Whimsy_NeoForgeModProject/blob/neoforge-1.21.X-develop/src/main/resources/whimsicalityLogo.png?raw=true)
 # Project - WhimsicalityMod Neoforge
 
 ## 项目概述
@@ -36,4 +36,3 @@
   - [x] Mixin原版原版聊天系统
   - [x] 处理聊天网络发包方面逻辑
   - [x] 可以使用指令、配置设置聊天半径
-

@@ -1,6 +1,7 @@
 package com.r3944realms.whimsy.mixin.enchantmentBlock.main;
 
 import com.r3944realms.whimsy.content.blocks.enchantmentBlock.BlockEnchantmentStorage;
+import com.r3944realms.whimsy.modInterface.block.IBlockBehaviour$PropertiesExtension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.ListTag;
@@ -28,7 +29,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
         private void init(CallbackInfo info) {
             if (this.level().isClientSide && this.isHolding(Items.BRUSH)) {
                 Whimsy$TickCounter++;
-                if (Whimsy$TickCounter >= 5) {  // 每5 tick (0.25秒) 执行一次
+                if (Whimsy$TickCounter >= 2) {  // 每2 tick (0.1秒) 执行一次
                     // 检测附魔方块和生成粒子效果的代码
                     Whimsy$TickCounter = 0;
                     Whimsy$CheckAndGenerateParticles();
@@ -48,7 +49,8 @@ public abstract class MixinPlayerEntity extends LivingEntity {
                         BlockPos blockPos = playerPos.offset(x, y, z);
 
                         // 检查方块是否有附魔
-                        if (!Objects.equals(BlockEnchantmentStorage.getEnchantmentsAtPosition(level().dimension(), blockPos), new ListTag())) {
+                        ListTag enchantmentsAtPosition = BlockEnchantmentStorage.getEnchantmentsAtPosition(level().dimension(), blockPos);
+                        if ((enchantmentsAtPosition != null && !enchantmentsAtPosition.isEmpty()) || ((IBlockBehaviour$PropertiesExtension)level().getBlockState(blockPos).getBlock().properties()).hasEnchantment()) {
                             // 在方块上创建粒子效果
                             // 在方块顶部创建粒子效果
                             this.level().addParticle(ParticleTypes.COMPOSTER,

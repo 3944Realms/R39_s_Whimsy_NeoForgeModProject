@@ -20,7 +20,7 @@ public abstract class MixinWebBlock  extends Block {
     }
     @Inject(at = @At("HEAD"), method = "entityInside")
     private void init1(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity, CallbackInfo ci) {
-        int k = BlockEnchantmentStorage.getLevel(Enchantments.THORNS, pLevel.dimension(), pPos);
+        int k = BlockEnchantmentStorage.getEnchantmentLevel(Enchantments.THORNS, pLevel.dimension(), pPos);
         if (!pLevel.isClientSide() && k > 0) {//如果有荆棘附魔
             pEntity.hurt(pEntity.damageSources().cactus(),(float) k);
         }
