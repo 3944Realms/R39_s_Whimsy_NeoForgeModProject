@@ -55,6 +55,7 @@ public class ClientEventHandler {
         @SubscribeEvent
         static void onLoggingOn(ClientPlayerNetworkEvent.LoggingIn event) {
             if(WebSocketClientConfig.WebSocketClientAutoManager.get()) {
+
                 WebsocketClientManager.init(
                         DG_Lab.ClientManagerStart,
                         DG_Lab.ClientManagerStop,

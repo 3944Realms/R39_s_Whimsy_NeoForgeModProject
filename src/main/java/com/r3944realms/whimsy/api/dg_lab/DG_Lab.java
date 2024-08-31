@@ -24,9 +24,10 @@ import java.io.File;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class DG_Lab {
+public enum DG_Lab {
+    INSTANCE;
     private static final Logger logger = LoggerFactory.getLogger(DG_Lab.class);
-    public static Supplier<ManagerResultEnum> ClientManagerStart = () -> {
+    public final static Supplier<ManagerResultEnum> ClientManagerStart = () -> {
                if(!FMLEnvironment.dist.isClient()) { //非客户端退出
                   logger.error("Distributor is not client");
                   return ManagerResultEnum.MISMATCHED_ENVIRONMENT_FAILURE;
@@ -46,7 +47,7 @@ public class DG_Lab {
                   return ManagerResultEnum.FAILURE_FROM_CATCH;
               }
       };
-    public static Supplier<ManagerResultEnum> ClientManagerStop = () -> {
+    public final static Supplier<ManagerResultEnum> ClientManagerStop = () -> {
           if(!FMLEnvironment.dist.isClient()) { //非客户端退出
            logger.error("Distributor is not client");
            return ManagerResultEnum.MISMATCHED_ENVIRONMENT_FAILURE;
@@ -54,7 +55,7 @@ public class DG_Lab {
 
       return ManagerResultEnum.SUCCESSFUL;
     };
-    public static Supplier<Void> informSupplier = () -> {
+    public final static Supplier<Void> informSupplier = () -> {
         File file = FilePathHelper.get_HCJ_HTML_Path().toFile().getAbsoluteFile();
                 MutableComponent fileComponent = Component.literal(file.getName()).withStyle(ChatFormatting.UNDERLINE);
                 fileComponent.withStyle((style) -> {
@@ -66,10 +67,10 @@ public class DG_Lab {
                 NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, link_display);
         return null;
     };
-    public static Supplier<Void> noticeSupplier = () -> {
+    public final static Supplier<Void> noticeSupplier = () -> {
         Component bind_suc = Component.translatable(APILanguageKey.PB_BIND_SUCCESSFUL);
         NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, bind_suc);
         return null;
     };
-    public static Consumer<String> qrCodeProducer = FilePathHelper::ReCreateHCJFile;
+    public final static Consumer<String> qrCodeProducer = FilePathHelper::ReCreateHCJFile;
 }

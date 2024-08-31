@@ -52,6 +52,7 @@ public class CommonEventHandler {
             serverInstance = event.getServer();
             Boolean enableMsgMode = WebSocketServerConfig.isEnableWebSocketTextMessageMode.get();
             WebSocketServer.setMode(enableMsgMode ? SendMode.ClientMessage : SendMode.OnlyText);
+            WebSocketServer.BindingPort(WebSocketServerConfig.WebSocketServerPort.get());
             if(WebSocketServerConfig.WebSocketServerAutoManager.get()) {
                 WebsocketServerManager.getManager().StartServer();
             }

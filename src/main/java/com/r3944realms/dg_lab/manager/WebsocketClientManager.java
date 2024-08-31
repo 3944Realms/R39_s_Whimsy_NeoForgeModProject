@@ -121,6 +121,7 @@ public enum WebsocketClientManager {
 
     private ManagerResultEnum StopClient0() {
         if(!hadInit.get()) return ManagerResultEnum.NOT_INITIALIZED;
+        refreshBoth();
         ManagerResultEnum managerResultEnum;
         managerResultEnum = stopSupplier.get();
         return managerResultEnum;
@@ -140,12 +141,12 @@ public enum WebsocketClientManager {
     }
 
     private static void setStartSupplier(Supplier<ManagerResultEnum> startSupplier) {
-        if(WebsocketClientManager.startSupplier == null) throw new NullPointerException("startSupplier is null");
+        if(startSupplier == null) throw new NullPointerException("startSupplier is null");
         WebsocketClientManager.startSupplier = startSupplier;
     }
 
     private static void setStopSupplier(Supplier<ManagerResultEnum> stopSupplier) {
-        if(startSupplier == null) throw new NullPointerException("stopSupplier is null");
+        if(stopSupplier == null) throw new NullPointerException("stopSupplier is null");
         WebsocketClientManager.stopSupplier = stopSupplier;
     }
     public static void init(@NotNull Supplier<ManagerResultEnum> startSupplier,
