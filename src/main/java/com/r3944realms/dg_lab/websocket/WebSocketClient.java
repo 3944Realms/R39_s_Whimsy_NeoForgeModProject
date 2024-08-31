@@ -1,7 +1,7 @@
 package com.r3944realms.dg_lab.websocket;
 
 import com.r3944realms.dg_lab.websocket.protocol.ClientMessageWebsocketHandler;
-import com.r3944realms.whimsy.utils.NetworkUtils.UrlValidator;
+import com.r3944realms.dg_lab.websocket.utils.stringUtils.UrlValidator;
 import com.r3944realms.dg_lab.websocket.utils.stringUtils.StringHandlerUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -19,11 +19,15 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrameAggregator;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 //通过服务器发包来告诉有效链接
 
 public class WebSocketClient {
@@ -36,19 +40,29 @@ public class WebSocketClient {
     private static volatile int port = -1;
     private static final AtomicBoolean isRunning = new AtomicBoolean(false),
                                         isStopping = new AtomicBoolean(false),
-                                        hasSync = new AtomicBoolean(false);
+                                        hasSync = new AtomicBoolean(false),
+                                        hadInit = new AtomicBoolean(false);
     private static final AtomicBoolean isDemo = new AtomicBoolean(false);
     public static final AtomicBoolean iSDaemonThread = new AtomicBoolean(false);
     public static void enableDemo() {
         isDemo.set(true);
         address = "127.0.0.1";
-
         port = 9000;
     }
     public static String getUrl() {
         return StringHandlerUtil.buildWebSocketURL(address, port, false);
     }
 
+    public static void init(@NotNull Supplier<Void> informFuture, @NotNull Supplier<Void> noticeFuture, @NotNull Consumer<String> qrCodeProducer) {
+        try {
+            ClientMessageWebsocketHandler.setInformSupplier(informFuture);
+            ClientMessageWebsocketHandler.setNoticeSupplier(noticeFuture);
+            ClientMessageWebsocketHandler.setQrCodeProducer(qrCodeProducer);
+            hadInit.set(true);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+    }
     public static void syncServerData(String address, int port) {
         if(UrlValidator.isValidAddress(address) && port != -1) {
             WebSocketClient.address = address;
@@ -57,7 +71,10 @@ public class WebSocketClient {
         }
     }
     public static void Start() {
-
+        if(!hadInit.get()) {
+            logger.error("Please init() first.");
+            return;
+        }
         if(isRunning.get()) {
             logger.info("WebSocketClient is already running");
             return;

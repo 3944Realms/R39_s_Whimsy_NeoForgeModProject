@@ -1,34 +1,26 @@
 package com.r3944realms.dg_lab.websocket.protocol;
 
-import com.r3944realms.dg_lab.APILanguageKey;
 import com.r3944realms.dg_lab.websocket.WebSocketClient;
 import com.r3944realms.dg_lab.websocket.message.PowerBoxMessage;
 import com.r3944realms.dg_lab.websocket.message.data.PowerBoxData;
 import com.r3944realms.dg_lab.websocket.message.role.WebSocketClientRole;
 import com.r3944realms.dg_lab.websocket.message.role.WebSocketServerRole;
 import com.r3944realms.dg_lab.websocket.message.role.type.RoleType;
-import com.r3944realms.whimsy.content.items.ModItemsRegister;
-import com.r3944realms.whimsy.init.FilePathHelper;
-import com.r3944realms.whimsy.utils.Notice.NoticePlayer;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
 import java.net.SocketException;
 import java.util.Objects;
 import java.util.Timer;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+    private static Supplier<Void> informSupplier, noticeSupplier;
+    private static Consumer<String> qrCodeProducer;
     public static String connectionId = "",
                             targetWSId = "";
     private static final int delay = 500; //防抖
@@ -68,8 +60,22 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
                     connectionId = data.getClientId();
                     logger.info("收到clientId: {}",connectionId);
                     String qrCodeContext = "https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#" + WebSocketClient.getUrl()  + connectionId;
-                    FilePathHelper.ReCreateHCJFile(qrCodeContext);
+//                    FilePathHelper.ReCreateHCJFile(qrCodeContext);
                     try {
+                        qrCodeProducer.accept(qrCodeContext);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    try {
+                        //File file = FilePathHelper.get_HCJ_HTML_Path().toFile().getAbsoluteFile();
+                        //        MutableComponent fileComponent = Component.literal(file.getName()).withStyle(ChatFormatting.UNDERLINE);
+                        //        fileComponent.withStyle((style) -> {
+                        //                    return style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath()))
+                        //                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackInfo(new ItemStack(ModItemsRegister.TEST_ITEM.get()))));
+                        //                }
+                        //        );
+                        //        Component link_display = Component.translatable(APILanguageKey.PB_LINK_OF_QRCODE, fileComponent);
+                        //        NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, link_display);
                         inform();
                     } catch (Exception e) {
                         logger.debug("Notice File Link Failed");
@@ -83,8 +89,9 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
                     targetWSId = data.getTargetId();
                     logger.info("已建立绑定连接，TargetId:{}, msg:{}",targetWSId,data.getMessage());
                     try {
-                        Component bind_suc = Component.translatable(APILanguageKey.PB_BIND_SUCCESSFUL);
-                        NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, bind_suc);
+//                        Component bind_suc = Component.translatable(APILanguageKey.PB_BIND_SUCCESSFUL);
+//                        NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, bind_suc);
+                        notice();
                     } catch (Exception e) {
                         logger.debug("Notice Failed");
                     }
@@ -114,15 +121,36 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
     }
 
     private static void inform() throws Exception {
-        File file = FilePathHelper.get_HCJ_HTML_Path().toFile().getAbsoluteFile();
-        MutableComponent fileComponent = Component.literal(file.getName()).withStyle(ChatFormatting.UNDERLINE);
-        fileComponent.withStyle((style) -> {
-                    return style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath()))
-                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackInfo(new ItemStack(ModItemsRegister.TEST_ITEM.get()))));
-                }
-        );
-        Component link_display = Component.translatable(APILanguageKey.PB_LINK_OF_QRCODE, fileComponent);
-        NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, link_display);
+        informSupplier.get();
+    }
+    private static void notice() throws Exception {
+        noticeSupplier.get();
+    }
+    /**
+     * 对于使用环境下的Url提醒处理
+     * @param supplier 异步任务
+     */
+    public static void setInformSupplier(Supplier<Void> supplier) {
+        if(supplier == null) throw new NullPointerException("null supplier");
+        informSupplier = supplier;
+    }
+
+    /**
+     * 对于调试环境下的Url提醒处理
+     * @param supplier 任务
+     */
+    public static void setNoticeSupplier(Supplier<Void> supplier) {
+        if(supplier == null) throw new NullPointerException("null future");
+        noticeSupplier = supplier;
+    }
+
+    /**
+     *
+     * @param producer QrCode生成者(会传进去一个String[URL])
+     */
+    public static void setQrCodeProducer(Consumer<String> producer) {
+        if(producer == null) throw new NullPointerException("null consumer");
+        qrCodeProducer = producer;
     }
 
     private void sendMsgOrData(ChannelHandlerContext target, PowerBoxMessage dataMsg) {

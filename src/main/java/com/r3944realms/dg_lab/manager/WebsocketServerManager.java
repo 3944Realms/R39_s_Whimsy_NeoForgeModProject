@@ -3,6 +3,9 @@ package com.r3944realms.dg_lab.manager;
 import com.r3944realms.dg_lab.websocket.WebSocketServer;
 import com.r3944realms.dg_lab.websocket.utils.enums.ManagerResultEnum;
 
+/**
+ * 暂时无需额外处理
+ */
 public enum WebsocketServerManager {
     INSTANCE;
 

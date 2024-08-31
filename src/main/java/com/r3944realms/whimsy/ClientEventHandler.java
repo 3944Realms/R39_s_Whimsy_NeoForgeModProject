@@ -3,6 +3,7 @@ package com.r3944realms.whimsy;
 import com.mojang.brigadier.CommandDispatcher;
 
 import com.r3944realms.dg_lab.manager.WebsocketClientManager;
+import com.r3944realms.whimsy.api.dg_lab.DG_Lab;
 import com.r3944realms.whimsy.client.mdoel.CustomTextureBakedModel;
 import com.r3944realms.whimsy.client.mdoel.DynamicTextureItemBakedModel;
 import com.r3944realms.whimsy.client.renderer.DynamicTextureItemRenderer;
@@ -38,6 +39,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.Optional;
 
+
 public class ClientEventHandler {
     @EventBusSubscriber(modid = WhimsyMod.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.GAME)
     public static class ClientGameBusEventHandler extends ClientEventHandler {
@@ -52,7 +54,14 @@ public class ClientEventHandler {
         }
         @SubscribeEvent
         static void onLoggingOn(ClientPlayerNetworkEvent.LoggingIn event) {
-            if(WebSocketClientConfig.WebSocketClientAutoManager.get()){
+            if(WebSocketClientConfig.WebSocketClientAutoManager.get()) {
+                WebsocketClientManager.init(
+                        DG_Lab.ClientManagerStart,
+                        DG_Lab.ClientManagerStop,
+                        DG_Lab.informSupplier,
+                        DG_Lab.noticeSupplier,
+                        DG_Lab.qrCodeProducer
+                );
                 WebsocketClientManager.getManager().StartClient();
             }
         }
