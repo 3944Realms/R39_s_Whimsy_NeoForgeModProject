@@ -35,7 +35,9 @@ public class LeashCommand {
         Command<CommandSourceStack> getRefPlayerLeashLength = context -> {
             CommandSourceStack source = context.getSource();
             try {
-                Player player = context.getArgument("player", Player.class);
+
+//                Player player = context.getArgument("player", Player.class);
+                ServerPlayer player = EntityArgument.getPlayer(context, "player");
                 float leashLength = ((IEntityExtension)player).getLeashLength();
                 source.sendSuccess(() -> Component.translatable(LEASH_LENGTH_SHOW, player.getName(), leashLength), true);
             } catch (Exception e) {
@@ -60,7 +62,8 @@ public class LeashCommand {
         Command<CommandSourceStack> setLengthLeashLength = context -> {
             CommandSourceStack source = context.getSource();
             try {
-                Player player = context.getArgument("player", Player.class);
+//                Player player = context.getArgument("player", Player.class);
+                ServerPlayer player = EntityArgument.getPlayer(context, "player");
                 float leashLength = context.getArgument("leashLength", Float.class);
                 ((IEntityExtension)player).setLeashLength(leashLength);
                 source.sendSuccess(() -> Component.translatable(LEASH_LENGTH_SET, player.getName(), leashLength), true);

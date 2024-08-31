@@ -34,6 +34,7 @@ public enum ModLangKeyValue {
     TEST_ITEM(ModItemsRegister.TEST_ITEM, ModPartEnum.ITEM,"Test Item", "测试物品", "測試物品", true),
     DYNAMIC_ITEM(ModItemsRegister.DYNAMIC_TEXTURE_ITEM, ModPartEnum.ITEM, "Dynamic Texture Item", "动态材质物品", "動態材質物品", false),
     TEST_TEXTURE_ITEM(ModItemsRegister.TEST_TEXTURE_ITEM, ModPartEnum.ITEM, "Test Texture Item", "测试材质物品", "測試材質物品", false),
+    FABRIC(ModItemsRegister.FABRIC, ModPartEnum.ITEM, "§lFabric", "§l帆布", "§l帆布", true),
     DISC_SANDS_OF_TIME(ModItemsRegister.MUSIC_DISC_SANDS_OF_TIME, ModPartEnum.ITEM, "Mcc Game Music Disc", "Mcc小游戏音乐唱片", "Mcc小游戲音樂唱片", true),
     DISC_HUB_MUSIC(ModItemsRegister.MUSIC_DISC_HUB_MUSIC, ModPartEnum.ITEM, "Mcc Game Music Disc", "Mcc小游戏音乐唱片", "Mcc小游戲音樂唱片", true),
     DISC_ACE_RACE(ModItemsRegister.MUSIC_DISC_ACE_RACE, ModPartEnum.ITEM, "Mcc Game Music Disc", "Mcc小游戏音乐唱片", "Mcc小游戲音樂唱片", true),

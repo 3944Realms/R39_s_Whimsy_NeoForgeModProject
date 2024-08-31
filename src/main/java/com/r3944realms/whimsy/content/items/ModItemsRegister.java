@@ -31,7 +31,10 @@ public class ModItemsRegister {
 
     public static final Supplier<Item> TEST_TEXTURE_ITEM =
             ModItemsRegister.register("test_texture_item", () -> new TestTextureItem(new Item.Properties().stacksTo(1)), false);
-
+    //MY IDEAS
+    public static final Supplier<Item> FABRIC =
+            ModItemsRegister.register("fabric", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
+    //DISC
     public static final Supplier<Item> MUSIC_DISC_SANDS_OF_TIME =
             ModItemsRegister.register("music_disc_sands_of_time", () -> new Item(DistProperties(ModJukeboxSongs.SANDS_OF_TIME)), true);
 
