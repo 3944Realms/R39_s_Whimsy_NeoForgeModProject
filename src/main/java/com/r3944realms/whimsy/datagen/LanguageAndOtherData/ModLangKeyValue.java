@@ -1,6 +1,6 @@
 package com.r3944realms.whimsy.datagen.LanguageAndOtherData;
 
-import com.r3944realms.whimsy.api.APILanguageKey;
+import com.r3944realms.dg_lab.APILanguageKey;
 import com.r3944realms.whimsy.content.blocks.ModBlocksRegister;
 import com.r3944realms.whimsy.content.commands.MiscCommand.LeashCommand;
 import com.r3944realms.whimsy.content.commands.MiscCommand.MotionCommand;

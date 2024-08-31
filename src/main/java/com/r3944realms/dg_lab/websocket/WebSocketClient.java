@@ -2,7 +2,7 @@ package com.r3944realms.dg_lab.websocket;
 
 import com.r3944realms.dg_lab.websocket.protocol.ClientMessageWebsocketHandler;
 import com.r3944realms.whimsy.utils.NetworkUtils.UrlValidator;
-import com.r3944realms.whimsy.utils.Transform.StringHandlerUtil;
+import com.r3944realms.dg_lab.websocket.utils.stringUtils.StringHandlerUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;

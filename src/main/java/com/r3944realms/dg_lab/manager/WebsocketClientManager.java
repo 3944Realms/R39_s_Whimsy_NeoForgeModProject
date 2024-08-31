@@ -4,16 +4,21 @@ import com.r3944realms.dg_lab.websocket.WebSocketClient;
 import com.r3944realms.dg_lab.websocket.WebSocketServer;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
 import com.r3944realms.whimsy.network.payload.ackpayload.SyncWebsocketRequestPayload;
-import com.r3944realms.whimsy.utils.Enum.ManagerResultEnum;
-import com.r3944realms.whimsy.utils.logger.logger;
+import com.r3944realms.dg_lab.websocket.utils.enums.ManagerResultEnum;
 import net.minecraft.client.Minecraft;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public enum WebsocketClientManager {
     INSTANCE;
+    private static final Logger logger = LoggerFactory.getLogger(WebsocketClientManager.class);
+    public static WebsocketClientManager getManager() {
+        return INSTANCE;
+    }
     private final AtomicBoolean shouldStart = new AtomicBoolean(false),
                                 waitingForSynchronization = new AtomicBoolean(false);
 
@@ -62,7 +67,7 @@ public enum WebsocketClientManager {
             }
             else throw new NullPointerException();
         } catch (NullPointerException e) {
-            logger.error("Null pointer exception, player is null :{}", e);
+            logger.error("Null pointer exception, player is null :", e);
             return ManagerResultEnum.FAILURE_FROM_CATCH;
         }
     }

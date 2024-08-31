@@ -5,7 +5,7 @@ import com.r3944realms.dg_lab.websocket.message.Message;
 import com.r3944realms.dg_lab.websocket.message.PowerBoxMessage;
 import com.r3944realms.dg_lab.websocket.message.role.PlaceholderRole;
 import com.r3944realms.dg_lab.websocket.message.role.WebSocketClientRole;
-import com.r3944realms.whimsy.utils.ModAnnotation.NeedCompletedInFuture;
+import com.r3944realms.dg_lab.websocket.utils.annoation.NeedCompletedInFuture;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.TimerTask;

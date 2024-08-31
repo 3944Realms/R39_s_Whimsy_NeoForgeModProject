@@ -2,7 +2,7 @@ package com.r3944realms.dg_lab.websocket.message.data;
 
 import com.r3944realms.dg_lab.websocket.message.data.type.PowerBoxDataType;
 import com.r3944realms.dg_lab.websocket.message.data.type.PowerBoxStatusCode;
-import com.r3944realms.whimsy.utils.Transform.StringHandlerUtil;
+import com.r3944realms.dg_lab.websocket.utils.stringUtils.StringHandlerUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

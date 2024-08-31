@@ -1,4 +1,4 @@
-package com.r3944realms.whimsy.utils.Transform;
+package com.r3944realms.dg_lab.websocket.utils.stringUtils;
 
 public class StringHandlerUtil {
     public static char getCharForString(String str, int index) {

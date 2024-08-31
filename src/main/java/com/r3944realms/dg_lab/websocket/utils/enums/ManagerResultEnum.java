@@ -1,4 +1,4 @@
-package com.r3944realms.whimsy.utils.Enum;
+package com.r3944realms.dg_lab.websocket.utils.enums;
 
 public enum ManagerResultEnum {
     SUCCESSFUL,

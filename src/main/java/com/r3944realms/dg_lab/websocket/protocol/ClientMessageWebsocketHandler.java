@@ -113,7 +113,7 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
 
     }
 
-    private static void inform() throws Exception{
+    private static void inform() throws Exception {
         File file = FilePathHelper.get_HCJ_HTML_Path().toFile().getAbsoluteFile();
         MutableComponent fileComponent = Component.literal(file.getName()).withStyle(ChatFormatting.UNDERLINE);
         fileComponent.withStyle((style) -> {

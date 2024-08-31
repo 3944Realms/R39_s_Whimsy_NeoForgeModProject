@@ -1,8 +1,9 @@
 package com.r3944realms.whimsy;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.r3944realms.whimsy.api.manager.WebsocketServerManager;
-import com.r3944realms.whimsy.api.websocket.WebSocketServer;
+import com.r3944realms.dg_lab.manager.WebsocketServerManager;
+import com.r3944realms.dg_lab.websocket.WebSocketServer;
+import com.r3944realms.dg_lab.websocket.utils.enums.SendMode;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
 import com.r3944realms.whimsy.content.commands.MiscCommand.LeashCommand;
 import com.r3944realms.whimsy.content.commands.MiscCommand.MotionCommand;
@@ -49,15 +50,16 @@ public class CommonEventHandler {
         @SubscribeEvent
         static void onServerStarted(ServerStartedEvent event) {
             serverInstance = event.getServer();
-            WebSocketServer.isTextMessageMode.set(WebSocketServerConfig.isEnableWebSocketTextMessageMode.get());
+            Boolean enableMsgMode = WebSocketServerConfig.isEnableWebSocketTextMessageMode.get();
+            WebSocketServer.setMode(enableMsgMode ? SendMode.ClientMessage : SendMode.OnlyText);
             if(WebSocketServerConfig.WebSocketServerAutoManager.get()) {
-                WebsocketServerManager.INSTANCE.StartServer();
+                WebsocketServerManager.getManager().StartServer();
             }
         }
         @SubscribeEvent
         static void onServerStopped(ServerStoppedEvent event) {
             if(WebSocketServerConfig.WebSocketServerAutoManager.get()) {
-                WebsocketServerManager.INSTANCE.StopServer();
+                WebsocketServerManager.getManager().StopServer();
             }
         }
         @SubscribeEvent

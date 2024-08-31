@@ -3,7 +3,7 @@ package com.r3944realms.whimsy.content.commands.Websocket;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.r3944realms.whimsy.api.websocket.WebSocketClient;
+import com.r3944realms.dg_lab.websocket.WebSocketClient;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
 import com.r3944realms.whimsy.content.commands.WhimsyCommand;
 import com.r3944realms.whimsy.network.payload.ackpayload.SyncWebsocketRequestPayload;

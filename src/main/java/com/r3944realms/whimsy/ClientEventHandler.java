@@ -1,7 +1,8 @@
 package com.r3944realms.whimsy;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.r3944realms.whimsy.api.manager.WebsocketClientManager;
+
+import com.r3944realms.dg_lab.manager.WebsocketClientManager;
 import com.r3944realms.whimsy.client.mdoel.CustomTextureBakedModel;
 import com.r3944realms.whimsy.client.mdoel.DynamicTextureItemBakedModel;
 import com.r3944realms.whimsy.client.renderer.DynamicTextureItemRenderer;
@@ -32,7 +33,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -53,13 +53,13 @@ public class ClientEventHandler {
         @SubscribeEvent
         static void onLoggingOn(ClientPlayerNetworkEvent.LoggingIn event) {
             if(WebSocketClientConfig.WebSocketClientAutoManager.get()){
-                WebsocketClientManager.INSTANCE.StartClient();
+                WebsocketClientManager.getManager().StartClient();
             }
         }
         @SubscribeEvent
         static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event){
             if(WebSocketClientConfig.WebSocketClientAutoManager.get()){
-                WebsocketClientManager.INSTANCE.StopClient();
+                WebsocketClientManager.getManager().StopClient();
             }
         }
         @SubscribeEvent

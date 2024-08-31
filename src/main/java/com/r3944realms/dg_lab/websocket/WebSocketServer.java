@@ -7,7 +7,7 @@ import com.r3944realms.dg_lab.websocket.message.role.WebSocketServerRole;
 import com.r3944realms.dg_lab.websocket.protocol.HttpRequestHandler;
 import com.r3944realms.dg_lab.websocket.protocol.ServerMessageDataTextWebsocketHandler;
 import com.r3944realms.dg_lab.websocket.protocol.ServerMessageTextWebsocketHandler;
-import com.r3944realms.whimsy.config.WebSocketServerConfig;
+import com.r3944realms.dg_lab.websocket.utils.enums.SendMode;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.group.ChannelGroup;
@@ -30,7 +30,9 @@ import java.util.Timer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WebSocketServer {
+    public static int Port;
     //
+
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     public static final Map<String, String> channelIdMap = Maps.newConcurrentMap();
     public static final WebSocketServerRole SOCKET_SERVER_ROLE = new WebSocketServerRole("IWebsocketServer");
@@ -61,7 +63,7 @@ public class WebSocketServer {
                                         isStopping = new AtomicBoolean(false);
     private static final AtomicBoolean isDemo = new AtomicBoolean(false);
     public static final AtomicBoolean iSDaemonThread = new AtomicBoolean(false);
-    public static final AtomicBoolean isTextMessageMode = new AtomicBoolean(false);
+    private static final AtomicBoolean isMessageMode = new AtomicBoolean(false);
     public static void enableDemo() {
         isDemo.set(true);
     }
@@ -101,13 +103,13 @@ public class WebSocketServer {
                     pipeline.addLast(new HttpRequestHandler());//去除路径请求，APP会发送带路径请求的HTTP升级请求，目前用不到
                     pipeline.addLast("WSP",new WebSocketServerProtocolHandler("/"));
                     pipeline.addLast(new WebSocketFrameAggregator(65536));
-                    pipeline.addLast(isTextMessageMode.get() ?
+                    pipeline.addLast(isMessageMode.get() ?
                             new ServerMessageTextWebsocketHandler() :
                             new ServerMessageDataTextWebsocketHandler()
                     );
                 }
             });
-            int port = isDemo.get() ? 9000 : WebSocketServerConfig.WebSocketServerPort.get();
+            int port = isDemo.get() ? 9000 : Port;
             logger.debug("WebSocketServer try binding port ... ");
             ChannelFuture channelFuture = serverBootstrap.bind(port);
             channelFuture.sync();
@@ -200,5 +202,15 @@ public class WebSocketServer {
             }
         }
     }
+    public static void setMode(SendMode mode) {
+        switch(mode) {
+            case OnlyText -> isMessageMode.set(false);
+            case ClientMessage -> isMessageMode.set(true);
+        }
+    }
+    public static void BindingPort(int port) {
+        Port = (port >= 0 && port <= 65535) ? port : 9000;
+    }
+
 
 }

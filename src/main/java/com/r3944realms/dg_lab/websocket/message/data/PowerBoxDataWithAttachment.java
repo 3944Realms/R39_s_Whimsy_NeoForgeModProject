@@ -8,7 +8,7 @@ public class PowerBoxDataWithAttachment extends PowerBoxData {
         this.timer_A = timer_A;
         this.timer_B = timer_B;
     }
-    public static PowerBoxDataWithAttachment attach(PowerBoxData parent, Integer timer_A, Integer timer_B){
+    public static PowerBoxDataWithAttachment attach(PowerBoxData parent, Integer timer_A, Integer timer_B) {
         if(parent == null)
             throw new NullPointerException("parent is null");
         return new PowerBoxDataWithAttachment(parent, timer_A, timer_B);

@@ -1,7 +1,8 @@
 package com.r3944realms.whimsy.network;
 
-import com.r3944realms.whimsy.api.manager.WebsocketClientManager;
-import com.r3944realms.whimsy.api.websocket.WebSocketClient;
+
+import com.r3944realms.dg_lab.manager.WebsocketClientManager;
+import com.r3944realms.dg_lab.websocket.WebSocketClient;
 import com.r3944realms.whimsy.content.gamerules.GameruleRegistry;
 import com.r3944realms.whimsy.content.gamerules.Gamerules;
 import com.r3944realms.whimsy.network.payload.*;
@@ -27,7 +28,7 @@ public class ClientPayloadHandler {
         context.enqueueWork(() -> {
             WebSocketClient.syncServerData(data.address(), data.port());
             logger.info("sync WebsocketServer Address Data successful");
-            WebsocketClientManager.INSTANCE.SyncedAndStart();
+            WebsocketClientManager.getManager().SyncedAndStart();
         }).exceptionally(throwable -> {
             context.disconnect(Component.translatable(WS_CLIENT_SYNC_FAILED));
             return null;

@@ -3,7 +3,8 @@ package com.r3944realms.whimsy.content.commands.Websocket;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.r3944realms.whimsy.api.websocket.WebSocketServer;
+
+import com.r3944realms.dg_lab.websocket.WebSocketServer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
