@@ -45,6 +45,9 @@ public class WebSocketClient {
                                         hadInit = new AtomicBoolean(false);
     private static final AtomicBoolean isDemo = new AtomicBoolean(false);
     public static final AtomicBoolean iSDaemonThread = new AtomicBoolean(false);
+    /**
+     * 仅调试使用
+     */
     public static void enableDemo() {
         isDemo.set(true);
         address = "127.0.0.1";
@@ -70,6 +73,9 @@ public class WebSocketClient {
             logger.error(e.getMessage());
         }
     }
+    /**
+     * 同步服务器数据
+     */
     public static void syncServerData(String address, int port) {
         if(UrlValidator.isValidAddress(address) && port != -1) {
             WebSocketClient.address = address;
@@ -77,6 +83,9 @@ public class WebSocketClient {
             hasSync.set(true);
         }
     }
+    /**
+     * 启动客户端
+     */
     public static void Start() {
         if(!hadInit.get()) {
             logger.error("Please init() first.");
@@ -182,13 +191,23 @@ public class WebSocketClient {
             hasSync.set(false);
         }
     }
+
+    /**
+     * @return 是否在运行
+     */
     public static boolean isRunning() {
         return isRunning.get();
     }
+    /**
+     * @return 是否已停止
+     */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isStopping() {
         return isStopping.get();
     }
+    /**
+     * @return 是否在同步获取到服务器连接请求
+     */
     public static boolean hasSync() {
         return hasSync.get();
     }
@@ -196,7 +215,7 @@ public class WebSocketClient {
      * 更新状态
      *
      */
-    @NeedCompletedInFuture(futureTarget = "用Completefuture来完成异步关闭")
+    @NeedCompletedInFuture(futureTarget = "用CompletableFuture来完成异步关闭")
     public static void refresh() {
         if(isStopping.get()) {
             if(eventLoopGroup == null && channel == null ) {

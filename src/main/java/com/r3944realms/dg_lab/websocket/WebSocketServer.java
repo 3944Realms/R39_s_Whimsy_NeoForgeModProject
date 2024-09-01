@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WebSocketServer {
     public static int Port;
-    //
+    //线程安全
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     public static final Map<String, String> channelIdMap = Maps.newConcurrentMap();
     public static final WebSocketServerRole SOCKET_SERVER_ROLE = new WebSocketServerRole("IWebsocketServer");
@@ -49,7 +49,7 @@ public class WebSocketServer {
     public static final Integer punishmentDuration = 5;
     // 默认一秒发送1次
     public static final Integer punishmentTime = 1;
-    // 心跳定时器
+    // 心跳定时器（该为线程安全的类）
     public static Timer heartTimer = null;
     //
     private static Thread WebsocketServerThread;
@@ -63,9 +63,17 @@ public class WebSocketServer {
     private static final AtomicBoolean isDemo = new AtomicBoolean(false);
     public static final AtomicBoolean iSDaemonThread = new AtomicBoolean(false);
     private static final AtomicBoolean isMessageMode = new AtomicBoolean(false);
+
+    /**
+     * 仅调试
+     */
     public static void enableDemo() {
         isDemo.set(true);
     }
+
+    /**
+     * 启动服务器
+     */
     public static void Start() {
         refresh();
         if(isRunning.get()) {
@@ -127,7 +135,9 @@ public class WebSocketServer {
         WebsocketServerThread.setDaemon(DaemonThreadEnable);
     }
 
-    //
+    /**
+     * 停止服务器
+     */
     public static void Stop() {
         refresh();
         if (!isRunning.get()) {
@@ -186,9 +196,16 @@ public class WebSocketServer {
             logger.info("WebSocketServer Stopped");
         }
     }
+
+    /**
+     * @return 是否正在运行
+     */
     public static boolean isRunning() {
         return isRunning.get();
     }
+    /**
+     * @return 是否正在停止
+     */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isStopping() {
         return isStopping.get();
@@ -198,7 +215,7 @@ public class WebSocketServer {
      * 更新状态
      *
      */
-    @NeedCompletedInFuture(futureTarget = "用Completefuture来完成异步关闭")
+    @NeedCompletedInFuture(futureTarget = "用CompletableFuture来完成异步关闭")
     public static void refresh() {
         if(isStopping.get()) {
             if(workerGroup == null && bossGroup == null && serverChannel == null) {
@@ -207,12 +224,20 @@ public class WebSocketServer {
             }
         }
     }
+    /**
+     * 服务器处理客户端消息模式
+     * @param mode 设置模式
+     */
     public static void setMode(SendMode mode) {
         switch(mode) {
             case OnlyText -> isMessageMode.set(false);
             case ClientMessage -> isMessageMode.set(true);
         }
     }
+    /**
+     * 服务器绑定端口
+     * @param port 端口
+     */
     public static void BindingPort(int port) {
         Port = (port >= 0 && port <= 65535) ? port : 9000;
     }

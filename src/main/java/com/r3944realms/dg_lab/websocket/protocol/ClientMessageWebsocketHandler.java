@@ -106,6 +106,7 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
             }
             default -> {
                 logger.info("收到其它信息{}",data.getMessage());
+
             }
         }
 

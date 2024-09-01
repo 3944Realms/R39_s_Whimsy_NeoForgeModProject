@@ -4,7 +4,6 @@ import com.r3944realms.dg_lab.websocket.message.data.type.PowerBoxDataType;
 import com.r3944realms.dg_lab.websocket.message.data.type.PowerBoxStatusCode;
 import com.r3944realms.dg_lab.websocket.utils.stringUtils.StringHandlerUtil;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -117,14 +116,13 @@ public class PowerBoxData implements IData {
         }
     }
     @SuppressWarnings("DuplicatedCode")
-    public Object[] getArgsArray(@Nullable PowerBoxDataType commanddataType) {
+    public Object[] getArgsArray() {
         if(message == null || message.isEmpty()) {
             return null;
         }
         String[] args = message.split("-");
         switch(args[0]) {
             case "strength": {
-                commanddataType = PowerBoxDataType.STRENGTH;
                 String[] arguments = args[1].split("\\+");
                 int argumentsLength = arguments.length;
                 switch (argumentsLength) {
@@ -144,7 +142,6 @@ public class PowerBoxData implements IData {
                 }
             }
             case "pulse": {
-                commanddataType = PowerBoxDataType.PULSE;
                 String channel = args[1].substring(0,1);
                 String[] DataList = getWaveformDataList(args[1]);
                 String[] dataList = new String[DataList.length + 1];
@@ -158,12 +155,10 @@ public class PowerBoxData implements IData {
 
             }
             case "clear": {
-                commanddataType = PowerBoxDataType.CLEAR;
                 String arg = args[1];
                 return new Integer[]{ Integer.parseInt(args[1]) };
             }
             case "feedback":{
-                commanddataType = PowerBoxDataType.FEEDBACK;
                 int arg = Integer.parseInt(args[1]);
                 return new Integer[]{ arg };
             }

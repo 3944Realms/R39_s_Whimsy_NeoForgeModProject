@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public enum WebsocketServerManager {
     INSTANCE;
-    private static Logger logger = LoggerFactory.getLogger(WebsocketServerManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebsocketServerManager.class);
     public static WebsocketServerManager getManager() {
         return INSTANCE;
     }

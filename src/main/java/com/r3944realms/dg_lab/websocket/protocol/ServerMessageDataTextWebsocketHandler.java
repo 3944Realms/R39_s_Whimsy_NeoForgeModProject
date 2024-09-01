@@ -232,7 +232,7 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
                         sendMessageData(session, error);
                         return;
                     }
-                    Object[] argsArray = data.getArgsArray(dataType);
+                    Object[] argsArray = data.getArgsArray();
                     if(argsArray == null) {
                         PowerBoxMessage error = PowerBoxMessage.createPowerBoxMessage("msg", clientId, targetId, "500", SOCKET_SERVER_ROLE, new WebSocketApplicationRole("Ap" + targetId));
                         sendMessageData(session, error);
