@@ -72,7 +72,7 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
                     }
                 });
             } else {
-                logger.warn("Channel is not active, skipping bindMsg for clientId={}", clientId);
+                logger.debug("Channel is not active, skipping bindMsg for clientId={}", clientId);
             }
         },200, TimeUnit.MILLISECONDS); // 延迟200毫秒发送消息
         synchronized (ServerMessageDataTextWebsocketHandler.class) {
@@ -91,12 +91,13 @@ public class ServerMessageDataTextWebsocketHandler extends SimpleChannelInboundH
                                 String targetId = relations.get(clientId);
                                 if (ObjectUtils.isEmpty(targetId)) {
                                     targetId = "";
-                                }PowerBoxMessage message =
+                                }
+                                PowerBoxMessage message =
                                         PowerBoxMessage.createPowerBoxMessage("heartbeat", clientId, targetId, "200",
                                                 SOCKET_SERVER_ROLE, new PlaceholderRole("Pl" + clientId));
                                 sendMessageData(client, message);
                             } else {
-                                logger.warn("Channel is not active, skipping heartbeat for clientId={}", clientId);
+                                logger.debug("Channel is not active, skipping heartbeat for clientId={}", clientId);
                                 connections.remove(clientId);
                             }
                         }

@@ -11,10 +11,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.net.SocketException;
 import java.util.Objects;
 import java.util.Timer;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -67,15 +67,6 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
                         throw new RuntimeException(e);
                     }
                     try {
-                        //File file = FilePathHelper.get_HCJ_HTML_Path().toFile().getAbsoluteFile();
-                        //        MutableComponent fileComponent = Component.literal(file.getName()).withStyle(ChatFormatting.UNDERLINE);
-                        //        fileComponent.withStyle((style) -> {
-                        //                    return style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath()))
-                        //                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackInfo(new ItemStack(ModItemsRegister.TEST_ITEM.get()))));
-                        //                }
-                        //        );
-                        //        Component link_display = Component.translatable(APILanguageKey.PB_LINK_OF_QRCODE, fileComponent);
-                        //        NoticePlayer.showMessageToLocalPlayer(Minecraft.getInstance().player, link_display);
                         inform();
                     } catch (Exception e) {
                         logger.debug("Notice File Link Failed");
@@ -128,7 +119,7 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
     }
     /**
      * 对于使用环境下的Url提醒处理
-     * @param supplier 异步任务
+     * @param supplier 任务
      */
     public static void setInformSupplier(Supplier<Void> supplier) {
         if(supplier == null) throw new NullPointerException("null supplier");
@@ -145,7 +136,7 @@ public class ClientMessageWebsocketHandler extends SimpleChannelInboundHandler<T
     }
 
     /**
-     *
+     * QrCode生成交给调用者实现
      * @param producer QrCode生成者(会传进去一个String[URL])
      */
     public static void setQrCodeProducer(Consumer<String> producer) {

@@ -1,6 +1,7 @@
 package com.r3944realms.whimsy;
 
 
+import com.r3944realms.dg_lab.Dg_Lab;
 import com.r3944realms.whimsy.config.ModMiscConfig;
 import com.r3944realms.whimsy.config.WebSocketClientConfig;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
@@ -16,6 +17,7 @@ import com.r3944realms.whimsy.content.paintings.ModPaintingsRegister;
 import com.r3944realms.whimsy.content.sounds.ModSoundRegister;
 import com.r3944realms.whimsy.init.FilePathHelper;
 import com.r3944realms.whimsy.utils.logger.logger;
+import io.netty.handler.logging.LogLevel;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
@@ -26,6 +28,7 @@ import net.neoforged.fml.config.ModConfig;
 @Mod(WhimsyMod.MOD_ID)
 public class WhimsyMod {
     public static final String MOD_ID = "whimsicality";
+    public static final Dg_Lab  DG_LAB = new Dg_Lab(LogLevel.DEBUG);
 
     /**
     * We can directly receive the event bus as a mod constructor argument.<br/><br/><br/>

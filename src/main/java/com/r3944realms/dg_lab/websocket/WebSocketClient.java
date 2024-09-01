@@ -1,8 +1,10 @@
 package com.r3944realms.dg_lab.websocket;
 
+import com.r3944realms.dg_lab.Dg_Lab;
 import com.r3944realms.dg_lab.websocket.protocol.ClientMessageWebsocketHandler;
-import com.r3944realms.dg_lab.websocket.utils.stringUtils.UrlValidator;
+import com.r3944realms.dg_lab.websocket.utils.annoation.NeedCompletedInFuture;
 import com.r3944realms.dg_lab.websocket.utils.stringUtils.StringHandlerUtil;
+import com.r3944realms.dg_lab.websocket.utils.stringUtils.UrlValidator;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -24,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -53,10 +54,16 @@ public class WebSocketClient {
         return StringHandlerUtil.buildWebSocketURL(address, port, false);
     }
 
-    public static void init(@NotNull Supplier<Void> informFuture, @NotNull Supplier<Void> noticeFuture, @NotNull Consumer<String> qrCodeProducer) {
+    /**
+     * 初始化
+     * @param informSupplier 使用环境下通知操作
+     * @param noticeSupplier 测试环境下通知操作
+     * @param qrCodeProducer qrCode生成操作
+     */
+    public static void init(@NotNull Supplier<Void> informSupplier, @NotNull Supplier<Void> noticeSupplier, @NotNull Consumer<String> qrCodeProducer) {
         try {
-            ClientMessageWebsocketHandler.setInformSupplier(informFuture);
-            ClientMessageWebsocketHandler.setNoticeSupplier(noticeFuture);
+            ClientMessageWebsocketHandler.setInformSupplier(informSupplier);
+            ClientMessageWebsocketHandler.setNoticeSupplier(noticeSupplier);
             ClientMessageWebsocketHandler.setQrCodeProducer(qrCodeProducer);
             hadInit.set(true);
         } catch (Exception e) {
@@ -105,7 +112,7 @@ public class WebSocketClient {
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
                         pipeline.addLast(
-                                new LoggingHandler(LogLevel.DEBUG),
+                                Dg_Lab.LOGGING_HANDLER,
                                 new HttpClientCodec(),
                                 new HttpObjectAggregator(65536),
                                 new WebSocketClientProtocolHandler(
@@ -185,6 +192,11 @@ public class WebSocketClient {
     public static boolean hasSync() {
         return hasSync.get();
     }
+    /**
+     * 更新状态
+     *
+     */
+    @NeedCompletedInFuture(futureTarget = "用Completefuture来完成异步关闭")
     public static void refresh() {
         if(isStopping.get()) {
             if(eventLoopGroup == null && channel == null ) {

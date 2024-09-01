@@ -1,9 +1,7 @@
 package com.r3944realms.whimsy;
 
 import com.mojang.brigadier.CommandDispatcher;
-
-import com.r3944realms.dg_lab.manager.WebsocketClientManager;
-import com.r3944realms.whimsy.api.dg_lab.DG_Lab;
+import com.r3944realms.whimsy.api.dg_lab.DGLabApi;
 import com.r3944realms.whimsy.client.mdoel.CustomTextureBakedModel;
 import com.r3944realms.whimsy.client.mdoel.DynamicTextureItemBakedModel;
 import com.r3944realms.whimsy.client.renderer.DynamicTextureItemRenderer;
@@ -56,20 +54,26 @@ public class ClientEventHandler {
         static void onLoggingOn(ClientPlayerNetworkEvent.LoggingIn event) {
             if(WebSocketClientConfig.WebSocketClientAutoManager.get()) {
 
-                WebsocketClientManager.init(
-                        DG_Lab.ClientManagerStart,
-                        DG_Lab.ClientManagerStop,
-                        DG_Lab.informSupplier,
-                        DG_Lab.noticeSupplier,
-                        DG_Lab.qrCodeProducer
+                WhimsyMod.DG_LAB.initClientManager(
+                        DGLabApi.ClientManagerStart,
+                        DGLabApi.ClientManagerStop,
+                        DGLabApi.informSupplier,
+                        DGLabApi.noticeSupplier,
+                        DGLabApi.qrCodeProducer
                 );
-                WebsocketClientManager.getManager().StartClient();
+                WhimsyMod.DG_LAB.getWebSocketClientManager().StartClient();
+            } else {
+                WhimsyMod.DG_LAB.initClientWS(
+                        DGLabApi.informSupplier,
+                        DGLabApi.noticeSupplier,
+                        DGLabApi.qrCodeProducer
+                );
             }
         }
         @SubscribeEvent
         static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event){
             if(WebSocketClientConfig.WebSocketClientAutoManager.get()){
-                WebsocketClientManager.getManager().StopClient();
+                WhimsyMod.DG_LAB.getWebSocketClientManager().StopClient();
             }
         }
         @SubscribeEvent

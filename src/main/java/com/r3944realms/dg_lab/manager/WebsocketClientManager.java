@@ -90,6 +90,7 @@ public enum WebsocketClientManager {
             case MISMATCHED_ENVIRONMENT_FAILURE -> logger.info("Mismatched environment failure");
             case FAILURE_FROM_CATCH -> logger.info("Failure from catch");
             case NOT_INITIALIZED -> logger.error("ClientManager not initialized, please init() first");
+            default -> logger.error("Unexpected Result");
         }
     }
 
@@ -116,6 +117,7 @@ public enum WebsocketClientManager {
             }
             case MISMATCHED_ENVIRONMENT_FAILURE -> logger.info("Mismatched environment failure");
             case NOT_INITIALIZED ->  logger.error("ClientManager not initialized, please init() first");
+            default -> logger.error("Unexpected Result");
         }
     }
 

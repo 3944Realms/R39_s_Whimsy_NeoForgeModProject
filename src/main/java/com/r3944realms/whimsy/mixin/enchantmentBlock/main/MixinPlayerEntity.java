@@ -16,8 +16,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Objects;
-
 @Mixin(Player.class)
 public abstract class MixinPlayerEntity extends LivingEntity {
         protected MixinPlayerEntity(EntityType<? extends LivingEntity> entityType, Level level) {

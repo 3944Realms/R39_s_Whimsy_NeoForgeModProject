@@ -1,8 +1,8 @@
 package com.r3944realms.whimsy.api.dg_lab;
 
 import com.r3944realms.dg_lab.APILanguageKey;
-import com.r3944realms.dg_lab.websocket.WebSocketClient;
 import com.r3944realms.dg_lab.websocket.utils.enums.ManagerResultEnum;
+import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
 import com.r3944realms.whimsy.content.items.ModItemsRegister;
 import com.r3944realms.whimsy.init.FilePathHelper;
@@ -24,9 +24,8 @@ import java.io.File;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public enum DG_Lab {
-    INSTANCE;
-    private static final Logger logger = LoggerFactory.getLogger(DG_Lab.class);
+public class DGLabApi {
+    private static final Logger logger = LoggerFactory.getLogger(DGLabApi.class);
     public final static Supplier<ManagerResultEnum> ClientManagerStart = () -> {
                if(!FMLEnvironment.dist.isClient()) { //非客户端退出
                   logger.error("Distributor is not client");
@@ -34,7 +33,7 @@ public enum DG_Lab {
               }
               try {
                   if(Minecraft.getInstance().isSingleplayer()) {//在单人模式下
-                      WebSocketClient.syncServerData(WebSocketServerConfig.WebSocketServerAddress.get(), WebSocketServerConfig.WebSocketServerPort.get());
+                      WhimsyMod.DG_LAB.initClientConfig(WebSocketServerConfig.WebSocketServerAddress.get(), WebSocketServerConfig.WebSocketServerPort.get());
                       return ManagerResultEnum.SUCCESSFUL;//因为是单人模式,直接从配置中读取Websocket服务器地址和端口
                   }
                   if (Minecraft.getInstance().player != null) {//非单人模式

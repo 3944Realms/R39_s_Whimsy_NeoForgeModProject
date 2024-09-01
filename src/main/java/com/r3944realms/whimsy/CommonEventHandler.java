@@ -25,7 +25,6 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -51,16 +50,15 @@ public class CommonEventHandler {
         static void onServerStarted(ServerStartedEvent event) {
             serverInstance = event.getServer();
             Boolean enableMsgMode = WebSocketServerConfig.isEnableWebSocketTextMessageMode.get();
-            WebSocketServer.setMode(enableMsgMode ? SendMode.ClientMessage : SendMode.OnlyText);
-            WebSocketServer.BindingPort(WebSocketServerConfig.WebSocketServerPort.get());
+            WhimsyMod.DG_LAB.initServerConfig(WebSocketServerConfig.WebSocketServerPort.get(), enableMsgMode ? SendMode.ClientMessage : SendMode.OnlyText);
             if(WebSocketServerConfig.WebSocketServerAutoManager.get()) {
-                WebsocketServerManager.getManager().StartServer();
+                WhimsyMod.DG_LAB.getWebsocketServerManager().StartServer();
             }
         }
         @SubscribeEvent
         static void onServerStopped(ServerStoppedEvent event) {
             if(WebSocketServerConfig.WebSocketServerAutoManager.get()) {
-                WebsocketServerManager.getManager().StopServer();
+                WhimsyMod.DG_LAB.getWebsocketServerManager().StopServer();
             }
         }
         @SubscribeEvent

@@ -11,7 +11,6 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 
 public class LeashCommand {
     private final static String WHIMSICALITY_LEASH_MESSAGE_ = "whimsy.command.leash.message.";

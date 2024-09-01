@@ -2,11 +2,13 @@ package com.r3944realms.dg_lab.websocket;
 
 
 import com.google.common.collect.Maps;
+import com.r3944realms.dg_lab.Dg_Lab;
 import com.r3944realms.dg_lab.websocket.message.data.PowerBoxData;
 import com.r3944realms.dg_lab.websocket.message.role.WebSocketServerRole;
 import com.r3944realms.dg_lab.websocket.protocol.HttpRequestHandler;
 import com.r3944realms.dg_lab.websocket.protocol.ServerMessageDataTextWebsocketHandler;
 import com.r3944realms.dg_lab.websocket.protocol.ServerMessageTextWebsocketHandler;
+import com.r3944realms.dg_lab.websocket.utils.annoation.NeedCompletedInFuture;
 import com.r3944realms.dg_lab.websocket.utils.enums.SendMode;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -19,8 +21,6 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketFrameAggregator;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class WebSocketServer {
     public static int Port;
     //
-
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     public static final Map<String, String> channelIdMap = Maps.newConcurrentMap();
     public static final WebSocketServerRole SOCKET_SERVER_ROLE = new WebSocketServerRole("IWebsocketServer");
@@ -97,7 +96,7 @@ public class WebSocketServer {
                 @Override
                 protected void initChannel(NioSocketChannel ch) throws Exception {
                     ChannelPipeline pipeline = ch.pipeline();
-                    pipeline.addLast(new LoggingHandler(LogLevel.DEBUG));
+                    pipeline.addLast(Dg_Lab.LOGGING_HANDLER);
                     pipeline.addLast(new HttpServerCodec());
                     pipeline.addLast(new HttpObjectAggregator(65536));
                     pipeline.addLast(new HttpRequestHandler());//去除路径请求，APP会发送带路径请求的HTTP升级请求，目前用不到
@@ -194,6 +193,12 @@ public class WebSocketServer {
     public static boolean isStopping() {
         return isStopping.get();
     }
+
+    /**
+     * 更新状态
+     *
+     */
+    @NeedCompletedInFuture(futureTarget = "用Completefuture来完成异步关闭")
     public static void refresh() {
         if(isStopping.get()) {
             if(workerGroup == null && bossGroup == null && serverChannel == null) {

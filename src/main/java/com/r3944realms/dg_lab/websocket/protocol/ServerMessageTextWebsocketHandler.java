@@ -76,7 +76,7 @@ public class ServerMessageTextWebsocketHandler extends SimpleChannelInboundHandl
                     }
                 });
             } else {
-                logger.warn("Channel is not active, message not sent to clientId={}", clientId);
+                logger.debug("Channel is not active, message not sent to clientId={}", clientId);
             }
         }, 200, TimeUnit.MILLISECONDS); // 延迟500毫秒发送消息
         if(heartTimer != null) return;
@@ -101,7 +101,7 @@ public class ServerMessageTextWebsocketHandler extends SimpleChannelInboundHandl
                                                 SOCKET_SERVER_ROLE, new PlaceholderRole("Pl" + clientId));
                                 sendMessageText(client, message);
                             } else {
-                                logger.warn("Channel is not active, skipping heartbeat for clientId={}", clientId);
+                                logger.debug("Channel is not active, skipping heartbeat for clientId={}", clientId);
                                 connections.remove(clientId);//不活跃移除对应连接
                             }
                         }
