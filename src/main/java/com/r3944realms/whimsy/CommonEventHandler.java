@@ -1,8 +1,6 @@
 package com.r3944realms.whimsy;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.r3944realms.dg_lab.manager.WebsocketServerManager;
-import com.r3944realms.dg_lab.websocket.WebSocketServer;
 import com.r3944realms.dg_lab.websocket.utils.enums.SendMode;
 import com.r3944realms.whimsy.config.WebSocketServerConfig;
 import com.r3944realms.whimsy.content.commands.MiscCommand.LeashCommand;

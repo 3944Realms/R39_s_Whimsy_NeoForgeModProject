@@ -13,6 +13,7 @@ import com.r3944realms.whimsy.content.effects.ModEffectRegister;
 import com.r3944realms.whimsy.content.effects.ModPotionRegister;
 import com.r3944realms.whimsy.content.gamerules.ClientRender.MustOthersHiddenNameTag;
 import com.r3944realms.whimsy.content.gamerules.ServerChat.DefaultTalkArea;
+import com.r3944realms.whimsy.content.gamerules.ServerChat.TeleportWithLeashedPlayers;
 import com.r3944realms.whimsy.content.items.CreativeModeTab.ModCreativeTab;
 import com.r3944realms.whimsy.content.items.ModItemsRegister;
 import com.r3944realms.whimsy.content.sounds.ModSoundRegister;
@@ -130,9 +131,11 @@ public enum ModLangKeyValue {
     //GAME_RULE_NAME
     DEFAULT_AREA_TALK_NAME(DefaultTalkArea.NAME_KEY, ModPartEnum.NAME, "Default Area Talk", "默认聊天区域可见半径", "默認聊天區域可見半徑",false),
     MUST_OTHERS_HIDDEN_NAME_TAG_NAME(MustOthersHiddenNameTag.NAME_KEY, ModPartEnum.NAME, "Force Hide Others' NameTag", "强制隐藏他人名字标签", "强制隱藏他人名字標簽", false),
+    TELEPORT_WITH_LEASHED_PLAYERS(TeleportWithLeashedPlayers.NAME_KEY, ModPartEnum.NAME, "Teleport with leashed player", "传送被栓玩家", "傳送被栓玩家" ,false),
     //GAME_RULE_DESCRIPTION
     DEFAULT_AREA_TALK_DESCRIPTION(DefaultTalkArea.DESCRIPTION_KEY, ModPartEnum.DESCRIPTION, "When the global setting is non-negative, it limits the chat range for all players. If a player's configured chat range is smaller than this value, this rule applies. Otherwise, the player's custom value is used.", "全局区域设置为非负数时，则限制全体玩家的聊天区域。若玩家设置的聊天区域小于该值则采用该规则，反之则采用玩家自定义值", "儅全局區域為非負時，則限制全服玩家聊天區域。若玩家自定義值小於該規則則采用，反之則用玩家自定義值","阖局初置非负数，则限一顾之日下，若立聊城小在直则用其常，若用玩义直上跻之地", false),
     MUST_OTHERS_HIDDEN_NAME_DESCRIPTION(MustOthersHiddenNameTag.DESCRIPTION_KEY, ModPartEnum.DESCRIPTION, "Forcefully turn off the display of others' NameTags, but it does not affect the display of NameTags through team settings. (After enabling, NameTag cannot be used to control others' head NameTag hidden control)", "强制关闭他人NameTag显示，但不影响通过队伍设置来显示NameTag的情况。（开启后无法使用NameTag来控制他人头部NameTag隐藏控制）", "強制關閉他人NameTag顯示，但不影響通過隊伍設定來顯示NameTag的情况。 （開啟後無法使用NameTag來控制他人頭部NameTag隱藏控制）", false),
+    TELEPORT_WITH_LEASHED_DESCRIPTION(TeleportWithLeashedPlayers.DESCRIPTION_KEY, ModPartEnum.DESCRIPTION, "You will teleport with your leashed players ", "传送时将被栓玩家与自己一起传送", "傳送時將被栓玩家與隨自己一起傳送" ,false),
 
     ;
 

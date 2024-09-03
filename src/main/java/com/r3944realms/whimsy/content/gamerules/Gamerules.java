@@ -21,6 +21,9 @@ public class Gamerules {
     public static String getDescriptionKey(Class<?> gameRuleClass) {
         return RULE_KEY_PERFix_ + gameRuleClass.getSimpleName() + ".description";
     }
+    public static String getDescriptionKey(String gameRuleName) {
+        return RULE_KEY_PERFix_ + gameRuleName + ".description";
+    }
     public static String getNameKey(Class<?> gameRuleClass) {
         return RULE_KEY_PERFix_ + gameRuleClass.getSimpleName();
     }

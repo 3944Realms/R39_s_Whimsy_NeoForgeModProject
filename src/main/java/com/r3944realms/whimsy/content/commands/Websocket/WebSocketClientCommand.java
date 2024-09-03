@@ -17,8 +17,8 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class WebSocketClientCommand {
-    public static final String WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_= "whimsy.websocket.client.message.",
-            NOT_CLIENT = WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "not_client",
+    private static final String WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_= "whimsy.websocket.client.message.";
+    public static final String NOT_CLIENT = WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "not_client",
             CLIENT_SYNC_ACK_SEND = WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "client_sync_send",
             CLIENT_START_SUCCESSFUL = WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "start.successful",
             CLIENT_START_FAILED_CLOSING =WHIMSICALITY_WEBSOCKET_CLIENT_MESSAGE_ + "start.failed.closing",

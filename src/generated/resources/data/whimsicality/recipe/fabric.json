@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "!": {
+      "item": "minecraft:string"
+    },
+    "#": {
+      "item": "minecraft:paper"
+    },
+    "$": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "$",
+    "#",
+    "!"
+  ],
+  "result": {
+    "count": 1,
+    "id": "whimsicality:fabric"
+  }
+}

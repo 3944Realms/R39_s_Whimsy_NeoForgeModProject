@@ -27,6 +27,16 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("###")
                 .unlockedBy("has_commandBlock",has(Items.COMMAND_BLOCK))
                 .save(pRecipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItemsRegister.FABRIC.get())
+                .define('$', Items.STICK)
+                .define('#', Items.PAPER)
+                .define('!', Items.STRING)
+                .pattern("$")
+                .pattern("#")
+                .pattern("!")
+                .unlockedBy("has_string",has(Items.STRING))
+                .save(pRecipeOutput);
+
 //        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItemsRegister.TEST_ITEM.get())
 //                .requires(Items.COMMAND_BLOCK)
 //                .unlockedBy("has_commandBlock",has(Items.COMMAND_BLOCK))

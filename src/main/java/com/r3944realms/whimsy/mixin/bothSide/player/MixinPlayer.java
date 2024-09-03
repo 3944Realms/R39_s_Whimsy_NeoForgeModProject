@@ -3,7 +3,7 @@ package com.r3944realms.whimsy.mixin.bothSide.player;
 import com.r3944realms.whimsy.content.effects.ModEffectRegister;
 import com.r3944realms.whimsy.content.gamerules.ClientRender.MustOthersHiddenNameTag;
 import com.r3944realms.whimsy.content.gamerules.GameruleRegistry;
-import com.r3944realms.whimsy.modInterface.entity.IEntityExtension;
+import com.r3944realms.whimsy.modInterface.entity.ILivingEntityExtension;
 import com.r3944realms.whimsy.modInterface.player.PlayerCapacity;
 import com.r3944realms.whimsy.modInterface.player.PlayerLeashable;
 import net.minecraft.nbt.CompoundTag;
@@ -39,6 +39,8 @@ public abstract class MixinPlayer extends LivingEntity implements PlayerCapacity
     @Shadow public float bob;
 
     @Shadow public abstract void tick();
+
+    @Shadow public abstract void jumpFromGround();
 
     @Unique
     @Nullable
@@ -86,7 +88,7 @@ public abstract class MixinPlayer extends LivingEntity implements PlayerCapacity
         float leashLength = 6.0f;
         Entity entity = this.Whimsy$LeashData.leashHolder;
         saveLeashData(Whimsy$LeashData);
-        if(this instanceof IEntityExtension iEntityExtension) {
+        if(this instanceof ILivingEntityExtension iEntityExtension) {
             float leashLengthSelf = iEntityExtension.getLeashLength();
             leashLength = leashLengthSelf > 6 ? leashLengthSelf : 6;
         }
@@ -94,7 +96,7 @@ public abstract class MixinPlayer extends LivingEntity implements PlayerCapacity
             if(!isAlive() || !entity.isAlive() || distanceTo(entity) > Math.max(leashLength * 2.0f, 10.0f)){
                 dropLeash(true, true);
             } else if(distanceTo(entity) > leashLength * 1.3f) {
-                tick();
+                jumpFromGround();
             }
         }
     }
@@ -103,7 +105,7 @@ public abstract class MixinPlayer extends LivingEntity implements PlayerCapacity
         if(entity == null || entity.level() != entity2.level())
             return;
         float leashLength = 6.0f;
-        if(entity2 instanceof IEntityExtension iEntity) {
+        if(entity2 instanceof ILivingEntityExtension iEntity) {
             float leashLengthFormValue = iEntity.getLeashLength();
             leashLength = leashLengthFormValue > 6 ? leashLengthFormValue : 6;
         }

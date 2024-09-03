@@ -13,6 +13,8 @@
   "gamerule.RWN.DefaultTalkArea.description": "When the global setting is non-negative, it limits the chat range for all players. If a player's configured chat range is smaller than this value, this rule applies. Otherwise, the player's custom value is used.",
   "gamerule.RWN.MustOthersHiddenNameTag": "Force Hide Others' NameTag",
   "gamerule.RWN.MustOthersHiddenNameTag.description": "Forcefully turn off the display of others' NameTags, but it does not affect the display of NameTags through team settings. (After enabling, NameTag cannot be used to control others' head NameTag hidden control)",
+  "gamerule.RWN.TeleportWithLeashedPlayers": "Teleport with leashed player",
+  "gamerule.RWN.TeleportWithLeashedPlayers.description": "You will teleport with your leashed players ",
   "item.minecraft.lingering_potion.effect.drunk": "Lingering Wine",
   "item.minecraft.lingering_potion.effect.long_drunk": "Lingering Wine",
   "item.minecraft.lingering_potion.effect.strong_drunk": "Lingering Strong Wine",

@@ -1,8 +1,6 @@
 package com.r3944realms.whimsy.network;
 
 
-import com.r3944realms.dg_lab.manager.WebsocketClientManager;
-import com.r3944realms.dg_lab.websocket.WebSocketClient;
 import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.content.gamerules.GameruleRegistry;
 import com.r3944realms.whimsy.content.gamerules.Gamerules;
@@ -45,6 +43,7 @@ public class ClientPayloadHandler {
                     (GameRules.Key<GameRules.BooleanValue>)
                             GameruleRegistry.gamerules.get(data.GameRuleName())
             ).set(data.value(), null);
+            Gamerules.gamerulesBooleanValuesClient.put(data.GameRuleName(),data.value());
         }).exceptionally(throwable -> {
             context.disconnect(Component.translatable(WS_CLIENT_SYNC_FAILED));
             return null;

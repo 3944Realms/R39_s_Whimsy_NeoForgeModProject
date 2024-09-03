@@ -13,6 +13,8 @@
   "gamerule.RWN.DefaultTalkArea.description": "全局区域设置为非负数时，则限制全体玩家的聊天区域。若玩家设置的聊天区域小于该值则采用该规则，反之则采用玩家自定义值",
   "gamerule.RWN.MustOthersHiddenNameTag": "强制隐藏他人名字标签",
   "gamerule.RWN.MustOthersHiddenNameTag.description": "强制关闭他人NameTag显示，但不影响通过队伍设置来显示NameTag的情况。（开启后无法使用NameTag来控制他人头部NameTag隐藏控制）",
+  "gamerule.RWN.TeleportWithLeashedPlayers": "传送被栓玩家",
+  "gamerule.RWN.TeleportWithLeashedPlayers.description": "传送时将被栓玩家与自己一起传送",
   "item.minecraft.lingering_potion.effect.drunk": "滞留型酒",
   "item.minecraft.lingering_potion.effect.long_drunk": "滞留型酒",
   "item.minecraft.lingering_potion.effect.strong_drunk": "滞留型烈酒",

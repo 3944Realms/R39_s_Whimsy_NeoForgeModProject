@@ -21,7 +21,7 @@ public class MustOthersHiddenNameTag {
     public static final String NAME_KEY = Gamerules.getNameKey(MustOthersHiddenNameTag.class);
     public static final GameRules.Category CATEGORY = GameRules.Category.PLAYER;
     public static final BiConsumer<MinecraftServer, GameRules.BooleanValue> NOTICE = (MinecraftServer server, GameRules.BooleanValue value) -> {
-        server.getPlayerList().getPlayers().forEach(player -> {
+         server.getPlayerList().getPlayers().forEach(player -> {
             Gamerules.gamerulesBooleanValuesClient.put(ID, value.get());
             PacketDistributor.sendToPlayer(player, new BooleanGameRuleValueChangeData(ID, value.get()));//通知客户端
         });

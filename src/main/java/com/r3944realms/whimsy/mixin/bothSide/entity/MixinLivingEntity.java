@@ -1,6 +1,6 @@
 package com.r3944realms.whimsy.mixin.bothSide.entity;
 
-import com.r3944realms.whimsy.modInterface.entity.IEntityExtension;
+import com.r3944realms.whimsy.modInterface.entity.ILivingEntityExtension;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class MixinLivingEntity extends Entity implements IEntityExtension {
+public abstract class MixinLivingEntity extends Entity implements ILivingEntityExtension {
     public MixinLivingEntity(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }

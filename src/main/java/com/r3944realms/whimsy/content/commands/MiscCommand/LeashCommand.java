@@ -5,7 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.r3944realms.whimsy.content.commands.WhimsyCommand;
-import com.r3944realms.whimsy.modInterface.entity.IEntityExtension;
+import com.r3944realms.whimsy.modInterface.entity.ILivingEntityExtension;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -23,7 +23,7 @@ public class LeashCommand {
             CommandSourceStack source = context.getSource();
             try {
                 ServerPlayer player = source.getPlayerOrException();
-                float leashLength = ((IEntityExtension)player).getLeashLength();
+                float leashLength = ((ILivingEntityExtension)player).getLeashLength();
                 source.sendSuccess(() -> Component.translatable(LEASH_LENGTH_SHOW, player.getName(), leashLength), true);
             } catch (Exception e) {
                 source.sendFailure(Component.translatable(LEASH_LENGTH_FAIL));
@@ -37,7 +37,7 @@ public class LeashCommand {
 
 //                Player player = context.getArgument("player", Player.class);
                 ServerPlayer player = EntityArgument.getPlayer(context, "player");
-                float leashLength = ((IEntityExtension)player).getLeashLength();
+                float leashLength = ((ILivingEntityExtension)player).getLeashLength();
                 source.sendSuccess(() -> Component.translatable(LEASH_LENGTH_SHOW, player.getName(), leashLength), true);
             } catch (Exception e) {
                 source.sendFailure(Component.translatable(LEASH_LENGTH_FAIL));
@@ -50,7 +50,7 @@ public class LeashCommand {
             try {
                 ServerPlayer player = source.getPlayerOrException();
                 float leashLength = context.getArgument("leashLength", Float.class);
-                ((IEntityExtension)player).setLeashLength(leashLength);
+                ((ILivingEntityExtension)player).setLeashLength(leashLength);
                 source.sendSuccess(() -> Component.translatable(LEASH_LENGTH_SET, player.getName(), leashLength), true);
             } catch (Exception e) {
                 source.sendFailure(Component.translatable(LEASH_LENGTH_FAIL));
@@ -64,7 +64,7 @@ public class LeashCommand {
 //                Player player = context.getArgument("player", Player.class);
                 ServerPlayer player = EntityArgument.getPlayer(context, "player");
                 float leashLength = context.getArgument("leashLength", Float.class);
-                ((IEntityExtension)player).setLeashLength(leashLength);
+                ((ILivingEntityExtension)player).setLeashLength(leashLength);
                 source.sendSuccess(() -> Component.translatable(LEASH_LENGTH_SET, player.getName(), leashLength), true);
             } catch (Exception e) {
                 source.sendFailure(Component.translatable(LEASH_LENGTH_FAIL));
