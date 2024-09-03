@@ -1,4 +1,4 @@
-package com.r3944realms.whimsy.content.gamerules.ServerChat;
+package com.r3944realms.whimsy.content.gamerules.Server;
 
 import com.r3944realms.whimsy.WhimsyMod;
 import com.r3944realms.whimsy.content.gamerules.Gamerules;

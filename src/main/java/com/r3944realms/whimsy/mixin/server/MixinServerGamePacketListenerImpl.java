@@ -1,7 +1,7 @@
 package com.r3944realms.whimsy.mixin.server;
 
 import com.r3944realms.whimsy.content.gamerules.GameruleRegistry;
-import com.r3944realms.whimsy.content.gamerules.ServerChat.TeleportWithLeashedPlayers;
+import com.r3944realms.whimsy.content.gamerules.Server.TeleportWithLeashedPlayers;
 import com.r3944realms.whimsy.modInterface.player.PlayerLeashable;
 import com.r3944realms.whimsy.utils.logger.logger;
 import net.minecraft.server.level.ServerPlayer;
