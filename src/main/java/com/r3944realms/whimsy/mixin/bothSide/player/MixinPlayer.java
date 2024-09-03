@@ -68,11 +68,6 @@ public abstract class MixinPlayer extends LivingEntity implements PlayerCapacity
         Entity leashHolder = playerLeashable.getLeashHolder();
         if(leashHolder != null ) {
             Whimsy$UpdateLeash(leashHolder, (Entity) playerLeashable);
-//            this.bob = 1.25f;
-        } else if(leashHolder instanceof ServerPlayer) {
-//            this.bob = 1.0f;
-        } else {
-//            this.bob = 0.6f;
         }
         if(this.hasEffect(ModEffectRegister.DRUNK_EFFECT)) {
             MobEffectInstance effect = this.getEffect(ModEffectRegister.DRUNK_EFFECT);
@@ -101,29 +96,32 @@ public abstract class MixinPlayer extends LivingEntity implements PlayerCapacity
         }
     }
     @Unique
-    private static void Whimsy$UpdateLeash(Entity entity, Entity entity2) {
-        if(entity == null || entity.level() != entity2.level())
+    private static void Whimsy$UpdateLeash(Entity holderEntity, Entity restrainedEntity) {
+        if(holderEntity == null || holderEntity.level() != restrainedEntity.level())
             return;
         float leashLength = 6.0f;
-        if(entity2 instanceof ILivingEntityExtension iEntity) {
+        if(restrainedEntity instanceof ILivingEntityExtension iEntity) {
             float leashLengthFormValue = iEntity.getLeashLength();
             leashLength = leashLengthFormValue > 6 ? leashLengthFormValue : 6;
         }
-        float distance = entity.distanceTo(entity2);
+        float distance = holderEntity.distanceTo(restrainedEntity);
         if(distance > leashLength) {
-            double dX = (entity.getX() - entity2.getX()) / (double) distance ;
-            double dY = (entity.getY() - entity2.getY()) / (double) distance ;
-            double dZ = (entity.getZ() - entity2.getZ()) / (double) distance ;
-            entity2.setDeltaMovement(
-                    entity2.getDeltaMovement().add(
-                            Math.copySign(dX * dX * 0.4d, dX),
-                            Math.copySign(dY * dY * 0.4d, dY),
-                            Math.copySign(dZ * dZ * 0.4d, dZ)
-                    )
-            );
-            Whimsy$Brake(entity2, 1, 1, 1);
+            Entity applyMovementEntity = restrainedEntity.isPassenger() ? restrainedEntity.getVehicle() : restrainedEntity;
+            if(applyMovementEntity != null){
+                double dX = (holderEntity.getX() - applyMovementEntity.getX()) / (double) distance;
+                double dY = (holderEntity.getY() - applyMovementEntity.getY()) / (double) distance;
+                double dZ = (holderEntity.getZ() - applyMovementEntity.getZ()) / (double) distance;
+                applyMovementEntity.setDeltaMovement(
+                        applyMovementEntity.getDeltaMovement().add(
+                                Math.copySign(dX * dX * 0.4d, dX),
+                                Math.copySign(dY * dY * 0.4d, dY),
+                                Math.copySign(dZ * dZ * 0.4d, dZ)
+                        )
+                );
+                Whimsy$Brake(applyMovementEntity, 1, 1, 1);
+            }
         }
-        entity2.checkSlowFallDistance();
+        restrainedEntity.checkSlowFallDistance();
 
     }
     @Unique
