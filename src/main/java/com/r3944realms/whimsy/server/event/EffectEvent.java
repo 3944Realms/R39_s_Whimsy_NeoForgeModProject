@@ -59,11 +59,11 @@ public class EffectEvent {
             ItemStack weaponItem = damageSourceEntity.getWeaponItem();
             if((damageSourceLivingEntity instanceof Player || damageSourceLivingEntity instanceof Monster) && (damageTargetLivingEntity instanceof Player || damageTargetLivingEntity instanceof Monster)) {
                 if(((LivingEntity) damageSourceEntity).isBaby())
-                if (ModEnchantmentHelper.hasDesignatedEnchantment(serverLevel, weaponItem, ModEnchantmentEffectComponents.CHANGE_ITEM)) {
-                    ItemStack damageTargetEntityMainHandItem = damageTargetLivingEntity.getMainHandItem();
-                    damageSourceLivingEntity.setItemInHand(InteractionHand.MAIN_HAND, damageTargetEntityMainHandItem);
-                    damageTargetLivingEntity.setItemInHand(InteractionHand.MAIN_HAND, weaponItem);
-                }
+                    if (ModEnchantmentHelper.hasDesignatedEnchantment(serverLevel, weaponItem, ModEnchantmentEffectComponents.CHANGE_ITEM)) {
+                        ItemStack damageTargetEntityMainHandItem = damageTargetLivingEntity.getMainHandItem();
+                        damageSourceLivingEntity.setItemInHand(InteractionHand.MAIN_HAND, damageTargetEntityMainHandItem);
+                        damageTargetLivingEntity.setItemInHand(InteractionHand.MAIN_HAND, weaponItem);
+                    }
             }
         }
     }
