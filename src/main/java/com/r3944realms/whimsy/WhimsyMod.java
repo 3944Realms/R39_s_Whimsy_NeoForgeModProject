@@ -29,7 +29,7 @@ import net.neoforged.fml.config.ModConfig;
 public class WhimsyMod {
     public static final String MOD_ID = "whimsicality";
     public static final Dg_Lab  DG_LAB = new Dg_Lab(LogLevel.DEBUG);
-
+//TODO: 青光眼罩
     /**
     * We can directly receive the event bus as a mod constructor argument.<br/><br/><br/>
      * <code>
