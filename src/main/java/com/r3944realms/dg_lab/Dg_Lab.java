@@ -13,6 +13,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+//TODO:
+// 1.将日志单独在某一个文件里保存
+// 2.数据接收能够通知第三方调用者
+
 public class Dg_Lab {
     public static LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
 

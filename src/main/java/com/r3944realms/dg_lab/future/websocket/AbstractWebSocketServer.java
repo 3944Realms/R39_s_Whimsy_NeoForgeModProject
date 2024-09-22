@@ -3,6 +3,7 @@ package com.r3944realms.dg_lab.future.websocket;
 
 import com.r3944realms.dg_lab.Dg_Lab;
 import com.r3944realms.dg_lab.future.misc.Status;
+import com.r3944realms.dg_lab.websocket.message.Message;
 import com.r3944realms.dg_lab.websocket.protocol.HttpRequestHandler;
 import com.r3944realms.dg_lab.websocket.utils.RangeValidator;
 import io.netty.bootstrap.ServerBootstrap;
@@ -179,4 +180,6 @@ public abstract class AbstractWebSocketServer {
             case STOPPED -> logger.info("Server has stopped");
         }
     }
+
+    public abstract void send(String clientId, Message message);
 }

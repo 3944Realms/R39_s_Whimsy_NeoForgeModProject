@@ -58,11 +58,23 @@ public class ClientDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
         PowerBoxMessage dataMsg;
         PowerBoxData data = null;
         String json = msg.text();
-        if(SRMsg) {
+        if(SRMsg && !TargetWSId().isEmpty()) {
+            //通过构造开启且如果有目标（即连上了APP端）则开启Message对象校验，只有通过校验才能进读取data(雾)
             dataMsg = PowerBoxMessage.getNullMessage().getMessage(json);
-            if(dataMsg.direction.sender().type != RoleType.T_SERVER && !Objects.equals(dataMsg.direction.sender().name, "IWebsocketServer")) {
+            //发送对象必须是服务器类型 且 接收者（本客户端）为占位对象类型 或 本客户端对象（名字类型相同），这里取反，只有满足条件才能进入 else读取 data
+            if(
+                    dataMsg.direction.sender().type != RoleType.T_SERVER
+                    &&
+                    !(
+                        dataMsg.direction.receiver().type == RoleType.PLACEHOLDER
+                        ||
+                        (dataMsg.direction.receiver().type == RoleType.T_CLIENT && Objects.equals(dataMsg.direction.receiver().name, role.name))
+                    )
+            ) {
                 logger.info("消息验证者错误：{}", dataMsg.direction.sender().name);
                 data = PowerBoxMessage.getNullMessage().getPayload(dataMsg.getInvalidMessageJson());
+            } else {
+                data = PowerBoxMessage.getNullMessage().getPayload(json);
             }
         } else {
             data = PowerBoxMessage.getNullMessage().getPayload(json);

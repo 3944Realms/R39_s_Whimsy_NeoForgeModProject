@@ -2,6 +2,7 @@ package com.r3944realms.dg_lab.future.websocket;
 
 import com.r3944realms.dg_lab.Dg_Lab;
 import com.r3944realms.dg_lab.future.misc.Status;
+import com.r3944realms.dg_lab.websocket.message.Message;
 import com.r3944realms.dg_lab.websocket.utils.RangeValidator;
 import com.r3944realms.dg_lab.websocket.utils.stringUtils.StringHandlerUtil;
 import com.r3944realms.dg_lab.websocket.utils.stringUtils.UrlValidator;
@@ -35,7 +36,7 @@ public abstract class AbstractWebSocketClient {
 
     private Bootstrap ClientBootstrap;
     private EventLoopGroup ClientEventLoopGroup;
-    private Channel ClientChannel;
+    protected Channel ClientChannel;
 
     private Thread WebSocketClientThread;
     private volatile Status ClientStatus = Status.WAITING_FOR_INIT;
@@ -195,5 +196,5 @@ public abstract class AbstractWebSocketClient {
             case STOPPED -> logger.info("Server has stopped");
         }
     }
-
+    public abstract void send(Message message);
 }

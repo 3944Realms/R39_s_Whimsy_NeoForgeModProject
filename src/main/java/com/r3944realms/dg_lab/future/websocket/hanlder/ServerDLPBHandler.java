@@ -8,6 +8,7 @@ import com.r3944realms.dg_lab.websocket.message.data.PowerBoxData;
 import com.r3944realms.dg_lab.websocket.message.data.PowerBoxDataWithSingleAttachment;
 import com.r3944realms.dg_lab.websocket.message.data.type.PowerBoxDataType;
 import com.r3944realms.dg_lab.websocket.message.role.*;
+import com.r3944realms.dg_lab.websocket.message.role.type.RoleType;
 import com.r3944realms.dg_lab.websocket.protocol.ServerMessageTextWebsocketHandler;
 import com.r3944realms.dg_lab.websocket.timeTask.DgLabTimerTask;
 import com.r3944realms.dg_lab.websocket.utils.stringUtils.StringHandlerUtil;
@@ -18,6 +19,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.FutureListener;
 import io.netty.util.concurrent.Promise;
 import org.apache.commons.lang3.ObjectUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Map;
@@ -74,7 +76,7 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
             } else {
                 logger.debug("Channel is not active, message not sent to clientId={}", clientId);
             }
-        }, 200, TimeUnit.MILLISECONDS); // 延迟500毫秒发送消息
+        }, 200, TimeUnit.MILLISECONDS); // 延迟200毫秒发送消息
         if(HeartTimer() != null) return;
         synchronized (ServerMessageTextWebsocketHandler.class) {
             // 启动心跳定时器（如果尚未启动）
@@ -92,10 +94,12 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
                                 String targetId = Relations().get(clientId);
                                 if (ObjectUtils.isEmpty(targetId)) {
                                     targetId = "";
-                                }PowerBoxMessage message =
+                                }
+                                Role receiverRole = getRole(clientId);
+                                PowerBoxMessage message =
                                         PowerBoxMessage.createPowerBoxMessage("heartbeat", clientId, targetId, "200",
-                                                role, new PlaceholderRole("Pl" + clientId));
-                                sendMessageText(ServerDLPBHandler.this,client, message);
+                                                role, receiverRole);
+                                sendMessageOrData(ServerDLPBHandler.this, clientId, message);
                             } else {
                                 logger.debug("Channel is not active, skipping heartbeat for clientId={}", clientId);
                                 Connections().remove(clientId);//不活跃移除对应连接
@@ -105,6 +109,17 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
                 }, 500, 60000/*ms = 1min*/);
             }
         }
+    }
+
+    private @NotNull Role getRole(String clientId) {
+        RoleType roleType = getRoleType(this, clientId);
+        Role receiverRole;
+        switch (roleType) {
+            case T_CLIENT -> receiverRole = new WebSocketClientRole("Cl" + clientId);
+            case APPLICATION -> receiverRole = new WebSocketApplicationRole("Ap" + clientId);
+            default -> receiverRole = new PlaceholderRole("Pl" + clientId);
+        }
+        return receiverRole;
     }
 
     @Override
@@ -122,7 +137,7 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
                 ChannelHandlerContext appClient = Connections().get(_targetId_);
                 PowerBoxMessage message =
                         PowerBoxMessage.createPowerBoxMessage("break", disconnectId, _targetId_, "209", role, new WebSocketClientRole("Cl" + _targetId_));
-                sendMessageData(this, appClient, message);
+                sendMessageText(this, appClient, message);
                 appClient.close(); //关闭当前的 websocket 连接
                 Relations().remove(_clientId_); // 清除关系
                 PowerBoxDataMap().remove(_targetId_);
@@ -160,13 +175,13 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
         } catch (Exception e) { //非JSON消息
             pMessage = PowerBoxMessage.createPowerBoxMessage("error", "", "",  "403",
                     role, new WebSocketClientRole("ErrorReceiver"));
-            sendMessageData(this, session, pMessage);
+            sendMessageText(this, session, pMessage);
             return;
         }
         if(!Connections().containsKey(data.getClientId()) && !Connections().containsKey(data.getTargetId())) { //非法信息来源拒绝
             pMessage = PowerBoxMessage.createPowerBoxMessage("error", "", "", "404",
                     role, new WebSocketClientRole("ErrorReceiver"));
-            sendMessageData(this, session, pMessage);
+            sendMessageText(this, session, pMessage);
             return;
         }
         if(!ObjectUtils.isEmpty(data.getType()) && !ObjectUtils.isEmpty(data.getClientId()) && !ObjectUtils.isEmpty(data.getTargetId()) && !ObjectUtils.isEmpty(data.getMessage())) {
@@ -185,7 +200,7 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
                             ChannelHandlerContext client = Connections().get(clientId);
                             PowerBoxMessage bindMessage = PowerBoxMessage.createPowerBoxMessage("bind", clientId, targetId, "200", role, new PlaceholderRole("Both: " + clientId + " ^ " + targetId));
                             sendMessageData(this, session, bindMessage);
-                            sendMessageData(this, client, bindMessage);
+                            sendMessageText(this, client, bindMessage);
                         } else {
                             PowerBoxMessage failure = PowerBoxMessage.createPowerBoxMessage("bind", clientId, targetId, "400", role, new WebSocketApplicationRole("Ap" + targetId));
                             sendMessageData(this, session, failure);
@@ -227,7 +242,7 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
                                     putDataInMap(targetId, data);
                                     String currentStrengthMsg = "strength-" + AStrength + "+" + BStrength + "+" + ALimit + "+" + BLimit;
                                     PowerBoxMessage clientMsg = PowerBoxMessage.createPowerBoxMessage("clientMsg", clientId, targetId, currentStrengthMsg, role, new WebSocketClientRole("Cl" + clientId));
-                                    sendMessageData(this, client, clientMsg);
+                                    sendMessageText(this, client, clientMsg);
                                 }
                             }
                         }
@@ -235,7 +250,7 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
                             //Thrown UnsupportedMsg
                             PowerBoxMessage UnsupportedMsg = PowerBoxMessage.createPowerBoxMessage("error", clientId, targetId, "502", role, new WebSocketClientRole("Cl" + clientId));
                             //"unsupported-reason:(please use type named clientMsg to adjust wave in order to get the timers of AB)"
-                            sendMessageData(this ,session, UnsupportedMsg);//发送给客户端
+                            sendMessageText(this ,session, UnsupportedMsg);//发送给客户端
                         }
                         case CLEAR -> {
                             if(Connections().containsKey(targetId)) {
@@ -261,10 +276,10 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
                 case CLIENT_MESSAGE -> {//接收到客户端消息(客户端的作用是附带Timer)
                     if(!Relations().get(clientId).equals(targetId)) {
                         PowerBoxMessage error = PowerBoxMessage.createPowerBoxMessage("bind", clientId, targetId, "402", role, new WebSocketClientRole("Cl" + clientId));
-                        sendMessageData(this, session, error);
+                        sendMessageText(this, session, error);
                     } else if(ObjectUtils.isEmpty(message)){
                         PowerBoxMessage error = PowerBoxMessage.createPowerBoxMessage("error", clientId, targetId, "501", role, new WebSocketClientRole("Cl" + clientId));
-                        sendMessageData(this, session, error);
+                        sendMessageText(this, session, error);
                     } else if(Relations().containsKey(targetId)) {
                         PowerBoxDataWithSingleAttachment dataWithAttachment = (PowerBoxDataWithSingleAttachment) data;
                         // AB通道的执行时间可以独立
@@ -305,20 +320,20 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
                     } else {
                         logger.debug("为找到匹配的客户端,clientId={}", clientId);
                         PowerBoxMessage not_found = PowerBoxMessage.createPowerBoxMessage("msg", clientId, targetId, "404", role, new WebSocketClientRole("Cl" + clientId));
-                        sendMessageData(this, session, not_found);
+                        sendMessageText(this, session, not_found);
                     }
                 }
                 default -> {
                     if(!Relations().get(clientId).equals(targetId)) {
                         PowerBoxMessage error = PowerBoxMessage.createPowerBoxMessage("bind", clientId, targetId, "402", role, new WebSocketClientRole("Cl" + clientId));
-                        sendMessageData(this, session, error);
+                        sendMessageText(this, session, error);
                     } else if (Connections().containsKey(clientId)) {
                         ChannelHandlerContext client = Connections().get(clientId);
                         PowerBoxMessage defaultMsg = PowerBoxMessage.createPowerBoxMessage(data.getType(), clientId, targetId, data.getMessage(), role, new WebSocketClientRole("Cl" + clientId));
-                        sendMessageData(this, client, defaultMsg);
+                        sendMessageText(this, client, defaultMsg);
                     } else {
                         PowerBoxMessage defaultMsg = PowerBoxMessage.createPowerBoxMessage("msg", clientId, targetId, "404", role, new WebSocketClientRole("Cl" + clientId));
-                        sendMessageData(this, session, defaultMsg);
+                        sendMessageText(this, session, defaultMsg);
                     }
                 }
             }
@@ -358,6 +373,17 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
     private void putDataInMap(String targetId, PowerBoxData data) {
         if(PowerBoxDataMap().containsKey(targetId))PowerBoxDataMap().replace(targetId, data);
         else PowerBoxDataMap().put(targetId, data);
+    }
+    /**
+     * 根据UUID对应对象的类型来决定发送的数据类型JSON
+     * @param uuid 能处理Message对象的目标UUID
+     * @param msg Message{@link Message}
+     */
+    private static void sendMessageOrData(ServerDLPBHandler serverDLPBHandler, String uuid, Message msg) {
+        switch (getRoleType(serverDLPBHandler, uuid)) {
+            case T_CLIENT -> sendMessageText(serverDLPBHandler, serverDLPBHandler.Connections().get(uuid), msg);
+            case PLACEHOLDER,APPLICATION -> sendMessageData(serverDLPBHandler, serverDLPBHandler.Connections().get(uuid), msg);
+        }
     }
 
     /**
@@ -417,6 +443,7 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
             ClientTimers().put(clientId + "-" + channel, timer);//存储对应的·clientId与频道
         }
     }
+
     public void clearInterval(String clientId, Timer timer, char channel) {
         timer.cancel();
         ClientTimers().remove(clientId + "-" + channel); // 删除对应的定时器
@@ -467,6 +494,13 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
 
     public Timer HeartTimer() {
         return SharedData.heartTimer;
+    }
+
+    //为什么不传入serverDLPBHandler.Relations()而传入整个ServerDLPBHandler（不符合良好的程序开发准则）
+    public static RoleType getRoleType(ServerDLPBHandler serverDLPBHandler, String uuid) {
+        if(serverDLPBHandler.Relations().containsKey(uuid)) return RoleType.T_CLIENT;
+        else if(serverDLPBHandler.Relations().containsValue(uuid)) return RoleType.APPLICATION;
+        else return RoleType.PLACEHOLDER;
     }
 
 }

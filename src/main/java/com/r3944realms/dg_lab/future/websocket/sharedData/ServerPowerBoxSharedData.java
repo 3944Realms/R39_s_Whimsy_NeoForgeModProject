@@ -2,7 +2,6 @@ package com.r3944realms.dg_lab.future.websocket.sharedData;
 
 import com.google.common.collect.Maps;
 import com.r3944realms.dg_lab.websocket.message.data.PowerBoxData;
-import com.r3944realms.dg_lab.websocket.message.role.WebSocketServerRole;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
