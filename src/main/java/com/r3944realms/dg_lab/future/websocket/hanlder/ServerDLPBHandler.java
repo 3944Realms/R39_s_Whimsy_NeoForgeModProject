@@ -51,6 +51,7 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
         do{
              clientId =  UUID.randomUUID().toString();
         } while (ChannelIdMap().containsKey(clientId));
+        ChannelIdMap().put(session.channel().id().asLongText(), clientId);
         logger.debug("channel added: clientId={}", clientId);
         Channel().add(session.channel());
         Connections().put(clientId, session);
@@ -68,9 +69,9 @@ public class ServerDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
             if (session.channel().isActive() && session.channel().isOpen()) {
                 session.channel().writeAndFlush(new TextWebSocketFrame(bindMsg.getDataJson())).addListener(sendFuture -> {
                     if (sendFuture.isSuccess()) {
-                        logger.info("Message sent successfully to clientId={}", clientId);
+                        logger.info("#1 Message sent successfully to clientId={}", clientId);
                     } else {
-                        logger.error("Failed to send message to clientId={}", clientId, sendFuture.cause());
+                        logger.error("#1 Failed to send message to clientId={}", clientId, sendFuture.cause());
                     }
                 });
             } else {

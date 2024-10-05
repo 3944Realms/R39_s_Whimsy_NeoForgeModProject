@@ -1,17 +1,8 @@
-[019月2024 11:12:33.869] [nioEventLoopGroup-2-1/INFO] [com.r3944realms.dg_lab.websocket.protocol.ClientMessageWebsocketHandler/]: 连接�[019月2024 11:12:33.954] [nioEventLoopGroup-3-1/INFO] [com.r3944realms.dg_lab.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 新的 webSocket 连接已建立, 标[019月2024 11:12:34.308] [nioEventLoopGroup-2-[019月2024 11:20:50.191] [nioEventLoopGroup-3-1/ERROR] [com.r3944realms.dg_lab.websocket.protocol.HttpRequestHandler/]: Connection reset
-java.net.SocketException: Connection reset
-	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401) ~[?:?]
-	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434) ~[?:?]
-	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255) ~[netty-buffer-4.1.109.Final.jar:4.1.109.Final]
-	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132) ~[netty-buffer-4.1.109.Final.jar:4.1.109.Final]
-	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:357) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
-	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
-	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
-	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
-	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
-	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
-	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) ~[netty-common-4.1.109.Final.jar:4.1.109.Final]
-	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.109.Final.jar:4.1.109.Final]
-	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.109.Final.jar:4.1.109.Final]
-	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
-[019月2024 11:20:50.200] [nioEventLoopGroup-3-1/INFO] [com.r3944realms.dg_lab.websocket.protocol.ServerMessageDataTextWebsocketHandler/]: 断开的client Id:5f5b8ab4-7c8e-492a-b574-d32e0404d1f8
+[229月2024 17:22:46.010] [nioEventLoopGroup-2-1/INFO] [com.r3944realms.dg_lab.future.websocket.hanlder.AbstractDgLabPowerBoxHandler/]: 连接已建立
+[229月2024 17:22:46.508] [nioEventLoopGroup-2-1/INFO] [com.r3944realms.dg_lab.future.websocket.hanlder.AbstractDgLabPowerBoxHandler/]: 收到clientId: 9c1e55cc-a2ff-4613-a561-a43701bd78c5
+[229月2024 17:22:46.713] [nioEventLoopGroup-2-1/INFO] [com.r3944realms.dg_lab.future.websocket.hanlder.AbstractDgLabPowerBoxHandler/]: 收到心跳
+[229月2024 17:24:01.021] [nioEventLoopGroup-2-1/INFO] [com.r3944realms.dg_lab.future.websocket.hanlder.AbstractDgLabPowerBoxHandler/]: 收到心跳
+[229月2024 17:24:10.658] [nioEventLoopGroup-2-1/ERROR] [com.r3944realms.dg_lab.future.websocket.hanlder.AbstractDgLabPowerBoxHandler/]: 连接出现错误：Connection reset
+[229月2024 17:24:10.662] [nioEventLoopGroup-2-1/INFO] [com.r3944realms.dg_lab.future.websocket.hanlder.AbstractDgLabPowerBoxHandler/]: 远程服务器关闭
+[229月2024 17:24:10.666] [Thread-0/INFO] [com.r3944realms.dg_lab.future.websocket.AbstractWebSocketClient/]: Client is starting, please waiting.
+[229月2024 17:24:10.673] [nioEventLoopGroup-2-1/INFO] [com.r3944realms.dg_lab.future.websocket.hanlder.AbstractDgLabPowerBoxHandler/]: 连接已断开

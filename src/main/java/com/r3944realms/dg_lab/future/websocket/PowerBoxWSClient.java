@@ -20,9 +20,7 @@ public class PowerBoxWSClient extends AbstractWebSocketClient {
         this.role = role;
     }
     public PowerBoxWSClient(ClientPowerBoxSharedData sharedData, WebSocketClientRole role) {
-        this.sharedData = sharedData;
-        this.role = role;
-        this.operation = new ExampleOperation();
+        this(sharedData, role, new ExampleOperation());
     }
     @Override
     protected void MessagePipeLineHandler(ChannelPipeline pipeline) {
@@ -37,4 +35,5 @@ public class PowerBoxWSClient extends AbstractWebSocketClient {
             logger.error("Message is not a PowerBoxMessage");
         }
     }
+
 }

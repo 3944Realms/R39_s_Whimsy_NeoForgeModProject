@@ -30,12 +30,12 @@ public abstract class AbstractWebSocketServer {
 
     private int Port;
 
-    private ServerBootstrap ServerBootstrap;
-    private EventLoopGroup BossGroup, WorkerGroup;
-    private Channel ServerChannel;
+    protected ServerBootstrap ServerBootstrap;
+    protected EventLoopGroup BossGroup, WorkerGroup;
+    protected Channel ServerChannel;
 
-    private Thread WebsocketServerThread;
-    private volatile Status ServerStatus = Status.WAITING_FOR_INIT;
+    protected Thread WebsocketServerThread;
+    protected volatile Status ServerStatus = Status.WAITING_FOR_INIT;
     protected AbstractWebSocketServer() {
         Port = 9000;
     }
@@ -68,6 +68,7 @@ public abstract class AbstractWebSocketServer {
         WorkerGroup = new NioEventLoopGroup();
         WebsocketServerThread = new Thread(() ->{
             try {
+                ServerBootstrap = new ServerBootstrap();
                 ServerStatus = Status.STARTING;
                 ServerBootstrap.option(ChannelOption.SO_BACKLOG, 1024)
                         .childOption(ChannelOption.SO_KEEPALIVE, true);

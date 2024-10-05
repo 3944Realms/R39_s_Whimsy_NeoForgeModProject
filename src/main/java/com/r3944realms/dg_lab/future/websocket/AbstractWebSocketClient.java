@@ -31,8 +31,8 @@ import java.util.concurrent.CompletableFuture;
 public abstract class AbstractWebSocketClient {
     protected static Logger logger = LoggerFactory.getLogger(AbstractWebSocketClient.class);
 
-    private volatile String Address;
-    private volatile int Port;
+    protected volatile String Address;
+    protected volatile int Port;
 
     private Bootstrap ClientBootstrap;
     private EventLoopGroup ClientEventLoopGroup;

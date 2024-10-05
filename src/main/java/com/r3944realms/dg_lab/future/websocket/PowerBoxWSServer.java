@@ -23,19 +23,24 @@ public class PowerBoxWSServer extends AbstractWebSocketServer {
     }
 
     @Override
-    public void send(String clientId, Message message) {
+    public void send(String connectId, Message message) {
         if(message instanceof PowerBoxMessage PBMessage) {
-            ChannelHandlerContext context = SharedData.connections.get(clientId);
+            ChannelHandlerContext context = SharedData.connections.get(connectId);//获取连接连接的Context
             if(context != null) {
-                String targetId = SharedData.relations.get(clientId);
-                if(targetId != null) {
-                    context.writeAndFlush(new TextWebSocketFrame(PBMessage.getMsgJson()));
-                } else {
-                    //TODO:待完善相关的 else 逻辑
+                String targetId = SharedData.relations.get(connectId);
+                if(targetId.isEmpty()) { //该上下文为客户端
+                    context.writeAndFlush(new TextWebSocketFrame(PBMessage.getMsgJson()));//发送给客户端
+                    ChannelHandlerContext appContext = SharedData.connections.get(targetId);
+                    appContext.writeAndFlush(new TextWebSocketFrame(PBMessage.getDataJson()));//发送给APP端
+                } else if(SharedData.relations.containsValue(targetId)){  // 绑定状态的APP端
+                    //仅对APP发信息
+                    context.writeAndFlush(new TextWebSocketFrame(PBMessage.getDataJson()));
+
+                } else { // 未绑定状态（不可发送消息）
+                    logger.error("Can't send Msg to no relationship obj.");
                 }
-
             } else {
-
+                logger.error("Find that Target is invalid.");
             }
         } else {
             logger.error("Message is not a PowerBoxMessage");

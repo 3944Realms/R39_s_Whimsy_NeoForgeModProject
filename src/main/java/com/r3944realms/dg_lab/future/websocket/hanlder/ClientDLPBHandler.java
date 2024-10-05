@@ -2,7 +2,6 @@ package com.r3944realms.dg_lab.future.websocket.hanlder;
 
 import com.r3944realms.dg_lab.future.websocket.sharedData.ClientPowerBoxSharedData;
 import com.r3944realms.dg_lab.future.websocket.sharedData.ISharedData;
-import com.r3944realms.dg_lab.websocket.WebSocketClient;
 import com.r3944realms.dg_lab.websocket.message.PowerBoxMessage;
 import com.r3944realms.dg_lab.websocket.message.data.PowerBoxData;
 import com.r3944realms.dg_lab.websocket.message.role.WebSocketClientRole;
@@ -85,8 +84,8 @@ public class ClientDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
                 if(data.getTargetId().isEmpty()) {
                     //初次连接客户端获取服务器指定id
                     SharedData.connectionId = data.getClientId();
-                    logger.info("收到clientId: {}",ConnectionId());
-                    String qrCodeContext = "https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#" + WebSocketClient.getUrl()  + ConnectionId();
+                    logger.info("收到clientId: {}", ConnectionId());
+                    String qrCodeContext = "https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#" + "" + ConnectionId();
 //                    FilePathHelper.ReCreateHCJFile(qrCodeContext);
                     try {
                         CO.createQrCode(qrCodeContext);
@@ -130,6 +129,8 @@ public class ClientDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
             }
             case _NC_HEARTBEAT_ -> {
                 logger.info("收到心跳");
+                SharedData.connectionId = data.getClientId();
+                role.UpdateName("Cl" + SharedData.connectionId);
             }
             default -> {
                 logger.info("收到其它信息{}",data.getMessage());
@@ -177,5 +178,8 @@ public class ClientDLPBHandler extends AbstractDgLabPowerBoxHandler implements I
     public boolean FollowBStrength() {
         return SharedData.followBStrength;
     }
-
+    
+    public String ServerAddress() {
+        return SharedData.ServerAddress;
+    }
 }
