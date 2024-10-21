@@ -54,6 +54,7 @@ public class WhimsyMod {
         ModPotionRegister.register(modEventBus);//Potion
         ModSoundRegister.register(modEventBus);//SoundEvent
         }
+        //GitHub
     private void initialize() {
         String Websocket = "Websocket";
         FilePathHelper.configWhimsyFile(new String[]{Websocket});//初始化配置文件目录
